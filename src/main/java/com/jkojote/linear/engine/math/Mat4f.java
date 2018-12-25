@@ -1,0 +1,117 @@
+package com.jkojote.linear.engine.math;
+
+import java.util.Arrays;
+
+/**
+ * Represents 4x4 matrix.
+ */
+public final class Mat4f {
+
+    private float[] matrix;
+
+    public Mat4f() { matrix = new float[16]; }
+
+    public Mat4f(float[] matrix) {
+        if (matrix.length != 16)
+            throw new IllegalArgumentException("length of matrix must be equal to 16");
+        this.matrix = matrix;
+    }
+
+    /**
+     * @return identity matrix
+     */
+    public static Mat4f identity() {
+        float[] matrix = new float[] {
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
+        };
+        return new Mat4f(matrix);
+    }
+
+    /**
+     * Get value in {@code i}-th row and {@code j}-th column
+     * @param i row number
+     * @param j column number
+     * @return value in i-th row and j-th column
+     */
+    public float get(int i, int j) {
+        if (i < 0 || i > 3)
+            throw new IllegalArgumentException("i must be in range [0;3]");
+        if (j < 0 || j > 3)
+            throw new IllegalArgumentException("j must be in range [0;3]");
+        return matrix[i * 4 + j];
+    }
+
+    /**
+     * Set value in {@code i}-th row and {@code j}-th column
+     * @param i row number
+     * @param j column number
+     * @return value in i-th row and j-th column
+     */
+    public void set(int i, int j, float value) {
+        if (i < 0 || i > 3)
+            throw new IllegalArgumentException("i must be in range [0;3]");
+        if (j < 0 || j > 3)
+            throw new IllegalArgumentException("j must be in range [0;3]");
+        matrix[i * 4 + j] = value;
+    }
+
+    /**
+     * Copies this matrix
+     * @return new matrix that is a copy of this matrix
+     */
+    public Mat4f copy() {
+        return new Mat4f(Arrays.copyOf(matrix, 16));
+    }
+
+    /**
+     * Performs scalar multiplication on this matrix
+     * @param scalar scalar value
+     * @return this matrix
+     */
+    public Mat4f scalar(float scalar) {
+        for (int i = 0; i < 16; i++)
+            matrix[i] *= scalar;
+        return this;
+    }
+
+    /**
+     * Performs matrix addition
+     * @param other matrix to be added
+     * @return this matrix
+     */
+    public Mat4f add(Mat4f other) {
+        for (int i = 0; i < 16; i++)
+            matrix[i] += other.matrix[i];
+        return this;
+    }
+
+    /**
+     * Performs matrix multiplication
+     * @param other matrix to be multiplied by
+     * @return new matrix that is the result of multiplication
+     */
+    public Mat4f mult(Mat4f other) {
+        Mat4f res = new Mat4f();
+        for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 4; j++)
+                for (int k = 0; k < 4; k++)
+                    res.matrix[i * 4 + j] += matrix[i * 4 + k] * other.matrix[k * 4 + j];
+        return res;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Mat4f that = (Mat4f) object;
+        return Arrays.equals(matrix, that.matrix);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(matrix);
+    }
+}
