@@ -1,6 +1,7 @@
 package com.jkojote.engine.math;
 
 import com.jkojote.linear.engine.math.Mat4f;
+import com.jkojote.linear.engine.math.Vec3f;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -41,6 +42,8 @@ public class Mat4fTest {
         assertEquals(expectedM1xM2, m1.mult(m2));
         assertEquals(expectedM2xM1, m2.mult(m1));
         assertEquals(m1, m1.mult(identity));
+        Vec3f v1 = new Vec3f(2, 3, 4);
+        assertEquals(v1, identity.mult(v1));
     }
 
     @Test

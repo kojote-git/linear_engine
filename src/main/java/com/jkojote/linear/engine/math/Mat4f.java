@@ -1,5 +1,6 @@
 package com.jkojote.linear.engine.math;
 
+import java.nio.FloatBuffer;
 import java.util.Arrays;
 
 /**
@@ -100,6 +101,29 @@ public final class Mat4f {
                 for (int k = 0; k < 4; k++)
                     res.matrix[i * 4 + j] += matrix[i * 4 + k] * other.matrix[k * 4 + j];
         return res;
+    }
+
+    /**
+     * Calculate product of a matrix and a vector
+     * @param vec vector to be multiplied
+     * @return new vector that is the result of the calculation
+     */
+    public Vec3f mult(Vec3f vec) {
+        Vec3f res = new Vec3f();
+        res.x = matrix[0] * vec.x + matrix[1] * vec.y + matrix[2] * vec.z + matrix[3];
+        res.y = matrix[4] * vec.x + matrix[5] * vec.y + matrix[6] * vec.z + matrix[7];
+        res.z = matrix[8] * vec.x + matrix[9] * vec.y + matrix[10] * vec.z + matrix[11];
+        return res;
+    }
+
+    /**
+     * Converts this matrix into a buffer
+     * @return buffer
+     */
+    public FloatBuffer toBuffer() {
+        FloatBuffer buffer = FloatBuffer.allocate(16);
+        buffer.put(matrix);
+        return buffer;
     }
 
     @Override
