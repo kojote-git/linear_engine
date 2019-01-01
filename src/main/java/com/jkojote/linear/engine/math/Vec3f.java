@@ -1,5 +1,7 @@
 package com.jkojote.linear.engine.math;
 
+import java.nio.FloatBuffer;
+
 /**
  * Represents three dimensional vector;
  * it's made mutable due to performance reasons.
@@ -8,7 +10,7 @@ public final class Vec3f {
 
     float x, y, z;
 
-    public Vec3f() { x = y = z = 0; }
+    public Vec3f() { }
 
     public Vec3f(float x, float y, float z) {
         this.x = x;
@@ -120,7 +122,7 @@ public final class Vec3f {
     /**
      * Returns normalized vector.
      * <b>Doesn't change</b> this vector
-     * @return
+     * @return normalized vector
      */
     public Vec3f normalized() {
         float len = len();
@@ -130,6 +132,12 @@ public final class Vec3f {
     @Override
     public String toString() {
         return "( " + x + " ; " + y + " ; " + z + " )";
+    }
+
+    public FloatBuffer toBuffer() {
+        FloatBuffer buffer = FloatBuffer.allocate(3);
+        buffer.put(x).put(y).put(z).flip();
+        return buffer;
     }
 
     @Override

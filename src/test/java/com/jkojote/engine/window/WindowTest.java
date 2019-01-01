@@ -1,4 +1,4 @@
-package com.jkojote.engine.math;
+package com.jkojote.engine.window;
 
 import com.jkojote.linear.engine.window.Window;
 import org.junit.Test;
@@ -28,5 +28,6 @@ public class WindowTest {
             Thread.sleep(1000 / 60);
             window.update();
         }
+        window.terminate();
     }
 }

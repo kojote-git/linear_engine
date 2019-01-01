@@ -1,5 +1,6 @@
 package com.jkojote.linear.engine.window;
 
+import com.jkojote.linear.engine.ReleasableResource;
 import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -10,7 +11,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 /**
  * Encapsulates GLFW library functionality for creating windows
  */
-public final class Window {
+public final class Window implements ReleasableResource {
 
     private long window;
 
@@ -147,6 +148,10 @@ public final class Window {
 
     public long getWindow() { return window; }
 
+    public boolean isInitialized() {
+        return initialized;
+    }
+
     /**
      * Initializes the window by initializing GLFW library and callbacks that were set
      * before to the invocation of this method
@@ -172,11 +177,6 @@ public final class Window {
         if (initCallback != null)
             initCallback.perform();
         initialized = true;
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glOrtho(-width / 2, width / 2, -height / 2, height / 2, 0.0, 1.0f);
-        glLoadIdentity();
-        glMatrixMode(GL_MODELVIEW);
         return this;
     }
 
@@ -246,5 +246,10 @@ public final class Window {
         glfwTerminate();
         if (windowClosedCallback != null)
             windowClosedCallback.perform();
+    }
+
+    @Override
+    public void release() {
+        terminate();
     }
 }

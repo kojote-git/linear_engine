@@ -1,5 +1,6 @@
 package com.jkojote.linear.engine.graphics2d;
 
+import com.jkojote.linear.engine.ReleasableResource;
 import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.utils.FileUtils;
 
@@ -12,7 +13,7 @@ import static org.lwjgl.opengl.GL20.*;
  * Program object that combines vertex and fragment shaders.
  * The purpose is to encapsulate control over using shaders in programObject.
  */
-public final class Shader {
+public final class Shader implements ReleasableResource {
 
     private int programObject;
 
@@ -94,19 +95,17 @@ public final class Shader {
         glUseProgram(0);
     }
 
-    /**
-     * Unbinds and deletes programObject
-     */
-    public void dispose() {
-        glUseProgram(0);
-        glDeleteProgram(programObject);
-    }
-
     public boolean setUnifrom(String name, Vec3f vec3f) {
         int location = glGetUniformLocation(programObject, name);
         if (location == -1)
             return false;
         glUniform3f(location, vec3f.getX(), vec3f.getY(), vec3f.getZ());
         return true;
+    }
+
+    @Override
+    public void release() {
+        glUseProgram(0);
+        glDeleteProgram(programObject);
     }
 }

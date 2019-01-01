@@ -1,5 +1,6 @@
 package com.jkojote.linear.engine.graphics2d;
 
+import com.jkojote.linear.engine.ReleasableResource;
 import org.lwjgl.BufferUtils;
 
 import java.awt.image.BufferedImage;
@@ -12,10 +13,10 @@ import javax.imageio.ImageIO;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
- * Represents 2D texture that can be loaded from file.
+ * Represents 2D texture that can be loaded from a file.
  * GL context need to be set before the texture is loaded.
  */
-public final class Texture2D {
+public final class Texture2D implements ReleasableResource {
 
     private static final int BYTES_PER_PIXEL = 4;
 
@@ -25,8 +26,9 @@ public final class Texture2D {
 
     private int texture;
 
+    private boolean initialized;
+
     public Texture2D(String path) {
-        texture = load(path);
         this.path = path;
     }
 
@@ -42,7 +44,6 @@ public final class Texture2D {
             throw new RuntimeException(e);
         }
         ByteBuffer buffer = BufferUtils.createByteBuffer(width * height * BYTES_PER_PIXEL);
-
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int pixel = pixels[y * width + x];
@@ -62,23 +63,41 @@ public final class Texture2D {
         return id;
     }
 
+    public void load() {
+        if (initialized)
+            return;
+        initialized = true;
+        texture = load(path);
+    }
+
     public String getPath() {
         return path;
     }
 
     public int getWidth() {
+        if (!initialized)
+            return -1;
         return width;
     }
 
     public int getHeight() {
+        if (!initialized)
+            return -1;
         return height;
     }
 
     public void bind() {
-        glBindTexture(GL_TEXTURE_2D, texture);
+        if (initialized)
+            glBindTexture(GL_TEXTURE_2D, texture);
     }
 
     public void unbind() {
-        glBindTexture(GL_TEXTURE_2D, 0);
+        if (initialized)
+            glBindTexture(GL_TEXTURE_2D, 0);
+    }
+
+    @Override
+    public void release() {
+        glDeleteTextures(texture);
     }
 }

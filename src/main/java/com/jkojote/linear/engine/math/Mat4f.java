@@ -123,6 +123,7 @@ public final class Mat4f {
     public FloatBuffer toBuffer() {
         FloatBuffer buffer = FloatBuffer.allocate(16);
         buffer.put(matrix);
+        buffer.flip();
         return buffer;
     }
 
