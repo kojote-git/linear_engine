@@ -1,7 +1,13 @@
 package com.jkojote.linear.engine.math;
 
+import org.lwjgl.BufferUtils;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.Arrays;
+
+import static org.lwjgl.opengl.GL11.glOrtho;
 
 /**
  * Represents 4x4 matrix.
@@ -22,10 +28,20 @@ public final class Mat4f {
      * @return identity matrix
      */
     public static Mat4f identity() {
-        float[] matrix = new float[] {
+        float[] matrix = {
             1, 0, 0, 0,
             0, 1, 0, 0,
             0, 0, 1, 0,
+            0, 0, 0, 1
+        };
+        return new Mat4f(matrix);
+    }
+
+    public static Mat4f ortho(float l, float r, float b, float t, float n, float f) {
+        float[] matrix = {
+            2 / (r - l), 0, 0, -(r + l) / (r - l),
+            0, 2 / (t - b), 0, -(t + b) / (t - b),
+            0, 0, -2 / (f - n), -(f + n) / (f - n),
             0, 0, 0, 1
         };
         return new Mat4f(matrix);
@@ -121,10 +137,9 @@ public final class Mat4f {
      * @return buffer
      */
     public FloatBuffer toBuffer() {
-        FloatBuffer buffer = FloatBuffer.allocate(16);
-        buffer.put(matrix);
-        buffer.flip();
-        return buffer;
+        FloatBuffer result = ByteBuffer.allocateDirect(16 << 2).order(ByteOrder.nativeOrder()).asFloatBuffer();
+        result.put(matrix).flip();
+        return result;
     }
 
     @Override

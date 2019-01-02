@@ -31,10 +31,10 @@ public class ShaderTest {
         float colorX = 0.0f, colorY = 0.0f, colorZ = 0.0f;
         float[] vertices = {
         //  -position-  ------- color --------
-            0.0f, 0.0f, colorX, colorY, colorZ,
-            0.0f, 0.5f, colorX, colorY, colorZ,
-            0.5f, 0.5f, colorX, colorY, colorZ,
-            0.5f, 0.0f, colorX, colorY, colorZ
+            -0.5f, -0.5f, colorX, colorY, colorZ,
+            -0.5f,  0.5f, colorX, colorY, colorZ,
+             0.5f,  0.5f, colorX, colorY, colorZ,
+             0.5f, -0.5f, colorX, colorY, colorZ
         };
         Window w = new Window("w", width, height, false, false)
             .setInitCallback(() -> {

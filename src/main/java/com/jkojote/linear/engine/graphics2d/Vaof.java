@@ -29,6 +29,14 @@ public final class Vaof implements ReleasableResource {
         this.vao = glGenVertexArrays();
     }
 
+    public Vaof(int capacity, boolean bind) {
+        this.buffers = new int[capacity];
+        this.capacity = capacity;
+        this.vao = glGenVertexArrays();
+        if (bind)
+            bind();
+    }
+
     /**
      * Binds this vao to the context
      */

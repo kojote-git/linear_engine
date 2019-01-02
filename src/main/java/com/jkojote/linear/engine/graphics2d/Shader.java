@@ -1,6 +1,7 @@
 package com.jkojote.linear.engine.graphics2d;
 
 import com.jkojote.linear.engine.ReleasableResource;
+import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.utils.FileUtils;
 
@@ -95,11 +96,19 @@ public final class Shader implements ReleasableResource {
         glUseProgram(0);
     }
 
-    public boolean setUnifrom(String name, Vec3f vec3f) {
+    public boolean setUniform(String name, Vec3f vec3f) {
         int location = glGetUniformLocation(programObject, name);
         if (location == -1)
             return false;
         glUniform3f(location, vec3f.getX(), vec3f.getY(), vec3f.getZ());
+        return true;
+    }
+
+    public boolean setUniform(String name, Mat4f matrix) {
+        int location = glGetUniformLocation(programObject, name);
+        if (location == -1)
+            return false;
+        glUniformMatrix4fv(location, false, matrix.toBuffer());
         return true;
     }
 
