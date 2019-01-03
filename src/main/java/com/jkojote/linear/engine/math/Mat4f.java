@@ -1,18 +1,18 @@
 package com.jkojote.linear.engine.math;
 
-import org.lwjgl.BufferUtils;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.Arrays;
 
-import static org.lwjgl.opengl.GL11.glOrtho;
 
 /**
  * Represents 4x4 matrix.
  */
 public final class Mat4f {
+
+    private static final float PI_180 = (float) Math.PI / 180;
 
     private float[] matrix;
 
@@ -45,6 +45,39 @@ public final class Mat4f {
             0, 0, 0, 1
         };
         return new Mat4f(matrix);
+    }
+
+    public static Mat4f translation(Vec3f vec) {
+        Mat4f translation = Mat4f.identity();
+        translation.matrix[3] = vec.x;
+        translation.matrix[7] = vec.y;
+        translation.matrix[11] = vec.z;
+        return translation;
+    }
+
+    public static Mat4f scale(Vec3f vec) {
+        Mat4f scale = Mat4f.identity();
+        scale.matrix[0] = vec.x;
+        scale.matrix[5] = vec.y;
+        scale.matrix[10] = vec.z;
+        return scale;
+    }
+
+    public static Mat4f scale(float scaleFactor) {
+        Mat4f scale = Mat4f.identity();
+        scale.matrix[0] = scaleFactor;
+        scale.matrix[5] = scaleFactor;
+        scale.matrix[10] = scaleFactor;
+        return scale;
+    }
+
+    public static Mat4f rotationZ(float angleRad) {
+        Mat4f res = Mat4f.identity();
+        res.matrix[0] = (float) Math.cos(angleRad * PI_180);
+        res.matrix[1] = (float) -Math.sin(angleRad * PI_180);
+        res.matrix[4] = (float) Math.sin(angleRad * PI_180);
+        res.matrix[5] = (float) Math.cos(angleRad * PI_180);
+        return res;
     }
 
     /**

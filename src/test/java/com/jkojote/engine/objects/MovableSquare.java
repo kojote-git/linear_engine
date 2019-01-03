@@ -14,28 +14,29 @@ implements Movable<MovableSquare> {
 
     private int width;
 
-    private int height;
-
     public MovableSquare(long id, int width) {
         super(id);
         this.width = width;
         this.rectangle = new Rectangle(position, width, width);
+        this.rectangle.setTranslation(this.position);
+    }
+
+    public MovableSquare(Vec3f pos, int width)  {
+        super(1);
+        this.width = width;
+        this.rectangle = new Rectangle(pos, width, width);
+        this.position = pos;
+        this.rectangle.setTranslation(this.position);
     }
 
     public int getWidth() {
         return width;
     }
 
-    public int getHeight() {
-        return height;
-    }
-
     @Override
     public void move() {
         position.add(velocity);
-        for (Vec3f v : rectangle.vertices()) {
-            v.add(velocity);
-        }
+        rectangle.setTranslation(position);
     }
 
     public Rectangle getRectangle() {

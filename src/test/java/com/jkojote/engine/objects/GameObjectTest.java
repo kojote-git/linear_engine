@@ -1,7 +1,8 @@
 package com.jkojote.engine.objects;
 
 import com.jkojote.engine.graphics.primitives.PrimitiveRenderer;
-import com.jkojote.linear.engine.graphics2d.primitives.Rectangle;
+import com.jkojote.linear.engine.Movable;
+import com.jkojote.linear.engine.graphics2d.primitives.Primitive;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.window.Window;
@@ -13,9 +14,11 @@ public class GameObjectTest {
 
     private int width = 400, height = 400;
 
-    private float angleDelta = 5f;
+    private float angleDelta = 10f;
 
-    private float scaleDelta = 0.05f;
+    private float velDelta = 2;
+
+    private float scaleDelta = 0.1f;
 
     private PrimitiveRenderer renderer;
 
@@ -26,53 +29,64 @@ public class GameObjectTest {
 
     @Test
     public void move() throws InterruptedException {
-        MovableSquare square = new MovableSquare(10, 30);
+        MovableSquare square = new MovableSquare(new Vec3f(30, 30, 0), 30);
+        MovableTriangle triangle = new MovableTriangle(
+                new Vec3f(),
+                new Vec3f(-30, -30, 0),
+                new Vec3f(0, 30, 0),
+                new Vec3f(30, -30, 0)
+        );
+        triangle.setColor(new Vec3f(0.1f, 0.8f, 0.1f));
+        Movable movable = square;
+        Primitive activePrimitive = square.getRectangle();
         Window w = new Window("W", width, height, false, false)
             .setKeyCallback((key, action, mods) -> {
-                Vec3f prev = square.position().copy();
+                Vec3f prev = movable.position().copy();
                 Vec3f vel;
-                Rectangle r = square.getRectangle();
                 switch (key) {
                     case GLFW_KEY_LEFT:
-                        vel = new Vec3f(-1, 0, 0);
-                        square.setVelocity(vel);
-                        square.move();
+                        vel = new Vec3f(-velDelta, 0, 0);
+                        movable.setVelocity(vel);
+                        movable.move();
 //                        assertEquals(prev.add(vel), square.position());
                         break;
                     case GLFW_KEY_UP:
-                        vel = new Vec3f(0, 1, 0);
-                        square.setVelocity(vel);
-                        square.move();
+                        vel = new Vec3f(0, velDelta, 0);
+                        movable.setVelocity(vel);
+                        movable.move();
 //                        assertEquals(prev.add(vel), square.position());
                         break;
                     case GLFW_KEY_RIGHT:
-                        vel = new Vec3f(1, 0, 0);
-                        square.setVelocity(vel);
-                        square.move();
+                        vel = new Vec3f(velDelta, 0, 0);
+                        movable.setVelocity(vel);
+                        movable.move();
 //                        assertEquals(prev.add(vel), square.position());
                         break;
                     case GLFW_KEY_DOWN:
-                        vel = new Vec3f(0, -1, 0);
-                        square.setVelocity(vel);
-                        square.move();
+                        vel = new Vec3f(0, -velDelta, 0);
+                        movable.setVelocity(vel);
+                        movable.move();
 //                        assertEquals(prev.add(vel), square.position());
                         break;
                     case GLFW_KEY_A:
-                        r.setRotationAngle(r.getRotationAngle() - angleDelta);
+                        activePrimitive.setRotationAngle(activePrimitive.getRotationAngle() + angleDelta);
                         break;
                     case GLFW_KEY_D:
-                        r.setRotationAngle(r.getRotationAngle() + angleDelta);
+                        activePrimitive.setRotationAngle(activePrimitive.getRotationAngle() - angleDelta);
                         break;
                     case GLFW_KEY_W:
-                        r.setScaleFactor(r.getScaleFactor() + scaleDelta);
+                        activePrimitive.setScaleFactor(activePrimitive.getScaleFactor() + scaleDelta);
                         break;
                     case GLFW_KEY_S:
-                        r.setScaleFactor(r.getScaleFactor() - scaleDelta);
+                        activePrimitive.setScaleFactor(activePrimitive.getScaleFactor() - scaleDelta);
                         break;
                 }
             })
             .setInitCallback(renderer::init)
-            .setRenderCallback(() -> renderer.render(square.getRectangle()))
+            .setRenderCallback(() -> {
+                renderer.render(square.getRectangle());
+                renderer.render(triangle.getTriangle());
+            })
             .setWindowClosedCallback(renderer::release)
             .init();
         long last = System.currentTimeMillis();

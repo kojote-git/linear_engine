@@ -48,7 +48,7 @@ public class PrimitiveRenderer implements ReleasableResource {
         vao.addArrayBuffer(buffer, GL_STATIC_DRAW, 1, 3, 20, 8);
         shader.bind();
         shader.setUniform("viewProj", viewProj);
-        shader.setUniform("model", primitive.modelMatrix(), false);
+        shader.setUniform("model", primitive.modelMatrix(), true);
 
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
