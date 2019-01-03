@@ -1,12 +1,15 @@
 package com.jkojote.linear.engine.graphics2d.primitives;
 
-import com.jkojote.linear.engine.math.Mat4f;
+import com.jkojote.linear.engine.graphics2d.Renderable;
+import com.jkojote.linear.engine.math.Vec3f;
 
-public interface Primitive {
+import java.util.List;
 
-    float getScale();
 
-    float getRotationAngle();
+public interface Primitive extends Renderable {
 
-    Mat4f modelMatrix();
+    List<Vec3f> vertices();
+
+    Vec3f color();
+
 }

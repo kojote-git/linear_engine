@@ -3,99 +3,90 @@ package com.jkojote.linear.engine.graphics2d.primitives;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 
-public class Rectangle implements Primitive {
+import java.util.ArrayList;
+import java.util.List;
 
-    private Vec3f position;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+
+public class Rectangle implements Scalable, Rotatable {
+
+    private List<Vec3f> vertices;
 
     private Vec3f color;
 
-    private Mat4f modelMatrix;
+    private Mat4f model;
 
-    private boolean updateMatrix = true;
+    private boolean updateModel;
 
     private float scaleFactor;
 
     private float rotationAngle;
 
-    private float width;
+    private float initialWidth, initialHeight;
 
-    private float height;
-
-    public Rectangle() {
-        this.position = new Vec3f();
-        this.color = new Vec3f(1.0f, 1.0f, 1.0f);
+    public Rectangle(Vec3f center, float width, float height) {
+        initialWidth = width;
+        initialHeight = height;
+        updateModel = true;
+        scaleFactor = 1.0f;
+        vertices = new ArrayList<>(4);
+        float x = center.getX(), y = center.getY(), z = center.getZ();
+        vertices.add(new Vec3f(x - width / 2, y - height / 2, z));
+        vertices.add(new Vec3f(x - width / 2, y + height / 2, z));
+        vertices.add(new Vec3f(x + width / 2, y + height / 2, z));
+        vertices.add(new Vec3f(x + width / 2, y - height / 2, z));
+        color = new Vec3f();
     }
 
-    public Vec3f getPosition() { return position; }
+    public float getInitialWidth() { return initialWidth; }
 
-    public void setPosition(Vec3f position) { this.position = position; }
-
-    public Rectangle withPosition(Vec3f position) {
-        this.position = position;
-        return this;
-    }
-
-    public Vec3f getColor() { return color; }
-
-    public void setColor(Vec3f color) { this.color = color; }
-
-    public Rectangle withColor(Vec3f color) {
-        this.color = color;
-        return this;
-    }
-
-    public float getWidth() { return width; }
-
-    public void setWidth(float width) { this.width = width; }
-
-    public Rectangle withWidth(float width) {
-        this.width = width;
-        return this;
-    }
-
-    public float getHeight() { return height; }
-
-    public void setHeight(float height) { this.height = height; }
-
-    public Rectangle withHeight(float height) {
-        this.height = height;
-        return this;
-    }
+    public float getInitialHeight() { return initialHeight; }
 
     @Override
-    public float getScale() {
-        return scaleFactor;
-    }
-
-    @Override
-    public float getRotationAngle() {
-        return rotationAngle;
-    }
-
     public void setRotationAngle(float rotationAngle) {
-        updateMatrix = true;
+        updateModel = true;
         this.rotationAngle = rotationAngle;
     }
 
-    public Rectangle withRotationAngle(float rotationAngle) {
-        this.rotationAngle = rotationAngle;
-        return this;
-    }
+    @Override
+    public float getRotationAngle() { return this.rotationAngle; }
 
+    @Override
     public void setScaleFactor(float scaleFactor) {
-        updateMatrix = true;
+        updateModel = true;
         this.scaleFactor = scaleFactor;
     }
 
-    public Rectangle withScaleFactor(float scaleFactor) {
-        this.scaleFactor = scaleFactor;
-        return this;
+    @Override
+    public float getScaleFactor() { return scaleFactor; }
+
+    @Override
+    public List<Vec3f> vertices() {
+        return vertices;
+    }
+
+    @Override
+    public Vec3f color() {
+        return color;
+    }
+
+    public void setColor(Vec3f color) {
+        this.color = color;
     }
 
     @Override
     public Mat4f modelMatrix() {
-        if (!updateMatrix)
-            return modelMatrix;
-        return modelMatrix = Utils.modelMatrix(this);
+        if (!updateModel)
+            return model;
+        Mat4f rotation = Utils.rotationMatrix(rotationAngle);
+        Mat4f scale = Utils.scaleMatrix(scaleFactor);
+        model = rotation.mult(scale);
+        updateModel = false;
+        return model;
+    }
+
+    @Override
+    public int renderingMode() {
+        return GL_QUADS;
     }
 }
