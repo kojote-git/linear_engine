@@ -1,4 +1,4 @@
-package com.jkojote.engine.math;
+package com.jkojote.engine.objects;
 
 import com.jkojote.linear.engine.Movable;
 import com.jkojote.linear.engine.math.Vec3f;
