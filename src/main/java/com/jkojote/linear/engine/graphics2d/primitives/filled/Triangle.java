@@ -1,5 +1,6 @@
-package com.jkojote.linear.engine.graphics2d.primitives;
+package com.jkojote.linear.engine.graphics2d.primitives.filled;
 
+import com.jkojote.linear.engine.graphics2d.primitives.BaseVertexShape;
 import com.jkojote.linear.engine.math.Vec3f;
 
 import java.util.ArrayList;

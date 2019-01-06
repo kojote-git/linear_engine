@@ -1,9 +1,10 @@
 package com.jkojote.engine.graphics.primitives;
 
-import com.jkojote.linear.engine.graphics2d.primitives.Ellipse;
-import com.jkojote.linear.engine.graphics2d.primitives.Line;
-import com.jkojote.linear.engine.graphics2d.primitives.Rectangle;
-import com.jkojote.linear.engine.graphics2d.primitives.Triangle;
+import com.jkojote.linear.engine.graphics2d.primitives.*;
+import com.jkojote.linear.engine.graphics2d.primitives.filled.Ellipse;
+import com.jkojote.linear.engine.graphics2d.primitives.filled.Polygon;
+import com.jkojote.linear.engine.graphics2d.primitives.filled.Rectangle;
+import com.jkojote.linear.engine.graphics2d.primitives.filled.Triangle;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.window.Window;
@@ -19,6 +20,8 @@ public class DrawingShapesTest {
     private Ellipse ellipse;
 
     private Triangle triangle;
+
+    private Polygon polygon;
 
     private Line line;
 
@@ -46,6 +49,26 @@ public class DrawingShapesTest {
         // create line
         line = new Line(50);
         line.setColor(new Vec3f(0.5f, 0.5f, 0.5f));
+        // create polygon
+        // cat head
+        polygon = new Polygon(new Vec3f[]{
+            new Vec3f(-2, -5, 0),
+            new Vec3f(-5, -4, 0),
+            new Vec3f(-7, -2, 0),
+            new Vec3f(-7,  1, 0),
+            new Vec3f(-6,  4, 0),
+            new Vec3f(-4,  7, 0),
+            new Vec3f(-3,  4, 0),
+            // reflectional symmetry
+            new Vec3f( 3,  4, 0),
+            new Vec3f( 4,  7, 0),
+            new Vec3f( 6,  4, 0),
+            new Vec3f( 7,  1, 0),
+            new Vec3f( 7, -2, 0),
+            new Vec3f( 5, -4, 0),
+            new Vec3f( 2, -5, 0)
+        });
+        polygon.setColor(new Vec3f(0.3f, 0.8f, 0.2f));
         Mat4f proj = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, 0.0f, 1.0f);
         vertexShapeRenderer = new VertexShapeRenderer(Mat4f.identity(), proj);
         ellipseRenderer = new EllipseRenderer(Mat4f.identity(), proj);
@@ -117,6 +140,20 @@ public class DrawingShapesTest {
         controller.setTranslationDelta(5);
         window
             .setRenderCallback(() -> ellipseRenderer.render(ellipse))
+            .setKeyCallback(controller)
+            .init();
+        while (!window.isTerminated()) {
+            window.update();
+            controller.update();
+        }
+    }
+
+    @Test
+    public void drawPolygon() {
+        ShapeTransformationController controller = new ShapeTransformationController(polygon);
+        controller.setTranslationDelta(5);
+        window
+            .setRenderCallback(() -> vertexShapeRenderer.render(polygon))
             .setKeyCallback(controller)
             .init();
         while (!window.isTerminated()) {

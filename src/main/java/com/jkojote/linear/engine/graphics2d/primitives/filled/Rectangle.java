@@ -1,5 +1,7 @@
-package com.jkojote.linear.engine.graphics2d.primitives;
+package com.jkojote.linear.engine.graphics2d.primitives.filled;
 
+import com.jkojote.linear.engine.graphics2d.Vaof;
+import com.jkojote.linear.engine.graphics2d.primitives.BaseVertexShape;
 import com.jkojote.linear.engine.math.Vec3f;
 
 import java.util.ArrayList;
@@ -9,6 +11,8 @@ import static org.lwjgl.opengl.GL11.GL_QUADS;
 public class Rectangle extends BaseVertexShape {
 
     private float initialWidth, initialHeight;
+
+    private Vaof vao;
 
     public Rectangle(Vec3f translation, float width, float height) {
         initialWidth = width;

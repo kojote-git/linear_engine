@@ -1,5 +1,6 @@
-package com.jkojote.linear.engine.graphics2d.primitives;
+package com.jkojote.linear.engine.graphics2d.primitives.filled;
 
+import com.jkojote.linear.engine.graphics2d.primitives.BaseShape;
 import com.jkojote.linear.engine.math.Vec3f;
 
 import static org.lwjgl.opengl.GL11.*;

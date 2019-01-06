@@ -2,7 +2,7 @@ package com.jkojote.engine.objects;
 
 import com.jkojote.linear.engine.BaseGameObject;
 import com.jkojote.linear.engine.Movable;
-import com.jkojote.linear.engine.graphics2d.primitives.Rectangle;
+import com.jkojote.linear.engine.graphics2d.primitives.filled.Rectangle;
 import com.jkojote.linear.engine.math.Vec3f;
 
 class MovableSquare extends BaseGameObject<MovableSquare>

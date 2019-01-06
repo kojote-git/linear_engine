@@ -3,7 +3,7 @@ package com.jkojote.engine.graphics.primitives;
 import com.jkojote.linear.engine.ReleasableResource;
 import com.jkojote.linear.engine.graphics2d.Shader;
 import com.jkojote.linear.engine.graphics2d.Vaof;
-import com.jkojote.linear.engine.graphics2d.primitives.Ellipse;
+import com.jkojote.linear.engine.graphics2d.primitives.filled.Ellipse;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 
