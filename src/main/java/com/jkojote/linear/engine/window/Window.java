@@ -252,4 +252,9 @@ public final class Window implements ReleasableResource {
     public void release() {
         terminate();
     }
+
+    @Override
+    public boolean isReleased() {
+        return terminated;
+    }
 }

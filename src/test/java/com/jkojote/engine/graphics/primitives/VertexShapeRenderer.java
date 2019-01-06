@@ -24,6 +24,8 @@ public class VertexShapeRenderer implements ReleasableResource {
 
     private Shader shader;
 
+    private boolean released;
+
     public VertexShapeRenderer(Mat4f view, Mat4f proj) {
         viewProj = proj.mult(view);
     }
@@ -74,6 +76,12 @@ public class VertexShapeRenderer implements ReleasableResource {
 
     @Override
     public void release() {
+        released = true;
         shader.release();
+    }
+
+    @Override
+    public boolean isReleased() {
+        return released;
     }
 }

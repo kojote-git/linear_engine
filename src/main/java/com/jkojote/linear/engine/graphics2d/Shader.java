@@ -18,6 +18,8 @@ public final class Shader implements ReleasableResource {
 
     private int programObject;
 
+    private boolean released;
+
     private Shader(String vertex, String fragment) {
         // create vertex shader
         int vertexProg = glCreateShader(GL_VERTEX_SHADER);
@@ -114,7 +116,13 @@ public final class Shader implements ReleasableResource {
 
     @Override
     public void release() {
+        released = true;
         glUseProgram(0);
         glDeleteProgram(programObject);
+    }
+
+    @Override
+    public boolean isReleased() {
+        return released;
     }
 }

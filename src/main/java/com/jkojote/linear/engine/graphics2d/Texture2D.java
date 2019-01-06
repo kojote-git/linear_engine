@@ -28,6 +28,8 @@ public final class Texture2D implements ReleasableResource {
 
     private boolean initialized;
 
+    private boolean released;
+
     public Texture2D(String path) {
         this.path = path;
     }
@@ -99,5 +101,10 @@ public final class Texture2D implements ReleasableResource {
     @Override
     public void release() {
         glDeleteTextures(texture);
+    }
+
+    @Override
+    public boolean isReleased() {
+        return released;
     }
 }

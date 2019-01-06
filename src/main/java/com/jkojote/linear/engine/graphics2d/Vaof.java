@@ -20,6 +20,8 @@ public final class Vaof implements ReleasableResource {
 
     private int lastBuffer = -1;
 
+    private boolean released;
+
     /**
      * @param capacity max number of buffers that this vao can contain
      */
@@ -99,8 +101,14 @@ public final class Vaof implements ReleasableResource {
 
     @Override
     public void release() {
+        released = true;
         glBindVertexArray(0);
         glDeleteBuffers(buffers);
         glDeleteVertexArrays(vao);
+    }
+
+    @Override
+    public boolean isReleased() {
+        return released;
     }
 }

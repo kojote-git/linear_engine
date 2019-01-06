@@ -12,8 +12,6 @@ public class Rectangle extends BaseVertexShape {
 
     private float initialWidth, initialHeight;
 
-    private Vaof vao;
-
     public Rectangle(Vec3f translation, float width, float height) {
         initialWidth = width;
         initialHeight = height;

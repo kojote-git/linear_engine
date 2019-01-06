@@ -23,6 +23,8 @@ public class EllipseRenderer implements ReleasableResource {
 
     private static final float PI_180 = (float) Math.PI / 180;
 
+    private boolean released;
+
     private Shader shader;
 
     public EllipseRenderer(Mat4f veiw, Mat4f proj) {
@@ -67,7 +69,13 @@ public class EllipseRenderer implements ReleasableResource {
 
     @Override
     public void release() {
+        released = true;
         shader.release();
+    }
+
+    @Override
+    public boolean isReleased() {
+        return released;
     }
 
     public void init() {

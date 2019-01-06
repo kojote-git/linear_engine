@@ -9,4 +9,6 @@ public interface ReleasableResource {
      * Release resources
      */
     void release();
+
+    boolean isReleased();
 }
