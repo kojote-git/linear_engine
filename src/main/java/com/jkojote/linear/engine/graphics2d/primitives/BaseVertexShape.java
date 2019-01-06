@@ -5,7 +5,7 @@ import com.jkojote.linear.engine.math.Vec3f;
 
 import java.util.List;
 
-public abstract class BasePrimitive implements Primitive {
+public abstract class BaseVertexShape implements VertexShape {
 
     protected List<Vec3f> vertices;
 
@@ -19,7 +19,7 @@ public abstract class BasePrimitive implements Primitive {
 
     private boolean updateMatrix;
 
-    private Mat4f model;
+    private Mat4f modelMatrix;
 
     @Override
     public final List<Vec3f> vertices() {
@@ -74,12 +74,12 @@ public abstract class BasePrimitive implements Primitive {
     @Override
     public final Mat4f modelMatrix() {
         if (!updateMatrix)
-            return model;
+            return modelMatrix;
         Mat4f translate = Mat4f.translation(translation);
         Mat4f rotate = Mat4f.rotationZ(rotationAngle);
         Mat4f scale = Mat4f.scale(scaleFactor);
-        model = translate.mult(rotate).mult(scale);
+        modelMatrix = translate.mult(rotate).mult(scale);
         updateMatrix = false;
-        return model;
+        return modelMatrix;
     }
 }

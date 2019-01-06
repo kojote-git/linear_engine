@@ -1,8 +1,8 @@
 package com.jkojote.engine.objects;
 
-import com.jkojote.engine.graphics.primitives.PrimitiveRenderer;
+import com.jkojote.engine.graphics.primitives.VertexShapeRenderer;
 import com.jkojote.linear.engine.Movable;
-import com.jkojote.linear.engine.graphics2d.primitives.Primitive;
+import com.jkojote.linear.engine.graphics2d.primitives.Shape;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.window.Window;
@@ -20,11 +20,11 @@ public class GameObjectTest {
 
     private float scaleDelta = 0.1f;
 
-    private PrimitiveRenderer renderer;
+    private VertexShapeRenderer renderer;
 
     public GameObjectTest() {
         Mat4f proj = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, 0.0f, 1.0f);
-        renderer = new PrimitiveRenderer(Mat4f.identity(), proj);
+        renderer = new VertexShapeRenderer(Mat4f.identity(), proj);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class GameObjectTest {
         );
         triangle.setColor(new Vec3f(0.1f, 0.8f, 0.1f));
         Movable movable = square;
-        Primitive activePrimitive = square.getRectangle();
+        Shape activePrimitive = square.getRectangle();
         Window w = new Window("W", width, height, false, false)
             .setKeyCallback((key, action, mods) -> {
                 Vec3f prev = movable.position().copy();

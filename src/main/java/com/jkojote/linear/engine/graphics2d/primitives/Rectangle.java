@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 
-public class Rectangle extends BasePrimitive {
+public class Rectangle extends BaseVertexShape {
 
     private float initialWidth, initialHeight;
 
-    public Rectangle(Vec3f center, float width, float height) {
+    public Rectangle(Vec3f translation, float width, float height) {
         initialWidth = width;
         initialHeight = height;
         super.vertices = new ArrayList<>(4);
@@ -18,7 +18,7 @@ public class Rectangle extends BasePrimitive {
         vertices.add(new Vec3f(-width / 2,  height / 2, 0));
         vertices.add(new Vec3f( width / 2,  height / 2, 0));
         vertices.add(new Vec3f( width / 2, -height / 2, 0));
-        setTranslation(center);
+        setTranslation(translation);
         setColor(new Vec3f());
         setScaleFactor(1.0f);
         setRotationAngle(0.0f);

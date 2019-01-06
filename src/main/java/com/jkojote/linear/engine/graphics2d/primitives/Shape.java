@@ -6,17 +6,12 @@ import com.jkojote.linear.engine.math.Vec3f;
 import java.util.List;
 
 /**
- * Base interface for primitives.
+ * Base interface for shapes.
  * It allows to perform such transformations as scaling, rotation and translation on the object,
  * but it also may be decided that the primitive doesn't support some of the transformations.
  * All these transformations are combined into the matrix returned by {@link Renderable#modelMatrix()}
  */
-public interface Primitive extends Renderable {
-
-    /**
-     * @return local space coordinates for this object
-     */
-    List<Vec3f> vertices();
+public interface Shape extends Renderable {
 
     /**
      * @return color of the primitive
@@ -24,8 +19,8 @@ public interface Primitive extends Renderable {
     Vec3f color();
 
     /**
-     * Sets the color of this primitive
-     * @param color color of this primitive
+     * Sets the color of this shape
+     * @param color color of this shape
      */
     void setColor(Vec3f color);
 

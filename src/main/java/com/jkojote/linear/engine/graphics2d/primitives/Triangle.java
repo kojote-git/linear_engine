@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import static org.lwjgl.opengl.GL11.*;
 
-public class Triangle extends BasePrimitive {
+public class Triangle extends BaseVertexShape {
 
     /**
      * Creates a new triangle, which has given vertices.
