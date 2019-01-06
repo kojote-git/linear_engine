@@ -104,14 +104,6 @@ public final class Shader implements ReleasableResource {
         return true;
     }
 
-    public boolean setUniform(String name, Mat4f matrix) {
-        int location = glGetUniformLocation(programObject, name);
-        if (location == -1)
-            return false;
-        glUniformMatrix4fv(location, false, matrix.toBuffer());
-        return true;
-    }
-
     public boolean setUniform(String name, Mat4f matrix, boolean transpose) {
         int location = glGetUniformLocation(programObject, name);
         if (location == -1)

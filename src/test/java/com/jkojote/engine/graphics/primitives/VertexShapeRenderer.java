@@ -47,7 +47,7 @@ public class VertexShapeRenderer implements ReleasableResource {
         vao.addArrayBuffer(buffer, GL_STATIC_DRAW, 0, 2, 20, 0);
         vao.addArrayBuffer(buffer, GL_STATIC_DRAW, 1, 3, 20, 8);
         shader.bind();
-        shader.setUniform("viewProj", viewProj);
+        shader.setUniform("viewProj", viewProj, false);
         shader.setUniform("model", shape.modelMatrix(), true);
 
         glEnableVertexAttribArray(0);

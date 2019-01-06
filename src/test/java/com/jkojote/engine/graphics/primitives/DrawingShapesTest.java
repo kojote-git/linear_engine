@@ -114,6 +114,7 @@ public class DrawingShapesTest {
     @Test
     public void drawEllipse() {
         ShapeTransformationController controller = new ShapeTransformationController(ellipse);
+        controller.setTranslationDelta(5);
         window
             .setRenderCallback(() -> ellipseRenderer.render(ellipse))
             .setKeyCallback(controller)

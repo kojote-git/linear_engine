@@ -2,7 +2,7 @@ package com.jkojote.linear.engine.graphics2d.primitives;
 
 import com.jkojote.linear.engine.math.Vec3f;
 
-import static org.lwjgl.opengl.GL11.GL_LINE_LOOP;
+import static org.lwjgl.opengl.GL11.*;
 
 public class Ellipse extends BaseShape {
 
@@ -27,6 +27,6 @@ public class Ellipse extends BaseShape {
 
     @Override
     public int renderingMode() {
-        return GL_LINE_LOOP;
+        return GL_TRIANGLE_FAN;
     }
 }

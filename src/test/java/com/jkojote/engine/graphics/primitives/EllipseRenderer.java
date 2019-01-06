@@ -52,8 +52,8 @@ public class EllipseRenderer implements ReleasableResource {
                 .addArrayBuffer(buffer, GL_STATIC_DRAW, 0, 2, 20, 0)
                 .addArrayBuffer(buffer, GL_STATIC_DRAW, 1, 3, 20, 8);
         shader.bind();
-        shader.setUniform("viewProj", viewProj);
-        shader.setUniform("model", ellipse.modelMatrix());
+        shader.setUniform("viewProj", viewProj, false);
+        shader.setUniform("model", ellipse.modelMatrix(), true);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
 
