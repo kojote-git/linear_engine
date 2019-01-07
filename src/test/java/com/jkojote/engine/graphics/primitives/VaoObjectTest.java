@@ -1,6 +1,5 @@
 package com.jkojote.engine.graphics.primitives;
 
-import com.jkojote.linear.engine.graphics2d.primitives.filled.Polygon;
 import com.jkojote.linear.engine.graphics2d.primitives.filled.vao.PolygonVao;
 import com.jkojote.linear.engine.graphics2d.primitives.filled.vao.RectangleVao;
 import com.jkojote.linear.engine.math.Mat4f;

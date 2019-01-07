@@ -1,11 +1,12 @@
 package com.jkojote.linear.engine.graphics2d.primitives;
 
+import com.jkojote.linear.engine.graphics2d.Transformable;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 
 import java.util.List;
 
-public abstract class BaseVertexShape implements VertexShape {
+public abstract class BaseVertexShape implements VertexShape, Transformable {
 
     protected List<Vec3f> vertices;
 
@@ -17,7 +18,7 @@ public abstract class BaseVertexShape implements VertexShape {
 
     protected float rotationAngle;
 
-    private boolean updateMatrix;
+    private boolean updateMatrix = true;
 
     private Mat4f modelMatrix;
 
@@ -61,7 +62,7 @@ public abstract class BaseVertexShape implements VertexShape {
     }
 
     @Override
-    public void setRotationAngle(float rotationAngle) {
+    public final void setRotationAngle(float rotationAngle) {
         updateMatrix = true;
         this.rotationAngle = rotationAngle;
     }
@@ -73,6 +74,11 @@ public abstract class BaseVertexShape implements VertexShape {
 
     @Override
     public final Mat4f modelMatrix() {
+        return transformationMatrix();
+    }
+
+    @Override
+    public Mat4f transformationMatrix() {
         if (!updateMatrix)
             return modelMatrix;
         Mat4f translate = Mat4f.translation(translation);

@@ -1,6 +1,7 @@
 package com.jkojote.linear.engine.graphics2d.primitives.filled.vao;
 
 import com.jkojote.linear.engine.graphics2d.VaoObject;
+import com.jkojote.linear.engine.graphics2d.VaoUtils;
 import com.jkojote.linear.engine.graphics2d.Vaof;
 import com.jkojote.linear.engine.graphics2d.primitives.BaseShape;
 import com.jkojote.linear.engine.math.Vec3f;
@@ -22,6 +23,10 @@ public class RectangleVao extends BaseShape implements VaoObject {
     private boolean updateVao, vaoReleased;
 
     public RectangleVao(Vec3f translation, float width, float height) {
+        super.translation = translation;
+        super.color = new Vec3f();
+        super.scaleFactor = 1.0f;
+
         initialWidth = width;
         initialHeight = height;
         vertices = new ArrayList<>(4);
@@ -29,10 +34,6 @@ public class RectangleVao extends BaseShape implements VaoObject {
         vertices.add(new Vec3f(-width / 2,  height / 2, 0));
         vertices.add(new Vec3f( width / 2,  height / 2, 0));
         vertices.add(new Vec3f( width / 2, -height / 2, 0));
-        setTranslation(translation);
-        setColor(new Vec3f());
-        setScaleFactor(1.0f);
-        setRotationAngle(0.0f);
     }
 
     public float getInitialWidth() { return initialWidth; }

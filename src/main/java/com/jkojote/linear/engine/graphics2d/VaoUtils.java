@@ -1,4 +1,4 @@
-package com.jkojote.linear.engine.graphics2d.primitives.filled.vao;
+package com.jkojote.linear.engine.graphics2d;
 
 import com.jkojote.linear.engine.graphics2d.Vaof;
 import com.jkojote.linear.engine.math.Vec3f;

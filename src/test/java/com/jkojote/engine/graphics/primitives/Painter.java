@@ -21,6 +21,8 @@ public class Painter {
 
     private Shape shape;
 
+    private static final float MIN = 0.05f, MAX = 0.95f;
+
     public Painter(Shape shape) {
         this.shape = shape;
         colorOffsetX = (float) (Math.random() / colorOffsetFraction);
@@ -29,16 +31,16 @@ public class Painter {
     }
 
     public void updateColor() {
-        if (colorChanges > 255) {
+        if (colorChanges > 127) {
             colorChanges = 0;
             colorOffsetX = (float) (Math.random() / colorOffsetFraction);
             colorOffsetY = (float) (Math.random() / colorOffsetFraction);
             colorOffsetZ = (float) (Math.random() / colorOffsetFraction);
         }
         Vec3f color = shape.color();
-        float incX = (float) (Math.random() / 100);
-        float incY = (float) (Math.random() / 100);
-        float incZ = (float) (Math.random() / 100);
+        float incX = (float) (Math.random() / 50);
+        float incY = (float) (Math.random() / 50);
+        float incZ = (float) (Math.random() / 50);
         float x = color.getX() + incX * xColor + colorOffsetX;
         float y = color.getY() + incY * yColor + colorOffsetY;
         float z = color.getZ() + incZ * zColor + colorOffsetZ;

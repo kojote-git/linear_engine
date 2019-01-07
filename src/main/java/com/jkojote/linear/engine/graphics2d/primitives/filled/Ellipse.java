@@ -11,11 +11,10 @@ public class Ellipse extends BaseShape {
 
     public Ellipse(Vec3f translation, float xRadius, float yRadius) {
         super.translation = translation;
+        super.scaleFactor = 1.0f;
+        super.color = new Vec3f();
         this.xRadius = xRadius;
         this.yRadius = yRadius;
-        setScaleFactor(1.0f);
-        setTranslation(translation);
-        setColor(new Vec3f());
     }
 
     public float xRadius() {

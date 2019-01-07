@@ -1,6 +1,6 @@
 package com.jkojote.engine.graphics.primitives;
 
-import com.jkojote.linear.engine.graphics2d.primitives.Shape;
+import com.jkojote.linear.engine.graphics2d.Transformable;
 import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.window.KeyCallback;
 
@@ -8,7 +8,7 @@ import static org.lwjgl.glfw.GLFW.*;
 
 public class ShapeTransformationController implements KeyCallback {
 
-    private Shape shape;
+    private Transformable shape;
 
     private static final int
         ROTATE_RIGHT = 0,
@@ -25,7 +25,7 @@ public class ShapeTransformationController implements KeyCallback {
 
     private float scaleFactorDelta = 0.1f;
 
-    public ShapeTransformationController(Shape shape) {
+    public ShapeTransformationController(Transformable shape) {
         this.shape = shape;
         this.pressed = new boolean[8];
     }

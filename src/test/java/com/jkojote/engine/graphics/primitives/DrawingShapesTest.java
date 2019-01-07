@@ -137,10 +137,12 @@ public class DrawingShapesTest {
     @Test
     public void drawEllipse() {
         ShapeTransformationController controller = new ShapeTransformationController(ellipse);
+        Painter painter = new Painter(ellipse);
         controller.setTranslationDelta(5);
         window
             .setRenderCallback(() -> ellipseRenderer.render(ellipse))
             .setKeyCallback(controller)
+            .setUpdateCallback(painter::updateColor)
             .init();
         while (!window.isTerminated()) {
             window.update();
@@ -151,10 +153,12 @@ public class DrawingShapesTest {
     @Test
     public void drawPolygon() {
         ShapeTransformationController controller = new ShapeTransformationController(polygon);
+        Painter painter = new Painter(polygon);
         controller.setTranslationDelta(5);
         window
             .setRenderCallback(() -> vertexShapeRenderer.render(polygon))
             .setKeyCallback(controller)
+            .setUpdateCallback(painter::updateColor)
             .init();
         while (!window.isTerminated()) {
             window.update();

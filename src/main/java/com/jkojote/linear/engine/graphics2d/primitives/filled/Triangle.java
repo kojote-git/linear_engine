@@ -26,13 +26,13 @@ public class Triangle extends BaseVertexShape {
      */
     public Triangle(Vec3f translation, Vec3f v1, Vec3f v2, Vec3f v3) {
         super.vertices = new ArrayList<>(3);
+        super.translation = translation;
+        super.color = new Vec3f();
+        super.scaleFactor = 1.0f;
+
         vertices.add(v1);
         vertices.add(v2);
         vertices.add(v3);
-        setScaleFactor(1.0f);
-        setRotationAngle(0.0f);
-        setColor(new Vec3f());
-        setTranslation(translation);
     }
 
     /**
@@ -43,13 +43,13 @@ public class Triangle extends BaseVertexShape {
      */
     public Triangle(Vec3f v1, Vec3f v2, Vec3f v3) {
         super.vertices = new ArrayList<>(3);
+        super.translation = new Vec3f();
+        super.color = new Vec3f();
+        super.scaleFactor = 1.0f;
+
         vertices.add(v1);
         vertices.add(v2);
         vertices.add(v3);
-        setScaleFactor(1.0f);
-        setRotationAngle(0.0f);
-        setColor(new Vec3f());
-        setTranslation(new Vec3f());
     }
 
     @Override

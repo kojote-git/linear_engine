@@ -2,7 +2,7 @@ package com.jkojote.engine.objects;
 
 import com.jkojote.engine.graphics.primitives.VertexShapeRenderer;
 import com.jkojote.linear.engine.Movable;
-import com.jkojote.linear.engine.graphics2d.primitives.Shape;
+import com.jkojote.linear.engine.graphics2d.Transformable;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.window.Window;
@@ -38,7 +38,7 @@ public class GameObjectTest {
         );
         triangle.setColor(new Vec3f(0.1f, 0.8f, 0.1f));
         Movable movable = square;
-        Shape activePrimitive = square.getRectangle();
+        Transformable activePrimitive = square.getRectangle();
         Window w = new Window("W", width, height, false, false)
             .setKeyCallback((key, action, mods) -> {
                 Vec3f prev = movable.position().copy();

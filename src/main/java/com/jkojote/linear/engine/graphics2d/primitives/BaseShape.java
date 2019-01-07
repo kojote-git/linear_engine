@@ -1,9 +1,10 @@
 package com.jkojote.linear.engine.graphics2d.primitives;
 
+import com.jkojote.linear.engine.graphics2d.Transformable;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 
-public abstract class BaseShape implements Shape {
+public abstract class BaseShape implements Shape, Transformable {
 
     protected Vec3f color;
 
@@ -13,7 +14,7 @@ public abstract class BaseShape implements Shape {
 
     protected float scaleFactor;
 
-    private Mat4f modelMatrix;
+    private Mat4f transformationMatrix;
 
     private boolean updateMatrix = true;
 
@@ -68,13 +69,18 @@ public abstract class BaseShape implements Shape {
 
     @Override
     public Mat4f modelMatrix() {
+        return transformationMatrix();
+    }
+
+    @Override
+    public Mat4f transformationMatrix() {
         if (!updateMatrix)
-            return modelMatrix;
+            return transformationMatrix;
         Mat4f translate = Mat4f.translation(translation);
         Mat4f rotate = Mat4f.rotationZ(rotationAngle);
         Mat4f scale = Mat4f.scale(scaleFactor);
-        modelMatrix = translate.mult(rotate).mult(scale);
+        transformationMatrix = translate.mult(rotate).mult(scale);
         updateMatrix = false;
-        return modelMatrix;
+        return transformationMatrix;
     }
 }

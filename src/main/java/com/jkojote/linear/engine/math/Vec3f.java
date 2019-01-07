@@ -53,6 +53,13 @@ public final class Vec3f {
         return this;
     }
 
+    public Vec3f add(float x, float y, float z) {
+        this.x += x;
+        this.y += y;
+        this.z += z;
+        return this;
+    }
+
     /**
      * Subtraction of two vectors.
      * <b>Changes</b>this vector
@@ -63,6 +70,13 @@ public final class Vec3f {
         x -= other.x;
         y -= other.y;
         z -= other.z;
+        return this;
+    }
+
+    public Vec3f sub(float x, float y, float z) {
+        this.x -= x;
+        this.y -= y;
+        this.z -= z;
         return this;
     }
 

@@ -1,6 +1,7 @@
 package com.jkojote.linear.engine.graphics2d.primitives.filled.vao;
 
 import com.jkojote.linear.engine.graphics2d.VaoObject;
+import com.jkojote.linear.engine.graphics2d.VaoUtils;
 import com.jkojote.linear.engine.graphics2d.Vaof;
 import com.jkojote.linear.engine.graphics2d.primitives.BaseShape;
 import com.jkojote.linear.engine.math.Vec3f;
@@ -22,19 +23,16 @@ public class PolygonVao extends BaseShape implements VaoObject {
 
     public PolygonVao(Vec3f[] vertices) {
         this.vertices = Arrays.asList(vertices);
-        setTranslation(new Vec3f());
-        setColor(new Vec3f());
-        setScaleFactor(1.0f);
-        setRotationAngle(0);
+        super.translation = new Vec3f();
+        super.color = new Vec3f();
+        super.scaleFactor = 1.0f;
     }
 
     public PolygonVao(Vec3f translation, Vec3f color, Vec3f[] vertices) {
         this.vertices = Arrays.asList(vertices);
-        setTranslation(translation);
-        setColor(color);
-        vao = VaoUtils.createPrimitiveVao(this.vertices, color);
-        setScaleFactor(1.0f);
-        setRotationAngle(0);
+        super.translation = translation;
+        super.color = color;
+        super.scaleFactor = 1.0f;
     }
 
     @Override
