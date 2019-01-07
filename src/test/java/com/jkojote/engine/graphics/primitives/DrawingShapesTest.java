@@ -1,5 +1,6 @@
 package com.jkojote.engine.graphics.primitives;
 
+import com.jkojote.engine.graphics.TransformationController;
 import com.jkojote.linear.engine.graphics2d.primitives.*;
 import com.jkojote.linear.engine.graphics2d.primitives.filled.Ellipse;
 import com.jkojote.linear.engine.graphics2d.primitives.filled.Polygon;
@@ -96,7 +97,7 @@ public class DrawingShapesTest {
     // and scale it pressing up and down arrows
     @Test
     public void drawRectangle() {
-        ShapeTransformationController controller = new ShapeTransformationController(rectangle);
+        TransformationController controller = new TransformationController(rectangle);
         controller.setTranslationDelta(10);
         window
             .setRenderCallback(() -> vertexShapeRenderer.render(rectangle))
@@ -110,7 +111,7 @@ public class DrawingShapesTest {
 
     @Test
     public void drawLine() {
-        ShapeTransformationController controller = new ShapeTransformationController(line);
+        TransformationController controller = new TransformationController(line);
         window
             .setRenderCallback(() -> vertexShapeRenderer.render(line))
             .setKeyCallback(controller)
@@ -123,7 +124,7 @@ public class DrawingShapesTest {
 
     @Test
     public void drawTriangle() {
-        ShapeTransformationController controller = new ShapeTransformationController(triangle);
+        TransformationController controller = new TransformationController(triangle);
         window
             .setRenderCallback(() -> vertexShapeRenderer.render(triangle))
             .setKeyCallback(controller)
@@ -136,7 +137,7 @@ public class DrawingShapesTest {
 
     @Test
     public void drawEllipse() {
-        ShapeTransformationController controller = new ShapeTransformationController(ellipse);
+        TransformationController controller = new TransformationController(ellipse);
         Painter painter = new Painter(ellipse);
         controller.setTranslationDelta(5);
         window
@@ -152,7 +153,7 @@ public class DrawingShapesTest {
 
     @Test
     public void drawPolygon() {
-        ShapeTransformationController controller = new ShapeTransformationController(polygon);
+        TransformationController controller = new TransformationController(polygon);
         Painter painter = new Painter(polygon);
         controller.setTranslationDelta(5);
         window

@@ -4,7 +4,7 @@ import com.jkojote.linear.engine.ReleasableResource;
 import com.jkojote.linear.engine.graphics2d.Shader;
 import com.jkojote.linear.engine.graphics2d.Vaof;
 import com.jkojote.linear.engine.graphics2d.primitives.VertexShape;
-import com.jkojote.linear.engine.graphics2d.VaoUtils;
+import com.jkojote.linear.engine.graphics2d.GraphicsUtils;
 import com.jkojote.linear.engine.math.Mat4f;
 
 import java.io.IOException;
@@ -26,7 +26,7 @@ public class VertexShapeRenderer implements ReleasableResource {
     }
 
     public void render(VertexShape shape) {
-        Vaof vao = VaoUtils.createPrimitiveVao(shape.vertices(), shape.color());
+        Vaof vao = GraphicsUtils.createPrimitiveVao(shape.vertices(), shape.color());
         shader.bind();
         shader.setUniform("viewProj", viewProj, false);
         shader.setUniform("model", shape.modelMatrix(), true);

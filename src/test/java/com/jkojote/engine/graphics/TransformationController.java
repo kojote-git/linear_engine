@@ -1,4 +1,4 @@
-package com.jkojote.engine.graphics.primitives;
+package com.jkojote.engine.graphics;
 
 import com.jkojote.linear.engine.graphics2d.Transformable;
 import com.jkojote.linear.engine.math.Vec3f;
@@ -6,7 +6,7 @@ import com.jkojote.linear.engine.window.KeyCallback;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-public class ShapeTransformationController implements KeyCallback {
+public class TransformationController implements KeyCallback {
 
     private Transformable shape;
 
@@ -25,7 +25,7 @@ public class ShapeTransformationController implements KeyCallback {
 
     private float scaleFactorDelta = 0.1f;
 
-    public ShapeTransformationController(Transformable shape) {
+    public TransformationController(Transformable shape) {
         this.shape = shape;
         this.pressed = new boolean[8];
     }
@@ -85,16 +85,16 @@ public class ShapeTransformationController implements KeyCallback {
             if (pressed[i]) {
                 switch (i) {
                     case MOVE_LEFT:
-                        shape.setTranslation(shape.getTranslation().add(new Vec3f(-translationDelta, 0, 0)));
+                        shape.setTranslation(shape.getTranslation().add(-translationDelta, 0, 0));
                         break;
                     case MOVE_RIGHT:
-                        shape.setTranslation(shape.getTranslation().add(new Vec3f(translationDelta, 0, 0)));
+                        shape.setTranslation(shape.getTranslation().add(translationDelta, 0, 0));
                         break;
                     case MOVE_UP:
-                        shape.setTranslation(shape.getTranslation().add(new Vec3f(0, translationDelta, 0)));
+                        shape.setTranslation(shape.getTranslation().add(0, translationDelta, 0));
                         break;
                     case MOVE_DOWN:
-                        shape.setTranslation(shape.getTranslation().add(new Vec3f(0, -translationDelta, 0)));
+                        shape.setTranslation(shape.getTranslation().add(0, -translationDelta, 0));
                         break;
                     case ROTATE_RIGHT:
                         shape.setRotationAngle(shape.getRotationAngle() - rotationDelta);

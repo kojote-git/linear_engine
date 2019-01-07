@@ -1,7 +1,7 @@
 package com.jkojote.linear.engine.graphics2d.primitives.filled.vao;
 
 import com.jkojote.linear.engine.graphics2d.VaoObject;
-import com.jkojote.linear.engine.graphics2d.VaoUtils;
+import com.jkojote.linear.engine.graphics2d.GraphicsUtils;
 import com.jkojote.linear.engine.graphics2d.Vaof;
 import com.jkojote.linear.engine.graphics2d.primitives.BaseShape;
 import com.jkojote.linear.engine.math.Vec3f;
@@ -95,7 +95,7 @@ public class PolygonVao extends BaseShape implements VaoObject {
         if (updateVao) {
             if (vao != null)
                 vao.release();
-            vao = VaoUtils.createPrimitiveVao(vertices, color);
+            vao = GraphicsUtils.createPrimitiveVao(vertices, color);
             updateVao = false;
         }
     }

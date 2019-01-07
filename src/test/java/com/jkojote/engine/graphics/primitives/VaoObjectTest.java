@@ -1,5 +1,6 @@
 package com.jkojote.engine.graphics.primitives;
 
+import com.jkojote.engine.graphics.TransformationController;
 import com.jkojote.linear.engine.graphics2d.primitives.filled.vao.PolygonVao;
 import com.jkojote.linear.engine.graphics2d.primitives.filled.vao.RectangleVao;
 import com.jkojote.linear.engine.math.Mat4f;
@@ -65,7 +66,7 @@ public class VaoObjectTest {
 
     @Test
     public void drawRectangle() {
-        ShapeTransformationController controller = new ShapeTransformationController(rectangle);
+        TransformationController controller = new TransformationController(rectangle);
         Painter painter = new Painter(rectangle);
         controller.setTranslationDelta(5);
         window
@@ -81,7 +82,7 @@ public class VaoObjectTest {
 
     @Test
     public void drawPolygon() {
-        ShapeTransformationController controller = new ShapeTransformationController(polygon);
+        TransformationController controller = new TransformationController(polygon);
         Painter painter = new Painter(polygon);
         controller.setTranslationDelta(5);
         window
