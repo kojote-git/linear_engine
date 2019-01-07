@@ -1,41 +1,50 @@
 package com.jkojote.engine.graphics.texture;
 
 import com.jkojote.engine.graphics.TransformationController;
+import com.jkojote.linear.engine.ResourceInitializationException;
+import com.jkojote.linear.engine.graphics2d.Camera;
+import com.jkojote.linear.engine.graphics2d.StaticCamera;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.window.Window;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import com.jkojote.linear.engine.graphics2d.primitives.renderers.TexturedObjectRenderer;
 
 public class RenderingTexturedObjectTest {
 
     private Bird bird;
 
-    private TextureObjectRenderer renderer;
+    private TexturedObjectRenderer renderer;
 
     private Window window;
 
-    private Mat4f view;
-
     private Mat4f proj;
+
+    private Camera camera;
 
     private int width = 600, height = 600;
 
     public RenderingTexturedObjectTest() {
-        view = Mat4f.identity();
         proj = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, 0.0f, 1.0f);
+        camera = new StaticCamera();
     }
 
     @Before
     public void init() {
-        renderer = new TextureObjectRenderer(view, proj);
+        renderer = new TexturedObjectRenderer(proj);
         bird = new Bird();
         window = new Window("w", width, height, false, false)
             .setInitCallback(() -> {
-                renderer.init();
-                bird.init();
+                try {
+                    renderer.init();
+                    bird.init();
+                } catch (ResourceInitializationException e) {
+                    System.out.println(e.getMessage());
+                    e.printStackTrace();
+                    window.release();
+                }
             });
-
     }
 
     @After
@@ -53,7 +62,7 @@ public class RenderingTexturedObjectTest {
         controller.setRotationDelta(3);
         controller.setTranslationDelta(5);
         window
-            .setRenderCallback(() -> renderer.render(bird))
+            .setRenderCallback(() -> renderer.render(bird, camera))
             .setKeyCallback(controller)
             .init();
         while (!window.isTerminated()) {

@@ -1,42 +1,39 @@
-package com.jkojote.engine.graphics.texture;
+package com.jkojote.linear.engine.graphics2d.primitives.renderers;
 
+import com.jkojote.linear.engine.InitializableResource;
 import com.jkojote.linear.engine.ReleasableResource;
-import com.jkojote.linear.engine.graphics2d.Shader;
-import com.jkojote.linear.engine.graphics2d.Texture2D;
-import com.jkojote.linear.engine.graphics2d.TexturedObject;
-import com.jkojote.linear.engine.graphics2d.Vaof;
+import com.jkojote.linear.engine.ResourceInitializationException;
+import com.jkojote.linear.engine.graphics2d.*;
 import com.jkojote.linear.engine.math.Mat4f;
 
 import java.io.IOException;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 
-public class TextureObjectRenderer implements ReleasableResource {
+public class TexturedObjectRenderer implements Renderer<TexturedObject>,
+        ReleasableResource, InitializableResource {
 
-    private Mat4f viewProj;
+    private Mat4f projectionMatrix;
 
     private Shader shader;
 
-    public TextureObjectRenderer(Mat4f view, Mat4f proj) {
-        this.viewProj = proj.mult(view);
+    public TexturedObjectRenderer(Mat4f projectionMatrix) {
+        this.projectionMatrix = projectionMatrix;
     }
 
-    public void init() {
-        try {
-            shader = Shader.fromFiles(
-                "src/test/java/com/jkojote/engine/graphics/texture/vert.glsl",
-                "src/test/java/com/jkojote/engine/graphics/texture/fragm.glsl"
-            );
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void setProjectionMatrix(Mat4f projectionMatrix) {
+        if (projectionMatrix == null)
+            throw new NullPointerException("projection matrix cannot be null");
+        this.projectionMatrix = projectionMatrix;
     }
 
-    public void render(TexturedObject obj) {
+    @Override
+    @SuppressWarnings("Duplicates")
+    public void render(TexturedObject obj, Camera camera) {
         Texture2D texture = obj.getTexture();
         int
             width = texture.getWidth(),
@@ -49,11 +46,11 @@ public class TextureObjectRenderer implements ReleasableResource {
              width / 2f,  height / 2f, 0.0f,   1, 0
         };
         Vaof vao = new Vaof(2, true)
-            .addArrayBuffer(coords, GL_STATIC_DRAW, 0, 3, 20, 0)
-            .addArrayBuffer(coords, GL_STATIC_DRAW, 1, 2, 20, 12);
+                .addArrayBuffer(coords, GL_STATIC_DRAW, 0, 3, 20, 0)
+                .addArrayBuffer(coords, GL_STATIC_DRAW, 1, 2, 20, 12);
         vao.unbind();
         shader.bind();
-        shader.setUniform("viewProj", viewProj, false);
+        shader.setUniform("pv", projectionMatrix.mult(camera.viewMatrix()), false);
         shader.setUniform("model", obj.modelMatrix(), true);
         texture.bind();
         vao.bind();
@@ -69,6 +66,15 @@ public class TextureObjectRenderer implements ReleasableResource {
         vao.unbind();
         vao.release();
         shader.unbind();
+    }
+
+    @Override
+    public void init() throws ResourceInitializationException {
+        try {
+            shader = Shader.fromResources("shaders/texture/vert.glsl", "shaders/texture/fragm.glsl");
+        } catch (IOException e) {
+            throw new ResourceInitializationException(e);
+        }
     }
 
     @Override

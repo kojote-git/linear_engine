@@ -1,11 +1,16 @@
 package com.jkojote.engine.graphics.primitives;
 
 import com.jkojote.engine.graphics.TransformationController;
+import com.jkojote.linear.engine.ResourceInitializationException;
+import com.jkojote.linear.engine.graphics2d.Camera;
+import com.jkojote.linear.engine.graphics2d.StaticCamera;
 import com.jkojote.linear.engine.graphics2d.primitives.*;
 import com.jkojote.linear.engine.graphics2d.primitives.filled.Ellipse;
 import com.jkojote.linear.engine.graphics2d.primitives.filled.Polygon;
 import com.jkojote.linear.engine.graphics2d.primitives.filled.Rectangle;
 import com.jkojote.linear.engine.graphics2d.primitives.filled.Triangle;
+import com.jkojote.linear.engine.graphics2d.primitives.renderers.VertexShapeRenderer;
+import com.jkojote.linear.engine.graphics2d.primitives.renderers.EllipseRenderer;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.window.Window;
@@ -33,6 +38,8 @@ public class DrawingShapesTest {
     private int width = 400, height = 400;
 
     private Window window;
+
+    private Camera camera;
 
     public DrawingShapesTest() {
         // create rectangle
@@ -71,16 +78,21 @@ public class DrawingShapesTest {
         });
         polygon.setColor(new Vec3f(0.3f, 0.8f, 0.2f));
         Mat4f proj = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, 0.0f, 1.0f);
-        vertexShapeRenderer = new VertexShapeRenderer(Mat4f.identity(), proj);
-        ellipseRenderer = new EllipseRenderer(Mat4f.identity(), proj);
+        vertexShapeRenderer = new VertexShapeRenderer(proj);
+        ellipseRenderer = new EllipseRenderer(proj);
+        camera = new StaticCamera();
     }
 
     @Before
     public void init() {
         window = new Window("w", width, height, false, false)
             .setInitCallback(() -> {
-                vertexShapeRenderer.init();
-                ellipseRenderer.init();
+                try {
+                    vertexShapeRenderer.init();
+                    ellipseRenderer.init();
+                } catch (ResourceInitializationException e) {
+                    window.release();
+                }
             })
             .setWindowClosedCallback(() -> {
                 vertexShapeRenderer.release();
@@ -100,7 +112,7 @@ public class DrawingShapesTest {
         TransformationController controller = new TransformationController(rectangle);
         controller.setTranslationDelta(10);
         window
-            .setRenderCallback(() -> vertexShapeRenderer.render(rectangle))
+            .setRenderCallback(() -> vertexShapeRenderer.render(rectangle, camera))
             .setKeyCallback(controller)
             .init();
         while (!window.isTerminated()) {
@@ -113,7 +125,7 @@ public class DrawingShapesTest {
     public void drawLine() {
         TransformationController controller = new TransformationController(line);
         window
-            .setRenderCallback(() -> vertexShapeRenderer.render(line))
+            .setRenderCallback(() -> vertexShapeRenderer.render(line, camera))
             .setKeyCallback(controller)
             .init();
         while (!window.isTerminated()) {
@@ -126,7 +138,7 @@ public class DrawingShapesTest {
     public void drawTriangle() {
         TransformationController controller = new TransformationController(triangle);
         window
-            .setRenderCallback(() -> vertexShapeRenderer.render(triangle))
+            .setRenderCallback(() -> vertexShapeRenderer.render(triangle, camera))
             .setKeyCallback(controller)
             .init();
         while (!window.isTerminated()) {
@@ -141,7 +153,7 @@ public class DrawingShapesTest {
         Painter painter = new Painter(ellipse);
         controller.setTranslationDelta(5);
         window
-            .setRenderCallback(() -> ellipseRenderer.render(ellipse))
+            .setRenderCallback(() -> ellipseRenderer.render(ellipse, camera))
             .setKeyCallback(controller)
             .setUpdateCallback(painter::updateColor)
             .init();
@@ -157,7 +169,7 @@ public class DrawingShapesTest {
         Painter painter = new Painter(polygon);
         controller.setTranslationDelta(5);
         window
-            .setRenderCallback(() -> vertexShapeRenderer.render(polygon))
+            .setRenderCallback(() -> vertexShapeRenderer.render(polygon, camera))
             .setKeyCallback(controller)
             .setUpdateCallback(painter::updateColor)
             .init();

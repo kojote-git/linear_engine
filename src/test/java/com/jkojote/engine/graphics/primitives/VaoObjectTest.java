@@ -1,6 +1,9 @@
 package com.jkojote.engine.graphics.primitives;
 
 import com.jkojote.engine.graphics.TransformationController;
+import com.jkojote.linear.engine.ResourceInitializationException;
+import com.jkojote.linear.engine.graphics2d.Camera;
+import com.jkojote.linear.engine.graphics2d.StaticCamera;
 import com.jkojote.linear.engine.graphics2d.primitives.filled.vao.PolygonVao;
 import com.jkojote.linear.engine.graphics2d.primitives.filled.vao.RectangleVao;
 import com.jkojote.linear.engine.math.Mat4f;
@@ -9,6 +12,8 @@ import com.jkojote.linear.engine.window.Window;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.jkojote.linear.engine.graphics2d.primitives.renderers.VaoObjectRenderer;
 
 public class VaoObjectTest {
 
@@ -20,18 +25,20 @@ public class VaoObjectTest {
 
     private VaoObjectRenderer renderer;
 
-    private Mat4f view, proj;
+    private Mat4f proj;
+
+    private Camera camera;
 
     private int width = 400, height = 400;
 
     public VaoObjectTest() {
-        view = Mat4f.identity();
         proj = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, 0, 1.0f);
+        camera = new StaticCamera();
     }
 
     @Before
     public void init() {
-        renderer = new VaoObjectRenderer(view, proj);
+        renderer = new VaoObjectRenderer(proj);
         rectangle = new RectangleVao(new Vec3f(), 10, 10);
         polygon = new PolygonVao(new Vec3f[]{
             new Vec3f(-2, -5, 0),
@@ -52,7 +59,11 @@ public class VaoObjectTest {
         });
         window = new Window("w", width, height, false, false)
             .setInitCallback(() -> {
-                renderer.init();
+                try {
+                    renderer.init();
+                } catch (ResourceInitializationException e) {
+                    window.release();
+                }
             });
     }
 
@@ -70,7 +81,7 @@ public class VaoObjectTest {
         Painter painter = new Painter(rectangle);
         controller.setTranslationDelta(5);
         window
-            .setRenderCallback(() -> renderer.render(rectangle))
+            .setRenderCallback(() -> renderer.render(rectangle, camera))
             .setKeyCallback(controller)
             .setUpdateCallback(painter::updateColor)
             .init();
@@ -86,7 +97,7 @@ public class VaoObjectTest {
         Painter painter = new Painter(polygon);
         controller.setTranslationDelta(5);
         window
-            .setRenderCallback(() -> renderer.render(polygon))
+            .setRenderCallback(() -> renderer.render(polygon, camera))
             .setKeyCallback(controller)
             .setUpdateCallback(painter::updateColor)
             .init();

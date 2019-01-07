@@ -1,6 +1,8 @@
 package com.jkojote.linear.engine.window;
 
+import com.jkojote.linear.engine.InitializableResource;
 import com.jkojote.linear.engine.ReleasableResource;
+import com.jkojote.linear.engine.ResourceInitializationException;
 import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -11,7 +13,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 /**
  * Encapsulates GLFW library functionality for creating windows
  */
-public final class Window implements ReleasableResource {
+public final class Window implements ReleasableResource, InitializableResource {
 
     private long window;
 
@@ -156,14 +158,15 @@ public final class Window implements ReleasableResource {
      * Initializes the window by initializing GLFW library and callbacks that were set
      * before to the invocation of this method
      * @return this window
-     * @throws RuntimeException if the window is terminated or initialized or if GLFW library cannot be initialized
+     * @throws ResourceInitializationException if the window is terminated or initialized or if GLFW library cannot be initialized
      */
-    public Window init() {
+    @Override
+    public void init() throws ResourceInitializationException {
         if (terminated || initialized) {
-            throw new RuntimeException("window is terminated or initialized");
+            throw new ResourceInitializationException("window is terminated or initialized");
         }
         if (!glfwInit()) {
-            throw new RuntimeException("Cannot initialize GLFW library");
+            throw new ResourceInitializationException("Cannot initialize GLFW library");
         }
         if (!resizable)
             glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
@@ -177,7 +180,6 @@ public final class Window implements ReleasableResource {
         if (initCallback != null)
             initCallback.perform();
         initialized = true;
-        return this;
     }
 
     /**

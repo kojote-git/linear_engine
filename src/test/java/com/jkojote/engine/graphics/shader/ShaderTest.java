@@ -64,8 +64,8 @@ public class ShaderTest {
             .setWindowClosedCallback(() -> {
                 vao.release();
                 shader.release();
-            })
-            .init();
+            });
+        w.init();
         System.out.println("************ Shader Test ***********");
         System.out.println("Do you see black square?");
         while (!w.isTerminated()) {

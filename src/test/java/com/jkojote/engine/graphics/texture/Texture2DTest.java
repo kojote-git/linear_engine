@@ -11,7 +11,6 @@ public class Texture2DTest {
     @Test
     public void drawTexture() {
         int width = 400, height = 400;
-        float offsetX = -200, offsetY = 200;
         Texture2D t = new Texture2D("src/test/java/com/jkojote/engine/graphics/texture/bird.png");
         Window w = new Window("window", width, height, false, false)
                 .setInitCallback(t::load)
@@ -42,7 +41,8 @@ public class Texture2DTest {
                         glVertex2f(t.getWidth() / 2f, t.getHeight() / 2f);
                     glEnd();
                     t.unbind();
-                }).init();
+                });
+        w.init();
         System.out.println("************ Texture2D test ************");
         System.out.println("Is the texture being rendered right?");
         while (!w.isTerminated()) {

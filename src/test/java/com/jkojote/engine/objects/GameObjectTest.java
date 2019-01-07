@@ -1,8 +1,10 @@
 package com.jkojote.engine.objects;
 
-import com.jkojote.engine.graphics.primitives.VertexShapeRenderer;
 import com.jkojote.linear.engine.Movable;
+import com.jkojote.linear.engine.graphics2d.Camera;
+import com.jkojote.linear.engine.graphics2d.StaticCamera;
 import com.jkojote.linear.engine.graphics2d.Transformable;
+import com.jkojote.linear.engine.graphics2d.primitives.renderers.VertexShapeRenderer;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.window.Window;
@@ -22,9 +24,12 @@ public class GameObjectTest {
 
     private VertexShapeRenderer renderer;
 
+    private Camera camera;
+
     public GameObjectTest() {
         Mat4f proj = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, 0.0f, 1.0f);
-        renderer = new VertexShapeRenderer(Mat4f.identity(), proj);
+        renderer = new VertexShapeRenderer(proj);
+        camera = new StaticCamera();
     }
 
     @Test
@@ -84,11 +89,11 @@ public class GameObjectTest {
             })
             .setInitCallback(renderer::init)
             .setRenderCallback(() -> {
-                renderer.render(square.getRectangle());
-                renderer.render(triangle.getTriangle());
+                renderer.render(square.getRectangle(), camera);
+                renderer.render(triangle.getTriangle(), camera);
             })
-            .setWindowClosedCallback(renderer::release)
-            .init();
+            .setWindowClosedCallback(renderer::release);
+        w.init();
         long last = System.currentTimeMillis();
         int frames = 0;
         while (!w.isTerminated()) {

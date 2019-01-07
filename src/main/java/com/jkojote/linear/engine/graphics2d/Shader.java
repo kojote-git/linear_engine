@@ -5,7 +5,11 @@ import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.utils.FileUtils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
 
 import static org.lwjgl.opengl.GL20.*;
 
@@ -80,6 +84,18 @@ public final class Shader implements ReleasableResource {
      */
     public static Shader fromSource(String vertexShader, String fragmentShader) {
         return new Shader(vertexShader, fragmentShader);
+    }
+
+    public static Shader fromResources(String vertexShader, String fragmentShader)
+    throws IOException {
+        ClassLoader loader = Shader.class.getClassLoader();
+        URL vUrl = loader.getResource(vertexShader);
+        URL fUrl = loader.getResource(fragmentShader);
+        if (vUrl == null)
+            throw new FileNotFoundException("cannot access the resource: " + vertexShader);
+        if (fUrl == null)
+            throw new FileNotFoundException("cannot access the resource: " + fragmentShader);
+        return fromFiles(new File(vUrl.getFile()).getAbsolutePath(), new File(fUrl.getFile()).getAbsolutePath());
     }
 
     /**

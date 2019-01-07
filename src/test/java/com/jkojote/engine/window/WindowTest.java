@@ -23,7 +23,8 @@ public class WindowTest {
             })
             .setWindowClosedCallback(() -> {
                 System.out.println("window is closed");
-            }).init();
+            });
+        window.init();
         while (!window.isTerminated()) {
             Thread.sleep(1000 / 60);
             window.update();
