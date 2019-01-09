@@ -57,7 +57,7 @@ public class EllipseRenderer implements Renderer<Ellipse>, ReleasableResource, I
                 .addArrayBuffer(buffer, GL_STATIC_DRAW, 0, 2, 20, 0)
                 .addArrayBuffer(buffer, GL_STATIC_DRAW, 1, 3, 20, 8);
         shader.bind();
-        shader.setUniform("pv", projectionMatrix.mult(camera.viewMatrix()), false);
+        shader.setUniform("pv", projectionMatrix.mult(camera.viewMatrix()), true);
         shader.setUniform("model", ellipse.modelMatrix(), true);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);

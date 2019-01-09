@@ -34,7 +34,7 @@ public class VaoObjectRenderer implements Renderer<VaoObject>, ReleasableResourc
     @SuppressWarnings("Duplicates")
     public void render(VaoObject vao, Camera camera) {
         shader.bind();
-        shader.setUniform("pv", projectionMatrix.mult(camera.viewMatrix()), false);
+        shader.setUniform("pv", projectionMatrix.mult(camera.viewMatrix()), true);
         shader.setUniform("model", vao.modelMatrix(), true);
         vao.bind();
         vao.enableAttributes();

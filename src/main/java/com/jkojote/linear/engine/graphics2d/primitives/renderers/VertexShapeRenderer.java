@@ -28,7 +28,7 @@ public class VertexShapeRenderer implements Renderer<VertexShape>, ReleasableRes
     public void render(VertexShape shape, Camera camera) {
         Vaof vao = GraphicsUtils.createPrimitiveVao(shape.vertices(), shape.color());
         shader.bind();
-        shader.setUniform("pv", projectionMatrix.mult(camera.viewMatrix()), false);
+        shader.setUniform("pv", projectionMatrix.mult(camera.viewMatrix()), true);
         shader.setUniform("model", shape.modelMatrix(), true);
 
         glEnableVertexAttribArray(0);

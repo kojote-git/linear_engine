@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 
 /**
- * Represents 4x4 matrix.
+ * Represents 4x4 matrix that is stored in <b>row-major order</b>
  */
 public final class Mat4f {
 
@@ -39,10 +39,10 @@ public final class Mat4f {
 
     public static Mat4f ortho(float l, float r, float b, float t, float n, float f) {
         float[] matrix = {
-            2 / (r - l), 0, 0, -(r + l) / (r - l),
-            0, 2 / (t - b), 0, -(t + b) / (t - b),
-            0, 0, -2 / (f - n), -(f + n) / (f - n),
-            0, 0, 0, 1
+            2 / (r - l), 0, 0, 0,
+            0, 2 / (t - b), 0, 0,
+            0, 0, -2 / (f - n), 0,
+            -(r + l) / (r - l), -(t + b) / (t - b), -(f + n) / (f - n), 1
         };
         return new Mat4f(matrix);
     }
@@ -73,10 +73,12 @@ public final class Mat4f {
 
     public static Mat4f rotationZ(float angleRad) {
         Mat4f res = Mat4f.identity();
-        res.matrix[0] = (float) Math.cos(angleRad * PI_180);
-        res.matrix[1] = (float) -Math.sin(angleRad * PI_180);
-        res.matrix[4] = (float) Math.sin(angleRad * PI_180);
-        res.matrix[5] = (float) Math.cos(angleRad * PI_180);
+        float sin = (float) Math.sin(angleRad * PI_180);
+        float cos = (float) Math.cos(angleRad * PI_180);
+        res.matrix[0] = cos;
+        res.matrix[1] = -sin;
+        res.matrix[4] = sin;
+        res.matrix[5] = cos;
         return res;
     }
 
@@ -98,7 +100,6 @@ public final class Mat4f {
      * Set value in {@code i}-th row and {@code j}-th column
      * @param i row number
      * @param j column number
-     * @return value in i-th row and j-th column
      */
     public void set(int i, int j, float value) {
         if (i < 0 || i > 3)

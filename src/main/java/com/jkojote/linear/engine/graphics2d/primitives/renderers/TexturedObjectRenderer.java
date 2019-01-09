@@ -50,7 +50,7 @@ public class TexturedObjectRenderer implements Renderer<TexturedObject>,
                 .addArrayBuffer(coords, GL_STATIC_DRAW, 1, 2, 20, 12);
         vao.unbind();
         shader.bind();
-        shader.setUniform("pv", projectionMatrix.mult(camera.viewMatrix()), false);
+        shader.setUniform("pv", projectionMatrix.mult(camera.viewMatrix()), true);
         shader.setUniform("model", obj.modelMatrix(), true);
         texture.bind();
         vao.bind();

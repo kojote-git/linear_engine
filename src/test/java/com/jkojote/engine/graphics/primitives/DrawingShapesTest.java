@@ -111,8 +111,12 @@ public class DrawingShapesTest {
     public void drawRectangle() {
         TransformationController controller = new TransformationController(rectangle);
         controller.setTranslationDelta(10);
+        camera = new BoundingCamera<>(rectangle);
         window
-            .setRenderCallback(() -> vertexShapeRenderer.render(rectangle, camera))
+            .setRenderCallback(() -> {
+                vertexShapeRenderer.render(rectangle, camera);
+                ellipseRenderer.render(ellipse, camera);
+            })
             .setKeyCallback(controller)
             .init();
         while (!window.isTerminated()) {
