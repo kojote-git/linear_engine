@@ -176,6 +176,10 @@ public final class Window implements ReleasableResource, InitializableResource {
         glfwMakeContextCurrent(window);
         GL.createCapabilities();
         glClearColor(1.0f, 1.0f, 1.0f, 0);
+        // enable textures and blend function
+        glEnable(GL_TEXTURE_2D);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         initCallbacks();
         if (initCallback != null)
             initCallback.perform();

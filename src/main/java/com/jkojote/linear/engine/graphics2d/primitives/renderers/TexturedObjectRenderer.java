@@ -54,9 +54,6 @@ public class TexturedObjectRenderer implements Renderer<TexturedObject>,
         shader.setUniform("model", obj.modelMatrix(), true);
         texture.bind();
         vao.bind();
-        glEnable(GL_TEXTURE_2D);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
         glDrawArrays(GL_QUADS, 0, 4);
