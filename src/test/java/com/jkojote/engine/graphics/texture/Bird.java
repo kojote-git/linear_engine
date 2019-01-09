@@ -1,6 +1,8 @@
 package com.jkojote.engine.graphics.texture;
 
+import com.jkojote.linear.engine.InitializableResource;
 import com.jkojote.linear.engine.ReleasableResource;
+import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.GraphicsUtils;
 import com.jkojote.linear.engine.graphics2d.Texture2D;
 import com.jkojote.linear.engine.graphics2d.TexturedObject;
@@ -8,9 +10,11 @@ import com.jkojote.linear.engine.graphics2d.Transformable;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 
+import java.io.IOException;
+
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 
-public class Bird implements TexturedObject, Transformable, ReleasableResource {
+public class Bird implements TexturedObject, Transformable, ReleasableResource, InitializableResource {
 
     private Texture2D texture;
 
@@ -25,13 +29,17 @@ public class Bird implements TexturedObject, Transformable, ReleasableResource {
     private boolean updateMatrix = true;
 
     public Bird() {
-        texture = new Texture2D("src/test/java/com/jkojote/engine/graphics/texture/bird.png");
         translation = new Vec3f();
         scaleFactor = 1.0f;
     }
 
-    public void init() {
-        texture.load();
+    @Override
+    public void init() throws ResourceInitializationException {
+        try {
+            texture = new Texture2D("src/test/java/com/jkojote/engine/graphics/texture/bird.png");
+        } catch (IOException e) {
+            throw new ResourceInitializationException(e);
+        }
     }
 
     @Override

@@ -11,6 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 import com.jkojote.linear.engine.graphics2d.primitives.renderers.TexturedObjectRenderer;
 
+import java.io.IOException;
+
 public class RenderingTexturedObjectTest {
 
     private Bird bird;
@@ -31,7 +33,7 @@ public class RenderingTexturedObjectTest {
     }
 
     @Before
-    public void init() {
+    public void init() throws IOException {
         renderer = new TexturedObjectRenderer(proj);
         bird = new Bird();
         window = new Window("w", width, height, false, false)

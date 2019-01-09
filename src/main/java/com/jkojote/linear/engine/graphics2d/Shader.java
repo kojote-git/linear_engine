@@ -25,7 +25,7 @@ public final class Shader implements ReleasableResource {
     private boolean released;
 
     private Shader(String vertex, String fragment) {
-        // create vertex shader
+        // load vertex shader
         int vertexProg = glCreateShader(GL_VERTEX_SHADER);
         glShaderSource(vertexProg, vertex);
         glCompileShader(vertexProg);
@@ -33,7 +33,7 @@ public final class Shader implements ReleasableResource {
         if (vertexCompileStatus == 0) {
             throw new ShaderCreationException(glGetShaderInfoLog(vertexProg));
         }
-        // create fragment shader
+        // load fragment shader
         int fragmentProg = glCreateShader(GL_FRAGMENT_SHADER);
         glShaderSource(fragmentProg, fragment);
         glCompileShader(fragmentProg);
@@ -41,7 +41,7 @@ public final class Shader implements ReleasableResource {
         if (fragmentCompilation == 0) {
             throw new ShaderCreationException(glGetShaderInfoLog(fragmentProg));
         }
-        // create programObject object
+        // load programObject object
         programObject = glCreateProgram();
         // attach shaders and link programObject
         glAttachShader(programObject, vertexProg);

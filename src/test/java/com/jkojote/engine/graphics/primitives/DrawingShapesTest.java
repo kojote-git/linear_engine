@@ -42,22 +42,22 @@ public class DrawingShapesTest {
     private Camera camera;
 
     public DrawingShapesTest() {
-        // create rectangle
+        // load rectangle
         rectangle = new Rectangle(new Vec3f(100, 100, 0), 80, 80);
         rectangle.setColor(new Vec3f(0.5f, 0.5f, 0.5f));
-        // create ellipse
+        // load ellipse
         ellipse = new Ellipse(new Vec3f(0, 0, 0), 80, 90);
         ellipse.setColor(new Vec3f(0.5f, 0.5f, 0.5f));
-        // create triangle
+        // load triangle
         triangle = new Triangle(
                 new Vec3f(-15, -30, 0),
                 new Vec3f(0, 20, 0),
                 new Vec3f(20, -20, 0));
         triangle.setColor(new Vec3f(0.5f, 0.5f, 0.5f));
-        // create line
+        // load line
         line = new Line(50);
         line.setColor(new Vec3f(0.5f, 0.5f, 0.5f));
-        // create polygon
+        // load polygon
         // cat head
         polygon = new Polygon(new Vec3f[]{
             new Vec3f(-2, -5, 0),

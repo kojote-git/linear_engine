@@ -12,7 +12,7 @@ public class Triangle extends BaseVertexShape {
     /**
      * Creates a new triangle, which has given vertices.
      * These vertices are aligned in the object space,
-     * thus to properly create a triangle consider this fact.
+     * thus to properly load a triangle consider this fact.
      * For example, the vertices may be specified as these: <br/>
      * {@code (-0.5f, -0.5f, 0.0f)} <br/>
      * {@code ( 0.5f, -0.5f, 0.0f)} <br/>
