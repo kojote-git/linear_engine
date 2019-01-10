@@ -80,12 +80,20 @@ public class EllipseRenderer implements Renderer<Ellipse>, ReleasableResource, I
     }
 
     @Override
+    public boolean isInitialized() {
+        return shader != null;
+    }
+
+    @Override
     public void release() {
-        shader.release();
+        if (isInitialized())
+            shader.release();
     }
 
     @Override
     public boolean isReleased() {
+        if (!isInitialized())
+            return false;
         return shader.isReleased();
     }
 }

@@ -43,6 +43,11 @@ public class Bird implements TexturedObject, Transformable, ReleasableResource, 
     }
 
     @Override
+    public boolean isInitialized() {
+        return texture != null;
+    }
+
+    @Override
     public void release() {
         texture.release();
     }

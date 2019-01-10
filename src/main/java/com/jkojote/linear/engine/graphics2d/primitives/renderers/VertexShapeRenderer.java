@@ -51,6 +51,11 @@ public class VertexShapeRenderer implements Renderer<VertexShape>, ReleasableRes
         }
     }
 
+    @Override
+    public boolean isInitialized() {
+        return shader != null;
+    }
+
     public void setProjectionMatrix(Mat4f projectionMatrix) {
         if (projectionMatrix == null)
             throw new NullPointerException("projectionMatrix must not be null");
@@ -59,11 +64,14 @@ public class VertexShapeRenderer implements Renderer<VertexShape>, ReleasableRes
 
     @Override
     public void release() {
-        shader.release();
+        if (isInitialized())
+            shader.release();
     }
 
     @Override
     public boolean isReleased() {
+        if (!isInitialized())
+            return false;
         return shader.isReleased();
     }
 }

@@ -54,12 +54,20 @@ public class VaoObjectRenderer implements Renderer<VaoObject>, ReleasableResourc
     }
 
     @Override
+    public boolean isInitialized() {
+        return shader != null;
+    }
+
+    @Override
     public void release() {
+        if (isInitialized())
         shader.release();
     }
 
     @Override
     public boolean isReleased() {
+        if (!isInitialized())
+            return false;
         return shader.isReleased();
     }
 }

@@ -150,6 +150,7 @@ public final class Window implements ReleasableResource, InitializableResource {
 
     public long getWindow() { return window; }
 
+    @Override
     public boolean isInitialized() {
         return initialized;
     }
