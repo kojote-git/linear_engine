@@ -14,6 +14,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.awt.*;
+
 import static org.lwjgl.opengl.GL11.glClearColor;
 
 
@@ -51,7 +53,7 @@ public class TrueTypeFontTest {
             .setInitCallback(() -> {
                 try {
 //                    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-                    font = new TrueTypeFont(path, 16);
+                    font = new TrueTypeFont(20, Font.PLAIN, true);
                     fontTexture = new FontTexture(font);
                     renderer.init();
                     textRenderer.init();
@@ -108,7 +110,7 @@ public class TrueTypeFontTest {
         window
             .setRenderCallback(() -> {
                 Text text = new Text(font);
-                text.append("Hello World!\n Hello World!");
+                text.append("Hello World!\nHello World!\nПривет мир!\nПривет мир!");
                 textRenderer.render(text, camera);
             })
             .setKeyCallback(controller)

@@ -17,6 +17,7 @@ public final class Glyph {
         this.offsetY = offsetY;
     }
 
+
     public int getWidth() {
         return width;
     }
