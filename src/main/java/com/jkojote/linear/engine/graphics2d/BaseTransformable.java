@@ -19,6 +19,7 @@ public abstract class BaseTransformable implements Transformable {
         this.translation = translation;
         this.rotationAngle = rotationAngle;
         this.scaleFactor = scaleFactor;
+        this.updateMatrix = true;
     }
 
     @Override
@@ -34,6 +35,8 @@ public abstract class BaseTransformable implements Transformable {
 
     @Override
     public void setScaleFactor(float scaleFactor) {
+        if (scaleFactor <= 0.0f)
+            scaleFactor = 0.0f;
         updateMatrix = true;
         this.scaleFactor = scaleFactor;
     }

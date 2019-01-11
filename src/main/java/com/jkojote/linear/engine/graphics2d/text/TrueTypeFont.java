@@ -18,6 +18,8 @@ public class TrueTypeFont implements ReleasableResource {
 
     private Font font;
 
+    private int lineHeight;
+
     public TrueTypeFont(int size) {
         font = new Font(Font.MONOSPACED, Font.PLAIN, size);
         glyphs = new HashMap<>();
@@ -35,10 +37,23 @@ public class TrueTypeFont implements ReleasableResource {
         initFont(font, true);
     }
 
-    @SuppressWarnings("Duplicates")
+    public Glyph getGlyph(Character c) { return glyphs.get(c); }
+
+    public Font getFont() { return font; }
+
+    public Texture2D getTexture() { return texture; }
+
+    public int getLineHeight() { return lineHeight; }
+
     private void initFont(Font font, boolean antiAlias) {
+        BufferedImage ascii = createAtlas(font, antiAlias, 32, 256);
+        texture = new Texture2D(ascii);
+    }
+
+    @SuppressWarnings("Duplicates")
+    private BufferedImage createAtlas(Font font, boolean antiAlias, int from, int to) {
         int imageWidth = 0, imageHeight = 0;
-        for (int i = 32; i < 256; i++) {
+        for (int i = from; i < to; i++) {
             if (i == 127)
                 continue;
             char c = (char) i;
@@ -48,10 +63,11 @@ public class TrueTypeFont implements ReleasableResource {
             imageWidth += image.getWidth();
             imageHeight = Math.max(imageHeight, image.getHeight());
         }
+        lineHeight = imageHeight;
         BufferedImage finalImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = finalImage.createGraphics();
         int x = 0;
-        for (int i = 32; i < 256; i++) {
+        for (int i = from; i < to; i++) {
             if (i == 127)
                 continue;
             char c = (char) i;
@@ -66,15 +82,7 @@ public class TrueTypeFont implements ReleasableResource {
             glyphs.put(c, glyph);
         }
         g.dispose();
-        texture = new Texture2D(finalImage);
-    }
-
-    public Glyph getGlyph(Character c) {
-        return glyphs.get(c);
-    }
-
-    public Font getFont() {
-        return font;
+        return finalImage;
     }
 
     private BufferedImage createCharImage(Font font, char c, boolean antiAlias) {
@@ -97,10 +105,6 @@ public class TrueTypeFont implements ReleasableResource {
         g.drawString(String.valueOf(c), 0, metrics.getAscent());
         g.dispose();
         return image;
-    }
-
-    public Texture2D getTexture() {
-        return texture;
     }
 
     @Override

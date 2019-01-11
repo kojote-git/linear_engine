@@ -8,7 +8,6 @@ uniform mat4 model;
 
 out vec4 vertexColor;
 void main() {
-
     gl_Position = pv *  model * vec4(position, 1);
     vertexColor = vec4(color, 1);
 }
