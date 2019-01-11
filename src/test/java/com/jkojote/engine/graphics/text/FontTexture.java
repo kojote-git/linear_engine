@@ -3,20 +3,20 @@ package com.jkojote.engine.graphics.text;
 import com.jkojote.linear.engine.ReleasableResource;
 import com.jkojote.linear.engine.graphics2d.Texture2D;
 import com.jkojote.linear.engine.graphics2d.TexturedObject;
-import com.jkojote.linear.engine.graphics2d.text.TrueTypeFont;
+import com.jkojote.linear.engine.graphics2d.text.FontMap;
 import com.jkojote.linear.engine.math.Mat4f;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 
 public class FontTexture implements TexturedObject, ReleasableResource {
 
-    private TrueTypeFont font;
+    private FontMap font;
 
-    public FontTexture(TrueTypeFont font) {
+    public FontTexture(FontMap font) {
         this.font = font;
     }
 
-    public TrueTypeFont getFont() {
+    public FontMap getFont() {
         return font;
     }
 

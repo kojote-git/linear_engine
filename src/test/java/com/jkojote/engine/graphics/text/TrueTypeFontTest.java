@@ -2,13 +2,12 @@ package com.jkojote.engine.graphics.text;
 
 import com.jkojote.engine.graphics.TransformableCamera;
 import com.jkojote.engine.graphics.TransformationController;
-import com.jkojote.linear.engine.graphics2d.Camera;
-import com.jkojote.linear.engine.graphics2d.StaticCamera;
 import com.jkojote.linear.engine.graphics2d.text.Text;
 import com.jkojote.linear.engine.graphics2d.text.TextRenderer;
-import com.jkojote.linear.engine.graphics2d.text.TrueTypeFont;
+import com.jkojote.linear.engine.graphics2d.text.FontMap;
 import com.jkojote.linear.engine.graphics2d.primitives.renderers.TexturedObjectRenderer;
 import com.jkojote.linear.engine.math.Mat4f;
+import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.window.Window;
 import org.junit.After;
 import org.junit.Before;
@@ -25,12 +24,12 @@ public class TrueTypeFontTest {
 
     private TexturedObjectRenderer renderer;
 
-    private TrueTypeFont font;
+    private FontMap font;
 
     private Mat4f projectionMatrix;
 
     private String path =
-        "src/test/java/com/jkojote/engine/graphics/text/HelveticaBlack.ttf";
+        "src/test/java/com/jkojote/engine/graphics/text/HelveticaRegular.ttf";
 
     private TransformableCamera camera;
 
@@ -52,8 +51,13 @@ public class TrueTypeFontTest {
         window = new Window("w", width, height, false, false)
             .setInitCallback(() -> {
                 try {
-//                    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-                    font = new TrueTypeFont(20, Font.PLAIN, true);
+                    font = FontMap.FontMapBuilder.aFont()
+                        .fromFile(path)
+                        .withSize(20)
+                        .withStyle(Font.PLAIN)
+                        .withAntialiasingEnabled()
+                        .withFontFormat(Font.TRUETYPE_FONT)
+                        .build();
                     fontTexture = new FontTexture(font);
                     renderer.init();
                     textRenderer.init();
@@ -69,7 +73,6 @@ public class TrueTypeFontTest {
                 }
             });
     }
-
     @After
     public void release() {
         if (!renderer.isReleased()) {
@@ -84,11 +87,12 @@ public class TrueTypeFontTest {
     }
 
     @Test
-    public void test() {
+    public void drawFontTexture() {
         TransformationController controller = new TransformationController(camera);
         camera.setScaleFactor(0.2f);
         controller.setTranslationDelta(5f);
         controller.setRotationDelta(2f);
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         window
             .setRenderCallback(() -> {
                 renderer.render(fontTexture, camera);
@@ -110,6 +114,7 @@ public class TrueTypeFontTest {
         window
             .setRenderCallback(() -> {
                 Text text = new Text(font);
+                text.setTranslation(new Vec3f(0, 0, 0));
                 text.append("Hello World!\nHello World!\nПривет мир!\nПривет мир!");
                 textRenderer.render(text, camera);
             })

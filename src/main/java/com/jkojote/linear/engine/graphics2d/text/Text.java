@@ -11,11 +11,11 @@ public class Text extends BaseTransformable implements Renderable {
 
     private StringBuilder text;
 
-    private TrueTypeFont font;
+    private FontMap font;
 
     private Vec3f color;
 
-    public Text(TrueTypeFont font) {
+    public Text(FontMap font) {
         super(new Vec3f(), 0.0f, 1.0f);
         this.text = new StringBuilder();
         this.font = font;
@@ -28,11 +28,11 @@ public class Text extends BaseTransformable implements Renderable {
 
     public Vec3f getColor() { return color; }
 
-    public void setFont(TrueTypeFont font) {
+    public void setFont(FontMap font) {
         this.font = font;
     }
 
-    public TrueTypeFont getFont() {
+    public FontMap getFont() {
         return font;
     }
 

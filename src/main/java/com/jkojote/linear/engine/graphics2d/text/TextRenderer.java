@@ -30,7 +30,7 @@ public class TextRenderer implements Renderer<Text>, InitializableResource, Rele
 
     @Override
     public void render(Text text, Camera camera) {
-        TrueTypeFont font = text.getFont();
+        FontMap font = text.getFont();
         CharSequence seq = text.getSequence();
         Texture2D fontTexture = font.getTexture();
         Vec3f color = text.getColor();
@@ -74,7 +74,7 @@ public class TextRenderer implements Renderer<Text>, InitializableResource, Rele
         shader.unbind();
     }
 
-    private FloatBuffer createVbo(CharSequence seq, Vec3f color, TrueTypeFont font,
+    private FloatBuffer createVbo(CharSequence seq, Vec3f color, FontMap font,
                                   float xRatio, float yRatio, int capacity, int lines) {
         int lineHeight = font.getLineHeight();
         float colorX = color.getX(),

@@ -1,10 +1,12 @@
 package com.jkojote.linear.engine.graphics2d.text;
 
 import java.awt.*;
+import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
 
 @SuppressWarnings("Duplicates")
 public class Atlas {
@@ -82,7 +84,7 @@ public class Atlas {
         BufferedImage image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = image.createGraphics();
         if (antiAlias) {
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         }
         g.setFont(font);
         FontMetrics metrics = g.getFontMetrics();
@@ -93,6 +95,10 @@ public class Atlas {
             return null;
         image = new BufferedImage(charWidth, charHeight, BufferedImage.TYPE_INT_ARGB);
         g = image.createGraphics();
+        if (antiAlias) {
+            g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        }
+        g.setFont(font);
         g.setFont(font);
         g.setPaint(Color.WHITE);
         g.drawString(String.valueOf(c), 0, metrics.getAscent());
