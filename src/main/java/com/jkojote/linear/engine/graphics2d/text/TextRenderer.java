@@ -99,12 +99,12 @@ public class TextRenderer implements Renderer<Text>, InitializableResource, Rele
                     .put(yPosition - g.height)
                     .put(colorX).put(colorY).put(colorZ)
                     .put(g.offsetX * xRatio)
-                    .put(1);
+                    .put((g.offsetY + g.height) * yRatio);
             buffer.put(xPosition + g.width)
                     .put(yPosition - g.height)
                     .put(colorX).put(colorY).put(colorZ)
                     .put((g.offsetX + g.width) * xRatio)
-                    .put(1);
+                    .put((g.offsetY + g.height) * yRatio);
             buffer.put(xPosition + g.width)
                     .put(yPosition)
                     .put(colorX).put(colorY).put(colorZ)

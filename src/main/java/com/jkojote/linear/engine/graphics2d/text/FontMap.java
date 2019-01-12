@@ -42,14 +42,15 @@ public class FontMap implements ReleasableResource {
 
     public FontMap(Font font, boolean antiAlias) {
         this.font = font;
-        Atlas ascii = new Atlas(font, 31, 256, antiAlias);
-        Atlas unknown = new Atlas(font, 63, 64, antiAlias);
-        Atlas cyrillic = new Atlas(font, 1040, 1103);
-        Atlas combined = unknown.combine(ascii).combine(cyrillic);
-        glyphMap = combined.getGlyphsMap();
-        glyphUnknown = glyphMap.get((char)63);
-        this.texture = new Texture2D(combined.getImage(), GL_LINEAR, GL_LINEAR);
-        this.lineHeight = combined.getLineHeight();
+        // ascii
+        Atlas atlas = new Atlas(font, 31, 256, antiAlias);
+        // cyrillic
+        Atlas cyrillic = new Atlas(font, 1040, 1104, antiAlias);
+        atlas = atlas.combine(cyrillic);
+        glyphMap = atlas.getGlyphsMap();
+        glyphUnknown = glyphMap.get((char)31);
+        this.texture = new Texture2D(atlas.getImage(), GL_LINEAR, GL_LINEAR);
+        this.lineHeight = atlas.getLineHeight();
     }
 
     public Glyph getGlyph(Character c) {

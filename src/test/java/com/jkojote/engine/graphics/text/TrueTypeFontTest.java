@@ -51,15 +51,16 @@ public class TrueTypeFontTest {
         window = new Window("w", width, height, false, false)
             .setInitCallback(() -> {
                 try {
-                    font = new FontMap(new Font("Calibri", Font.PLAIN, 58));
-                    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-//                    font = FontMap.FontMapBuilder.aFont()
-//                        .fromFile(path)
-//                        .withSize(40)
-//                        .withStyle(Font.PLAIN)
-//                        .withAntialiasingEnabled()
-//                        .withFontFormat(Font.TRUETYPE_FONT)
-//                        .build();
+                    // use larger size for better font quality
+                    // it later can be scaled
+//                    font = new FontMap(new Font("Calibri", Font.PLAIN, 58));
+                    font = FontMap.FontMapBuilder.aFont()
+                        .fromFile(path)
+                        .withSize(16)
+                        .withStyle(Font.PLAIN)
+                        .withAntialiasingEnabled()
+                        .withFontFormat(Font.TRUETYPE_FONT)
+                        .build();
                     fontTexture = new FontTexture(font);
                     renderer.init();
                     textRenderer.init();
@@ -96,6 +97,7 @@ public class TrueTypeFontTest {
         controller.setRotationDelta(2f);
         window
             .setRenderCallback(() -> {
+                glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
                 renderer.render(fontTexture, camera);
             })
             .setKeyCallback(controller)

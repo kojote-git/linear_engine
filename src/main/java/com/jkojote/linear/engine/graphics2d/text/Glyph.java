@@ -33,4 +33,14 @@ public final class Glyph {
     public int getOffsetY() {
         return offsetY;
     }
+
+    @Override
+    public String toString() {
+        return "Glyph{" +
+                "width=" + width +
+                ", height=" + height +
+                ", offsetX=" + offsetX +
+                ", offsetY=" + offsetY +
+                '}';
+    }
 }
