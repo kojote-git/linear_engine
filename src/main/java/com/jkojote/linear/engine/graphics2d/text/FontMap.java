@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
+import static org.lwjgl.opengl.GL11.GL_LINEAR;
+
 public class FontMap implements ReleasableResource {
 
     private Glyph glyphUnknown;
@@ -40,13 +42,13 @@ public class FontMap implements ReleasableResource {
 
     public FontMap(Font font, boolean antiAlias) {
         this.font = font;
-        Atlas ascii = new Atlas(font, 0, 256, antiAlias);
+        Atlas ascii = new Atlas(font, 31, 256, antiAlias);
         Atlas unknown = new Atlas(font, 63, 64, antiAlias);
-        Atlas cyrillic = new Atlas(font, 1024, 1279);
+        Atlas cyrillic = new Atlas(font, 1040, 1103);
         Atlas combined = unknown.combine(ascii).combine(cyrillic);
         glyphMap = combined.getGlyphsMap();
         glyphUnknown = glyphMap.get((char)63);
-        this.texture = new Texture2D(combined.getImage());
+        this.texture = new Texture2D(combined.getImage(), GL_LINEAR, GL_LINEAR);
         this.lineHeight = combined.getLineHeight();
     }
 

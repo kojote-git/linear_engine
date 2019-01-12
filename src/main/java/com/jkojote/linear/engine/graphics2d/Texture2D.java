@@ -39,6 +39,11 @@ public final class Texture2D implements ReleasableResource {
     public Texture2D(File file) throws IOException, NoContextSetException {
         this(ImageIO.read(file));
     }
+
+    public Texture2D(File file, int minFilter, int magFilter) throws IOException, NoContextSetException {
+        this(ImageIO.read(file), minFilter, magFilter);
+    }
+
     /**
      * Load texture from the file located by given path
      * @param path path where is the texture located
@@ -47,6 +52,10 @@ public final class Texture2D implements ReleasableResource {
      */
     public Texture2D(String path) throws IOException, NoContextSetException {
         this(new File(path));
+    }
+
+    public Texture2D(String path, int minFilter, int magFilter) throws IOException, NoContextSetException {
+        this(new File(path), minFilter, magFilter);
     }
 
     /**
@@ -59,6 +68,10 @@ public final class Texture2D implements ReleasableResource {
         this(ImageIO.read(in));
     }
 
+    public Texture2D(InputStream in, int minFilter, int magFilter) throws IOException, NoContextSetException {
+        this(ImageIO.read(in), minFilter, magFilter);
+    }
+
     /**
      * Converts given image so that it can be rendered by means of OpenGL
      * @param image source image
@@ -67,10 +80,16 @@ public final class Texture2D implements ReleasableResource {
     public Texture2D(BufferedImage image) throws NoContextSetException {
         if (glfwGetCurrentContext() == NULL)
             throw new NoContextSetException();
-        this.texture = load(image);
+        this.texture = load(image, GL_NEAREST, GL_NEAREST);
     }
 
-    private int load(BufferedImage image) {
+    public Texture2D(BufferedImage image, int minFilter, int magFilter) {
+        if (glfwGetCurrentContext() == NULL)
+            throw new NoContextSetException();
+        this.texture = load(image, minFilter, magFilter);
+    }
+
+    private int load(BufferedImage image, int minFilter, int magFilter) {
         width = image.getWidth();
         height = image.getHeight();
         int[] pixels = image.getRGB(0, 0, width, height, null, 0, width);
@@ -85,11 +104,10 @@ public final class Texture2D implements ReleasableResource {
             }
         }
         buffer.flip();
-        wglGetCurrentContext();
         int id = glGenTextures();
         glBindTexture(GL_TEXTURE_2D, id);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
         glBindTexture(GL_TEXTURE_2D, 0);
         return id;

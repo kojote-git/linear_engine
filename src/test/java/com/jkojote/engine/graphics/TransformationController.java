@@ -45,6 +45,20 @@ public class TransformationController implements KeyCallback {
     @Override
     public void perform(int key, int action, int mods) {
         if (action == GLFW_PRESS) {
+            if (key == GLFW_KEY_Z && mods == GLFW_KEY_LEFT_CONTROL) {
+                scaleFactorDelta -= 0.1f;
+                return;
+            } else if (key == GLFW_KEY_Z) {
+                scaleFactorDelta += 0.1f;
+                return;
+            }
+            if (key == GLFW_KEY_X && mods == GLFW_KEY_LEFT_CONTROL) {
+                translationDelta -= 0.8f;
+                return;
+            } else if (key == GLFW_KEY_X) {
+                translationDelta += 0.8f;
+                return;
+            }
             int actionPressed = translateKey(key);
             if (actionPressed == -1)
                 return;
