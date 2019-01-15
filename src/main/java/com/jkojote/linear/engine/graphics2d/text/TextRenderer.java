@@ -30,7 +30,7 @@ public class TextRenderer implements Renderer<Text>, InitializableResource, Rele
 
     @Override
     public void render(Text text, Camera camera) {
-        FontMap font = text.getFont();
+        FontMap font = text.getFontMap();
         CharSequence seq = text.getSequence();
         Texture2D fontTexture = font.getTexture();
         Vec3f color = text.getColor();
@@ -91,25 +91,25 @@ public class TextRenderer implements Renderer<Text>, InitializableResource, Rele
             }
             Glyph g = font.getGlyph(c);
             buffer.put(xPosition)
-                    .put(yPosition)
+                    .put(yPosition - g.height)
                     .put(colorX).put(colorY).put(colorZ)
                     .put(g.offsetX * xRatio)
-                    .put(g.offsetY * yRatio);
+                    .put((g.offsetY + g.height) * yRatio);
             buffer.put(xPosition)
-                    .put(yPosition - g.height)
+                    .put(yPosition)
                     .put(colorX).put(colorY).put(colorZ)
                     .put(g.offsetX * xRatio)
-                    .put((g.offsetY + g.height) * yRatio);
-            buffer.put(xPosition + g.width)
-                    .put(yPosition - g.height)
-                    .put(colorX).put(colorY).put(colorZ)
-                    .put((g.offsetX + g.width) * xRatio)
-                    .put((g.offsetY + g.height) * yRatio);
+                    .put(g.offsetY * yRatio);
             buffer.put(xPosition + g.width)
                     .put(yPosition)
                     .put(colorX).put(colorY).put(colorZ)
                     .put((g.offsetX + g.width) * xRatio)
                     .put(g.offsetY * yRatio);
+            buffer.put(xPosition + g.width)
+                    .put(yPosition - g.height)
+                    .put(colorX).put(colorY).put(colorZ)
+                    .put((g.offsetX + g.width) * xRatio)
+                    .put((g.offsetY + g.height) * yRatio);
             xPosition += g.width;
         }
         buffer.flip();

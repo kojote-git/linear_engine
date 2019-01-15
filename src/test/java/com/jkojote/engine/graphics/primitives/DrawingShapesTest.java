@@ -1,6 +1,7 @@
 package com.jkojote.engine.graphics.primitives;
 
 import com.jkojote.engine.graphics.TransformationController;
+import com.jkojote.engine.graphics.LoopRunner;
 import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.Camera;
 import com.jkojote.linear.engine.graphics2d.StaticCamera;
@@ -110,6 +111,7 @@ public class DrawingShapesTest {
     @Test
     public void drawRectangle() {
         TransformationController controller = new TransformationController(rectangle);
+        LoopRunner runner = new LoopRunner(window);
         controller.setTranslationDelta(10);
         camera = new BoundingCamera<>(rectangle);
         window
@@ -118,11 +120,9 @@ public class DrawingShapesTest {
                 ellipseRenderer.render(ellipse, camera);
             })
             .setKeyCallback(controller)
+            .setUpdateCallback(controller::update)
             .init();
-        while (!window.isTerminated()) {
-            window.update();
-            controller.update();
-        }
+        runner.run();
     }
 
     @Test
@@ -141,45 +141,46 @@ public class DrawingShapesTest {
     @Test
     public void drawTriangle() {
         TransformationController controller = new TransformationController(triangle);
+        LoopRunner runner = new LoopRunner(window);
         window
             .setRenderCallback(() -> vertexShapeRenderer.render(triangle, camera))
             .setKeyCallback(controller)
+            .setUpdateCallback(controller::update)
             .init();
-        while (!window.isTerminated()) {
-            window.update();
-            controller.update();
-        }
+        runner.run();
     }
 
     @Test
     public void drawEllipse() {
         TransformationController controller = new TransformationController(ellipse);
         Painter painter = new Painter(ellipse);
+        LoopRunner runner = new LoopRunner(window);
         controller.setTranslationDelta(5);
         window
             .setRenderCallback(() -> ellipseRenderer.render(ellipse, camera))
             .setKeyCallback(controller)
-            .setUpdateCallback(painter::updateColor)
+            .setUpdateCallback(() -> {
+                painter.updateColor();
+                controller.update();
+            })
             .init();
-        while (!window.isTerminated()) {
-            window.update();
-            controller.update();
-        }
+        runner.run();
     }
 
     @Test
     public void drawPolygon() {
         TransformationController controller = new TransformationController(polygon);
+        LoopRunner runner = new LoopRunner(window);
         Painter painter = new Painter(polygon);
-        controller.setTranslationDelta(5);
+        controller.setTranslationDelta(5f);
         window
             .setRenderCallback(() -> vertexShapeRenderer.render(polygon, camera))
             .setKeyCallback(controller)
-            .setUpdateCallback(painter::updateColor)
+            .setUpdateCallback(() -> {
+                controller.update();
+                painter.updateColor();
+            })
             .init();
-        while (!window.isTerminated()) {
-            window.update();
-            controller.update();
-        }
+        runner.run();
     }
 }

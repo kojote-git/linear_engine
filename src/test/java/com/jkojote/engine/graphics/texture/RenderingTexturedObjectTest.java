@@ -1,5 +1,6 @@
 package com.jkojote.engine.graphics.texture;
 
+import com.jkojote.engine.graphics.LoopRunner;
 import com.jkojote.engine.graphics.TransformationController;
 import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.Camera;
@@ -59,6 +60,7 @@ public class RenderingTexturedObjectTest {
     @Test
     public void renderTexture() {
         TransformationController controller = new TransformationController(bird);
+        LoopRunner runner = new LoopRunner(window);
         bird.setScaleFactor(0.2f);
         controller.setScaleFactorDelta(0.01f);
         controller.setRotationDelta(3);
@@ -66,10 +68,8 @@ public class RenderingTexturedObjectTest {
         window
             .setRenderCallback(() -> renderer.render(bird, camera))
             .setKeyCallback(controller)
+            .setUpdateCallback(controller::update)
             .init();
-        while (!window.isTerminated()) {
-            window.update();
-            controller.update();
-        }
+        runner.run();
     }
 }

@@ -1,6 +1,7 @@
 package com.jkojote.engine.graphics.primitives;
 
 import com.jkojote.engine.graphics.TransformationController;
+import com.jkojote.engine.graphics.LoopRunner;
 import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.Camera;
 import com.jkojote.linear.engine.graphics2d.StaticCamera;
@@ -79,32 +80,34 @@ public class VaoObjectTest {
     public void drawRectangle() {
         TransformationController controller = new TransformationController(rectangle);
         Painter painter = new Painter(rectangle);
+        LoopRunner runner = new LoopRunner(window);
         controller.setTranslationDelta(5);
         window
             .setRenderCallback(() -> renderer.render(rectangle, camera))
             .setKeyCallback(controller)
-            .setUpdateCallback(painter::updateColor)
+            .setUpdateCallback(() -> {
+                controller.update();
+                painter.updateColor();
+            })
             .init();
-        while (!window.isTerminated()) {
-            window.update();
-            controller.update();
-        }
+        runner.run();
     }
 
     @Test
     public void drawPolygon() {
         TransformationController controller = new TransformationController(polygon);
+        LoopRunner runner = new LoopRunner(window);
         Painter painter = new Painter(polygon);
         controller.setTranslationDelta(5);
         window
             .setRenderCallback(() -> renderer.render(polygon, camera))
             .setKeyCallback(controller)
-            .setUpdateCallback(painter::updateColor)
+            .setUpdateCallback(() -> {
+                painter.updateColor();
+                controller.update();
+            })
             .init();
-        while (!window.isTerminated()) {
-            window.update();
-            controller.update();
-        }
+        runner.run();
     }
 
 }

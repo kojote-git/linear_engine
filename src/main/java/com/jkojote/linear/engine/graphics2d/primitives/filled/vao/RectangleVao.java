@@ -20,7 +20,7 @@ public class RectangleVao extends BaseShape implements VaoObject {
 
     private Vaof vaof;
 
-    private boolean updateVao, vaoReleased;
+    private boolean updateVao = true, vaoReleased;
 
     public RectangleVao(Vec3f translation, float width, float height) {
         super.translation = translation;

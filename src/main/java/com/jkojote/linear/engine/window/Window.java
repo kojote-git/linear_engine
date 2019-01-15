@@ -226,19 +226,20 @@ public final class Window implements ReleasableResource, InitializableResource {
      * Does nothing if the window has been already terminated.
      */
     public void update() {
+        glfwPollEvents();
         if (glfwWindowShouldClose(window)) {
             terminate();
             return;
         }
-        if (terminated)
-            return;
         if (updateCallback != null)
             updateCallback.perform();
+    }
+
+    public void render() {
         glClear(GL_COLOR_BUFFER_BIT);
         if (renderCallback != null)
             renderCallback.perform();
         glfwSwapBuffers(window);
-        glfwPollEvents();
     }
 
     /**
