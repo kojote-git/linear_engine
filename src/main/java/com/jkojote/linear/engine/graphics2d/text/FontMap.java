@@ -12,6 +12,12 @@ import java.util.Map;
 
 import static org.lwjgl.opengl.GL11.GL_LINEAR;
 
+/**
+ * This class represents the idea of bitmap font - it contains the texture (atlas) with the glyphs and mappings for each glyph.
+ * It also has several overloaded constructors to choose convenient way to create FontMap.<br/>
+ * <b>Important:</b> due to the fact that it implements {@link InitializableResource} and {@link ReleasableResource},
+ * one needs to call {@link FontMap#init()} method to initialize this font and {@link FontMap#release()} to release resources.
+ */
 public class FontMap implements ReleasableResource, InitializableResource {
 
     private Glyph glyphUnknown;
@@ -46,19 +52,37 @@ public class FontMap implements ReleasableResource, InitializableResource {
         this(font, true);
     }
 
+    /**
+     * Creates font map of given font
+     * @param font font from which map is created
+     * @param antiAlias enable antialiasing
+     */
     public FontMap(Font font, boolean antiAlias) {
         this.font = font;
         this.antiAliasEnabled = antiAlias;
     }
 
+    /**
+     * Glyph has specific information about location of the glyph that represents character {@code c}
+     * on the font map
+     * @param c character represented by glyph
+     * @return glyph for this character
+     * @see Glyph
+     */
     public Glyph getGlyph(Character c) {
         return glyphMap.getOrDefault(c, glyphUnknown);
     }
 
     public Font getFont() { return font; }
 
+    /**
+     * @return texture that contains all glyphs for this font map
+     */
     public Texture2D getTexture() { return texture; }
 
+    /**
+     * @return line height
+     */
     public int getLineHeight() { return lineHeight; }
 
     @Override
