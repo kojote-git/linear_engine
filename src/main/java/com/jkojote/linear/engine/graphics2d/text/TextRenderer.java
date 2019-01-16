@@ -81,7 +81,7 @@ public class TextRenderer implements Renderer<Text>, InitializableResource, Rele
               colorY = color.getY(),
               colorZ = color.getZ();
         FloatBuffer buffer = ByteBuffer.allocateDirect(capacity).order(ByteOrder.nativeOrder()).asFloatBuffer();
-        float xPosition = 0, yPosition = lines * lineHeight / 2f;
+        float xPosition = 0, yPosition = 0;
         for (int i = 0; i < seq.length(); i++) {
             char c = seq.charAt(i);
             if (c == '\n') {

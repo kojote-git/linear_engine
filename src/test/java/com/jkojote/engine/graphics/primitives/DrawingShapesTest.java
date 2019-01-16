@@ -1,9 +1,9 @@
 package com.jkojote.engine.graphics.primitives;
 
+import com.jkojote.engine.graphics.TransformableCamera;
 import com.jkojote.engine.graphics.TransformationController;
 import com.jkojote.engine.graphics.LoopRunner;
 import com.jkojote.linear.engine.ResourceInitializationException;
-import com.jkojote.linear.engine.graphics2d.Camera;
 import com.jkojote.linear.engine.graphics2d.StaticCamera;
 import com.jkojote.linear.engine.graphics2d.primitives.*;
 import com.jkojote.linear.engine.graphics2d.primitives.filled.Ellipse;
@@ -18,6 +18,8 @@ import com.jkojote.linear.engine.window.Window;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.lwjgl.opengl.GL11.*;
 
 
 public class DrawingShapesTest {
@@ -36,11 +38,13 @@ public class DrawingShapesTest {
 
     private EllipseRenderer ellipseRenderer;
 
-    private int width = 400, height = 400;
+    private int width = 600, height = 600;
 
     private Window window;
 
-    private Camera camera;
+    private TransformableCamera transformableCamera;
+
+    private StaticCamera staticCamera;
 
     public DrawingShapesTest() {
         // load rectangle
@@ -81,11 +85,12 @@ public class DrawingShapesTest {
         Mat4f proj = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, 0.0f, 1.0f);
         vertexShapeRenderer = new VertexShapeRenderer(proj);
         ellipseRenderer = new EllipseRenderer(proj);
-        camera = new StaticCamera();
     }
 
     @Before
     public void init() {
+        staticCamera = new StaticCamera();
+        transformableCamera = new TransformableCamera();
         window = new Window("w", width, height, false, false)
             .setInitCallback(() -> {
                 try {
@@ -94,6 +99,9 @@ public class DrawingShapesTest {
                 } catch (ResourceInitializationException e) {
                     window.release();
                 }
+                System.out.println("GL_VENDOR: " + glGetString(GL_VENDOR));
+                System.out.println("GL_VERSION" + glGetString(GL_VERSION));
+                System.out.println("GL_RENDERER: " + glGetString(GL_RENDERER));
             })
             .setWindowClosedCallback(() -> {
                 vertexShapeRenderer.release();
@@ -113,7 +121,7 @@ public class DrawingShapesTest {
         TransformationController controller = new TransformationController(rectangle);
         LoopRunner runner = new LoopRunner(window);
         controller.setTranslationDelta(10);
-        camera = new BoundingCamera<>(rectangle);
+        BoundingCamera camera = new BoundingCamera<>(rectangle);
         window
             .setRenderCallback(() -> {
                 vertexShapeRenderer.render(rectangle, camera);
@@ -129,7 +137,7 @@ public class DrawingShapesTest {
     public void drawLine() {
         TransformationController controller = new TransformationController(line);
         window
-            .setRenderCallback(() -> vertexShapeRenderer.render(line, camera))
+            .setRenderCallback(() -> vertexShapeRenderer.render(line, staticCamera))
             .setKeyCallback(controller)
             .init();
         while (!window.isTerminated()) {
@@ -143,7 +151,7 @@ public class DrawingShapesTest {
         TransformationController controller = new TransformationController(triangle);
         LoopRunner runner = new LoopRunner(window);
         window
-            .setRenderCallback(() -> vertexShapeRenderer.render(triangle, camera))
+            .setRenderCallback(() -> vertexShapeRenderer.render(triangle, staticCamera))
             .setKeyCallback(controller)
             .setUpdateCallback(controller::update)
             .init();
@@ -157,7 +165,7 @@ public class DrawingShapesTest {
         LoopRunner runner = new LoopRunner(window);
         controller.setTranslationDelta(5);
         window
-            .setRenderCallback(() -> ellipseRenderer.render(ellipse, camera))
+            .setRenderCallback(() -> ellipseRenderer.render(ellipse, staticCamera))
             .setKeyCallback(controller)
             .setUpdateCallback(() -> {
                 painter.updateColor();
@@ -174,7 +182,7 @@ public class DrawingShapesTest {
         Painter painter = new Painter(polygon);
         controller.setTranslationDelta(5f);
         window
-            .setRenderCallback(() -> vertexShapeRenderer.render(polygon, camera))
+            .setRenderCallback(() -> vertexShapeRenderer.render(polygon, staticCamera))
             .setKeyCallback(controller)
             .setUpdateCallback(() -> {
                 controller.update();

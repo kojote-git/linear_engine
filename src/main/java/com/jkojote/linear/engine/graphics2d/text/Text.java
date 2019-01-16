@@ -61,6 +61,10 @@ public class Text extends BaseTransformable implements Renderable {
         return this;
     }
 
+    public int length() {
+        return text.length();
+    }
+
     public CharSequence getSequence() {
         return text;
     }

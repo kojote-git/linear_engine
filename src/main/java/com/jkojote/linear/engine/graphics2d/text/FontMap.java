@@ -1,6 +1,8 @@
 package com.jkojote.linear.engine.graphics2d.text;
 
+import com.jkojote.linear.engine.InitializableResource;
 import com.jkojote.linear.engine.ReleasableResource;
+import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.Texture2D;
 
 import java.awt.*;
@@ -10,7 +12,7 @@ import java.util.Map;
 
 import static org.lwjgl.opengl.GL11.GL_LINEAR;
 
-public class FontMap implements ReleasableResource {
+public class FontMap implements ReleasableResource, InitializableResource {
 
     private Glyph glyphUnknown;
 
@@ -21,6 +23,10 @@ public class FontMap implements ReleasableResource {
     private Font font;
 
     private int lineHeight;
+
+    private boolean initialized;
+
+    private boolean antiAliasEnabled;
 
     public FontMap(int size) {
         this(size, Font.PLAIN, true);
@@ -42,15 +48,7 @@ public class FontMap implements ReleasableResource {
 
     public FontMap(Font font, boolean antiAlias) {
         this.font = font;
-        // ascii
-        Atlas atlas = new Atlas(font, 31, 256, antiAlias);
-        // cyrillic
-        Atlas cyrillic = new Atlas(font, 1040, 1104, antiAlias);
-        atlas = atlas.combine(cyrillic);
-        glyphMap = atlas.getGlyphsMap();
-        glyphUnknown = glyphMap.get((char)31);
-        this.texture = new Texture2D(atlas.getImage(), GL_LINEAR, GL_LINEAR);
-        this.lineHeight = atlas.getLineHeight();
+        this.antiAliasEnabled = antiAlias;
     }
 
     public Glyph getGlyph(Character c) {
@@ -71,6 +69,25 @@ public class FontMap implements ReleasableResource {
     @Override
     public boolean isReleased() {
         return texture.isReleased();
+    }
+
+    @Override
+    public void init() throws ResourceInitializationException {
+        initialized = true;
+        // ascii
+        Atlas atlas = new Atlas(font, 0, 256, antiAliasEnabled);
+        // cyrillic
+        Atlas cyrillic = new Atlas(font, 1040, 1104, antiAliasEnabled);
+        atlas = atlas.combine(cyrillic);
+        glyphMap = atlas.getGlyphsMap();
+        glyphUnknown = glyphMap.get((char)31);
+        this.texture = new Texture2D(atlas.getImage(), GL_LINEAR, GL_LINEAR);
+        this.lineHeight = atlas.getLineHeight();
+    }
+
+    @Override
+    public boolean isInitialized() {
+        return initialized;
     }
 
 

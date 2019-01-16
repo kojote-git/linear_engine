@@ -87,6 +87,34 @@ public class Atlas {
     /* creates buffered image for given character using given font
      */
     private BufferedImage createCharImage(Font font, char c, boolean antiAlias) {
+        FontMetrics metrics = getMetrics(font, antiAlias);
+        int charWidth, charHeight;
+        String drawn;
+        if (c == '\t') {
+            charWidth = metrics.charWidth(' ') * 4 + 2;
+            drawn = "    ";
+        } else {
+            charWidth = metrics.charWidth(c) + 2;
+            drawn = String.valueOf(c);
+        }
+        if (charWidth == 0)
+            return null;
+        charHeight = metrics.getHeight() + 2;
+        BufferedImage image = new BufferedImage(charWidth, charHeight, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = image.createGraphics();
+        if (antiAlias) {
+            g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        }
+        g.setFont(font);
+        g.setFont(font);
+        g.setPaint(Color.WHITE);
+        g.drawString(drawn, 1, metrics.getAscent() + 1);
+        g.dispose();
+        return image;
+    }
+
+
+    private FontMetrics getMetrics(Font font, boolean antiAlias) {
         BufferedImage image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = image.createGraphics();
         if (antiAlias) {
@@ -95,21 +123,7 @@ public class Atlas {
         g.setFont(font);
         FontMetrics metrics = g.getFontMetrics();
         g.dispose();
-        int charWidth = metrics.charWidth(c);
-        int charHeight = metrics.getHeight();
-        if (charWidth == 0)
-            return null;
-        image = new BufferedImage(charWidth, charHeight, BufferedImage.TYPE_INT_ARGB);
-        g = image.createGraphics();
-        if (antiAlias) {
-            g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        }
-        g.setFont(font);
-        g.setFont(font);
-        g.setPaint(Color.WHITE);
-        g.drawString(String.valueOf(c), 0, metrics.getAscent());
-        g.dispose();
-        return image;
+        return metrics;
     }
 
     /**

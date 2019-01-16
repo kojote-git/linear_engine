@@ -2,17 +2,27 @@ package com.jkojote.engine.graphics;
 
 import com.jkojote.linear.engine.window.Window;
 
+
 public class LoopRunner implements Runnable {
 
     private Window window;
+
+    private FpsCallback onFps;
 
     public LoopRunner(Window window) {
         this.window = window;
     }
 
+    public LoopRunner(Window window, FpsCallback onFps) {
+        this.window = window;
+        this.onFps = onFps;
+    }
+
     @Override
     public void run() {
-        double amountOfTicks = 120.0;
+        if (onFps == null)
+            onFps = System.out::println;
+        double amountOfTicks = 75.0;
         double lastTime = System.nanoTime();
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;
@@ -30,7 +40,7 @@ public class LoopRunner implements Runnable {
             frames++;
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                System.out.println("FPS: " + frames);
+                onFps.apply(frames);
                 frames = 0;
             }
         }

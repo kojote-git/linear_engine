@@ -17,7 +17,7 @@ public class PolygonVao extends BaseShape implements VaoObject {
 
     private Vaof vao;
 
-    private boolean updateVao, vaoReleased;
+    private boolean updateVao = true, vaoReleased;
 
     private List<Vec3f> vertices;
 

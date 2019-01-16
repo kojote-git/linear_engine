@@ -30,7 +30,7 @@ public class FontMapTest {
     private Mat4f projectionMatrix;
 
     private String path =
-        "src/test/java/com/jkojote/engine/graphics/text/HelveticaRegular.ttf";
+        "src/test/java/com/jkojote/engine/graphics/text/Cousine-Regular.ttf";
 
     private TransformableCamera transformableCamera;
 
@@ -60,17 +60,19 @@ public class FontMapTest {
                 try {
                     // use larger size for better font quality
                     // it later can be scaled
-//                    font = new FontMap(new Font("Calibri", Font.PLAIN, 58));
+//                    font = new FontMap(new Font("Calibri", Font.BOLD, 32), false);
                     font = FontMap.FontMapBuilder.aFont()
                         .fromFile(path)
-                        .withSize(72)
+                        .withSize(128)
                         .withStyle(Font.PLAIN)
                         .withAntialiasingEnabled()
                         .withFontFormat(Font.TRUETYPE_FONT)
                         .build();
                     fontTexture = new FontTexture(font);
                     text.setFontMap(font);
-                    text.append("Hello World!\nHello World!\nПривет мир!\nПривет мир!");
+                    text.append("Hello World!\n\tHello World!\nПривет мир!\nПривет мир!");
+
+                    font.init();
                     renderer.init();
                     textRenderer.init();
                 } catch (Exception e) {
@@ -118,7 +120,7 @@ public class FontMapTest {
 
     @Test
     public void drawText() {
-        TransformationController controller = new TransformationController(text);
+        TransformationController controller = new TransformationController(transformableCamera);
         LoopRunner runner = new LoopRunner(window);
         transformableCamera.setScaleFactor(1.0f);
         controller.setTranslationDelta(5f);
@@ -126,7 +128,7 @@ public class FontMapTest {
         controller.setScaleFactorDelta(0.01f);
         window
             .setRenderCallback(() -> {
-                textRenderer.render(text, staticCamera);
+                textRenderer.render(text, transformableCamera);
             })
             .setKeyCallback(controller)
             .setUpdateCallback(controller::update)
