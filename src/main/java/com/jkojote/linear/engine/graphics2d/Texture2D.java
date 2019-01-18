@@ -14,9 +14,36 @@ import static org.lwjgl.glfw.GLFW.glfwGetCurrentContext;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
+import org.lwjgl.opengl.GL11;
+
 /**
+ * <p>
  * Represents 2D texture that can be rendered by means of OpenGL.
  * GL context need to be set before the texture is created.
+ * </p><br/>
+ *
+ * <p>
+ * To draw a texture, first of all bind it to the rendering context by {@link #bind()} method.
+ * Then specify mapping between local space coordinates and texture coordinates. This can be done in several ways:
+ * <ul style="margin: 5px">
+ *   <li>using approach with vertex buffer objects (VBO)</li>
+ *   <li>
+ *     using approach with calling {@link GL11#glTexCoord2f(float, float)}
+ *     and {@link GL11#glTexCoord2f(float, float)}
+ *   </li>
+ * </ul>
+ * The second approach is considered as deprecated.
+ * </p><br/>
+ *
+ * <p>
+ * After mapping, call one of the drawing methods, such as {@link GL11#glDrawArrays(int, int, int)} to finally draw
+ * the texture. Next unbind the texture.
+ * </p><br/>
+ *
+ * <p>
+ * When the texture is not needed anymore, one should call {@link #release()} method to release the texture.
+ * </p>
+ * @see TexturedObject
  */
 public final class Texture2D implements Releasable {
 
@@ -30,9 +57,9 @@ public final class Texture2D implements Releasable {
 
 
     /**
-     * Lad texture from the file represented by given file
+     * Load texture from the file
      * @param file file of the texture
-     * @throws IOException if no such file exist by given path or some other i/o exception occurs
+     * @throws IOException if no such file exists or some other i/o exception occurs
      * @throws NoContextSetException if the OpenGL context hasn't been set before calling the constructor
      */
     public Texture2D(File file) throws IOException, NoContextSetException {
@@ -72,7 +99,7 @@ public final class Texture2D implements Releasable {
     }
 
     /**
-     * Converts given image so that it can be rendered by means of OpenGL
+     * Converts the source image into a texture
      * @param image source image
      * @throws NoContextSetException if the OpenGL context hasn't been set before calling the constructor
      */
