@@ -6,10 +6,10 @@ import java.util.List;
 
 /**
  * This extension of the {@link Shape} interface represents a shape that consists of vertices connected
- * in a specific order. The order of the vertices is defined by the order of elements, returned by
- * {@link VertexShape#vertices()} method. Also, the vertices reside in local space of the object.
+ * in a specific order. The order of the vertices is determined by the order of elements, returned by
+ * {@link #vertices()} method. Also, the vertices reside in the local-space.
  * For example, this is a simple square, defined by vertices:
- * <ul>
+ * <ul style="margin: 5px;">
  *  <li>1. (-10, -5, 0)</li>
  *  <li>2. (-10, 5, 0)</li>
  *  <li>3. (10, 5, 0)</li>
@@ -19,7 +19,7 @@ import java.util.List;
  */
 public interface VertexShape extends Shape {
     /**
-     * @return local space coordinates for this object
+     * @return vertices of the shape
      */
     List<Vec3f> vertices();
 }

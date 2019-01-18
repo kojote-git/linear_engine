@@ -55,7 +55,6 @@ public final class Texture2D implements Releasable {
 
     private boolean released;
 
-
     /**
      * Load texture from the file
      * @param file file of the texture

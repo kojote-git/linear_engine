@@ -23,9 +23,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL30.glGetStringi;
 
 public class StressTest {
 
@@ -74,6 +78,9 @@ public class StressTest {
                     } catch (Exception e) {
                         window.release();
                     }
+                    System.out.println("GL_VENDOR: " + glGetString(GL_VENDOR));
+                    System.out.println("GL_VERSION: " + glGetString(GL_VERSION));
+                    System.out.println("GL_RENDERER: " + glGetString(GL_RENDERER));
                 })
                 .setWindowClosedCallback(() -> {
                     fontMap.release();
