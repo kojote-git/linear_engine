@@ -1,7 +1,7 @@
 package com.jkojote.linear.engine.graphics2d.primitives.renderers;
 
-import com.jkojote.linear.engine.InitializableResource;
-import com.jkojote.linear.engine.ReleasableResource;
+import com.jkojote.linear.engine.Initializable;
+import com.jkojote.linear.engine.Releasable;
 import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.Camera;
 import com.jkojote.linear.engine.graphics2d.Renderer;
@@ -9,12 +9,11 @@ import com.jkojote.linear.engine.graphics2d.Shader;
 import com.jkojote.linear.engine.graphics2d.VaoObject;
 import com.jkojote.linear.engine.math.Mat4f;
 
-import java.io.File;
 import java.io.IOException;
 
 import static org.lwjgl.opengl.GL11.glDrawArrays;
 
-public class VaoObjectRenderer implements Renderer<VaoObject>, ReleasableResource, InitializableResource {
+public class VaoObjectRenderer implements Renderer<VaoObject>, Releasable, Initializable {
 
     private Mat4f projectionMatrix;
 

@@ -1,7 +1,7 @@
 package com.jkojote.linear.engine.graphics2d.primitives.renderers;
 
-import com.jkojote.linear.engine.InitializableResource;
-import com.jkojote.linear.engine.ReleasableResource;
+import com.jkojote.linear.engine.Initializable;
+import com.jkojote.linear.engine.Releasable;
 import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.*;
 import com.jkojote.linear.engine.math.Mat4f;
@@ -15,7 +15,7 @@ import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 
 public class TexturedObjectRenderer implements Renderer<TexturedObject>,
-        ReleasableResource, InitializableResource {
+        Releasable, Initializable {
 
     private Mat4f projectionMatrix;
 
@@ -54,11 +54,11 @@ public class TexturedObjectRenderer implements Renderer<TexturedObject>,
         shader.setUniform("model", obj.modelMatrix(), true);
         texture.bind();
         vao.bind();
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
-        glDrawArrays(GL_QUADS, 0, 4);
-        glDisableVertexAttribArray(0);
-        glDisableVertexAttribArray(1);
+            glEnableVertexAttribArray(0);
+            glEnableVertexAttribArray(1);
+            glDrawArrays(GL_QUADS, 0, 4);
+            glDisableVertexAttribArray(0);
+            glDisableVertexAttribArray(1);
         texture.unbind();
         vao.unbind();
         vao.release();

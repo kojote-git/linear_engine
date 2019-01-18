@@ -1,6 +1,6 @@
 package com.jkojote.linear.engine.graphics2d;
 
-import com.jkojote.linear.engine.ReleasableResource;
+import com.jkojote.linear.engine.Releasable;
 
 import java.nio.FloatBuffer;
 
@@ -10,7 +10,7 @@ import static org.lwjgl.opengl.GL30.*;
 /**
  * Vertex Array Object
  */
-public final class Vaof implements ReleasableResource {
+public final class Vaof implements Releasable {
 
     private int vao;
 

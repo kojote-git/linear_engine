@@ -1,7 +1,7 @@
 package com.jkojote.linear.engine.graphics2d.primitives.renderers;
 
-import com.jkojote.linear.engine.InitializableResource;
-import com.jkojote.linear.engine.ReleasableResource;
+import com.jkojote.linear.engine.Initializable;
+import com.jkojote.linear.engine.Releasable;
 import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.*;
 import com.jkojote.linear.engine.graphics2d.primitives.VertexShape;
@@ -13,7 +13,7 @@ import static org.lwjgl.opengl.GL11.glDrawArrays;
 import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 
-public class VertexShapeRenderer implements Renderer<VertexShape>, ReleasableResource, InitializableResource {
+public class VertexShapeRenderer implements Renderer<VertexShape>, Releasable, Initializable {
 
     private Shader shader;
 

@@ -1,7 +1,7 @@
 package com.jkojote.engine.graphics.texture;
 
-import com.jkojote.linear.engine.InitializableResource;
-import com.jkojote.linear.engine.ReleasableResource;
+import com.jkojote.linear.engine.Initializable;
+import com.jkojote.linear.engine.Releasable;
 import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.*;
 import com.jkojote.linear.engine.math.Mat4f;
@@ -12,7 +12,7 @@ import java.io.IOException;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 
 public class Bird extends BaseTransformable
-        implements TexturedObject, ReleasableResource, InitializableResource {
+        implements TexturedObject, Releasable, Initializable {
 
     private Texture2D texture;
 

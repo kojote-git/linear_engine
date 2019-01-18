@@ -1,6 +1,6 @@
 package com.jkojote.linear.engine.graphics2d;
 
-import com.jkojote.linear.engine.ReleasableResource;
+import com.jkojote.linear.engine.Releasable;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.utils.FileUtils;
@@ -17,7 +17,7 @@ import static org.lwjgl.opengl.GL20.*;
  * Program object that combines vertex and fragment shaders.
  * The purpose is to encapsulate control over using shaders in programObject.
  */
-public final class Shader implements ReleasableResource {
+public final class Shader implements Releasable {
 
     private int programObject;
 

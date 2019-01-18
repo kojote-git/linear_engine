@@ -1,6 +1,6 @@
 package com.jkojote.linear.engine.graphics2d;
 
-import com.jkojote.linear.engine.ReleasableResource;
+import com.jkojote.linear.engine.Releasable;
 
 /**
  * This interface represents an object that contains vertex array object (VAO) inside.
@@ -9,7 +9,7 @@ import com.jkojote.linear.engine.ReleasableResource;
  * It can slightly improve performance but it is also must be considered
  * that <b>the object must be released if it's not in use</b> to prevent memory leaks.
  */
-public interface VaoObject extends Renderable, ReleasableResource {
+public interface VaoObject extends Renderable, Releasable {
 
     /**
      * Binds the vao to the rendering context

@@ -1,8 +1,8 @@
 package com.jkojote.linear.engine.graphics2d.text;
 
 
-import com.jkojote.linear.engine.InitializableResource;
-import com.jkojote.linear.engine.ReleasableResource;
+import com.jkojote.linear.engine.Initializable;
+import com.jkojote.linear.engine.Releasable;
 import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.*;
 import com.jkojote.linear.engine.math.Mat4f;
@@ -18,7 +18,7 @@ import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 
-public class TextRenderer implements Renderer<Text>, InitializableResource, ReleasableResource {
+public class TextRenderer implements Renderer<Text>, Initializable, Releasable {
 
     private Mat4f projectionMatrix;
 

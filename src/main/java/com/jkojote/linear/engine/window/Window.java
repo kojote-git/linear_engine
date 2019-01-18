@@ -1,7 +1,7 @@
 package com.jkojote.linear.engine.window;
 
-import com.jkojote.linear.engine.InitializableResource;
-import com.jkojote.linear.engine.ReleasableResource;
+import com.jkojote.linear.engine.Initializable;
+import com.jkojote.linear.engine.Releasable;
 import com.jkojote.linear.engine.ResourceInitializationException;
 import org.lwjgl.opengl.GL;
 
@@ -13,7 +13,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 /**
  * Encapsulates GLFW library functionality for creating windows
  */
-public final class Window implements ReleasableResource, InitializableResource {
+public final class Window implements Releasable, Initializable {
 
     private long window;
 
@@ -156,9 +156,9 @@ public final class Window implements ReleasableResource, InitializableResource {
     }
 
     /**
-     * Initializes the window by initializing GLFW library and callbacks that were set
-     * before to the invocation of this method
-     * @return this window
+     * Initializes the window by initializing GLFW library, rendering context, and callbacks that were set
+     * before the invocation of this method. After it's done with initializing a stuff related to GLFW and OpenGL, it
+     * executes {@link InitCallback} if it has been set before initialization.
      * @throws ResourceInitializationException if the window is terminated or initialized or if GLFW library cannot be initialized
      */
     @Override

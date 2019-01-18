@@ -1,7 +1,7 @@
 package com.jkojote.linear.engine.graphics2d.text;
 
-import com.jkojote.linear.engine.InitializableResource;
-import com.jkojote.linear.engine.ReleasableResource;
+import com.jkojote.linear.engine.Initializable;
+import com.jkojote.linear.engine.Releasable;
 import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.Texture2D;
 
@@ -15,10 +15,10 @@ import static org.lwjgl.opengl.GL11.GL_LINEAR;
 /**
  * This class represents the idea of bitmap font - it contains the texture (atlas) with the glyphs and mappings for each glyph.
  * It also has several overloaded constructors to choose convenient way to create FontMap.<br/>
- * <b>Important:</b> due to the fact that it implements {@link InitializableResource} and {@link ReleasableResource},
+ * <b>Important:</b> due to the fact that it implements {@link Initializable} and {@link Releasable},
  * one needs to call {@link FontMap#init()} method to initialize this font and {@link FontMap#release()} to release resources.
  */
-public class FontMap implements ReleasableResource, InitializableResource {
+public class FontMap implements Releasable, Initializable {
 
     private Glyph glyphUnknown;
 

@@ -1,7 +1,7 @@
 package com.jkojote.linear.engine.graphics2d.primitives.renderers;
 
-import com.jkojote.linear.engine.InitializableResource;
-import com.jkojote.linear.engine.ReleasableResource;
+import com.jkojote.linear.engine.Initializable;
+import com.jkojote.linear.engine.Releasable;
 import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.Camera;
 import com.jkojote.linear.engine.graphics2d.Renderer;
@@ -22,7 +22,7 @@ import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 
-public class EllipseRenderer implements Renderer<Ellipse>, ReleasableResource, InitializableResource {
+public class EllipseRenderer implements Renderer<Ellipse>, Releasable, Initializable {
 
     private Mat4f projectionMatrix;
 

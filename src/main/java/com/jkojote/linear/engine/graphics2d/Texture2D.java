@@ -1,6 +1,6 @@
 package com.jkojote.linear.engine.graphics2d;
 
-import com.jkojote.linear.engine.ReleasableResource;
+import com.jkojote.linear.engine.Releasable;
 import org.lwjgl.BufferUtils;
 
 import javax.imageio.ImageIO;
@@ -12,14 +12,13 @@ import java.nio.ByteBuffer;
 
 import static org.lwjgl.glfw.GLFW.glfwGetCurrentContext;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.WGL.wglGetCurrentContext;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 /**
  * Represents 2D texture that can be rendered by means of OpenGL.
  * GL context need to be set before the texture is created.
  */
-public final class Texture2D implements ReleasableResource {
+public final class Texture2D implements Releasable {
 
     private static final int BYTES_PER_PIXEL = 4;
 
