@@ -52,12 +52,25 @@ public class Vec3fTest {
     }
 
     @Test
-    public void normalized() {
+    public void unit() {
         Vec3f v1 = new Vec3f(3, 4, 0);
         float len = v1.len();
         Vec3f expected = new Vec3f(3 / len, 4 / len, 0);
 
         assertEquals(5.0f, len, 0.05f);
-        assertEquals(expected, v1.normalized());
+        assertEquals(expected, v1.unit());
+    }
+
+    @Test
+    public void normal() {
+        for (int i = 0; i < 15_000_000; i++) {
+            float x = (float) Math.random() * 10000;
+            float y = (float) Math.random() * 10000;
+            float z = (float) Math.random() * 10000;
+            Vec3f vector = new Vec3f(x, y, z);
+            Vec3f normal = vector.normal();
+            float dot = vector.dot(normal);
+            assertEquals(0, dot, 0.001f);
+        }
     }
 }

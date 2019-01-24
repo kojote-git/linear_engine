@@ -134,13 +134,21 @@ public final class Vec3f {
     }
 
     /**
-     * Returns normalized vector.
+     * Returns unit vector.
      * <b>Doesn't change</b> this vector
-     * @return normalized vector
+     * @return unit vector
      */
-    public Vec3f normalized() {
+    public Vec3f unit() {
         float len = len();
         return new Vec3f(x / len, y / len, z / len);
+    }
+
+    /**
+     * <b>Doesn't change</b> this vector
+     * @return normal vector
+     */
+    public Vec3f normal() {
+        return new Vec3f(-y, x, 0);
     }
 
     @Override
