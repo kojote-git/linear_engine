@@ -1,4 +1,4 @@
-package com.jkojote.linear.engine.graphics2d;
+package com.jkojote.linear.engine.shared;
 
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;

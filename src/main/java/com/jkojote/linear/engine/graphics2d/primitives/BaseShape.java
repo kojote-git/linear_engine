@@ -1,6 +1,6 @@
 package com.jkojote.linear.engine.graphics2d.primitives;
 
-import com.jkojote.linear.engine.graphics2d.Transformable;
+import com.jkojote.linear.engine.shared.Transformable;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 

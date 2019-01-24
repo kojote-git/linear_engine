@@ -4,7 +4,7 @@ import com.jkojote.engine.graphics.LoopRunner;
 import com.jkojote.engine.graphics.TransformableCamera;
 import com.jkojote.engine.graphics.TransformationController;
 import com.jkojote.linear.engine.graphics2d.StaticCamera;
-import com.jkojote.linear.engine.graphics2d.Transformable;
+import com.jkojote.linear.engine.shared.Transformable;
 import com.jkojote.linear.engine.graphics2d.primitives.Shape;
 import com.jkojote.linear.engine.graphics2d.primitives.VertexShape;
 import com.jkojote.linear.engine.graphics2d.primitives.filled.Ellipse;
@@ -23,13 +23,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.xml.bind.SchemaOutputResolver;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL30.glGetStringi;
 
 public class StressTest {
 

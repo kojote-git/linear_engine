@@ -1,7 +1,7 @@
 package com.jkojote.engine.graphics.primitives;
 
 import com.jkojote.linear.engine.graphics2d.Camera;
-import com.jkojote.linear.engine.graphics2d.Transformable;
+import com.jkojote.linear.engine.shared.Transformable;
 import com.jkojote.linear.engine.math.Mat4f;
 
 public class BoundingCamera<T extends Transformable> implements Camera {

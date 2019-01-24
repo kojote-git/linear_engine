@@ -1,7 +1,6 @@
 package com.jkojote.engine.graphics;
 
-import com.jkojote.linear.engine.graphics2d.Transformable;
-import com.jkojote.linear.engine.math.Vec3f;
+import com.jkojote.linear.engine.shared.Transformable;
 import com.jkojote.linear.engine.window.KeyCallback;
 
 import static org.lwjgl.glfw.GLFW.*;
