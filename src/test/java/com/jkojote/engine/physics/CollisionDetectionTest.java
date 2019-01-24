@@ -64,10 +64,6 @@ public class CollisionDetectionTest {
     }
 
     @Test
-    public void testCollision() {
-    }
-
-    @Test
     public void renderCollision() {
         Vec3f[] cbv1 = new Vec3f[] {
             new Vec3f(-3, 4, 0),
@@ -98,6 +94,7 @@ public class CollisionDetectionTest {
         SolidPolygon p4 = new SolidPolygon(cbv3, new Vec3f(-20, -30, 0), new Vec3f(0.1f, 0.8f, 0.4f));
         p1.setScaleFactor(5);
         p2.setScaleFactor(5);
+        p2.setRotationAngle(45);
         p3.setScaleFactor(5);
         p4.setScaleFactor(5);
         BoundingCamera camera = new BoundingCamera<>(p1);
@@ -129,7 +126,9 @@ public class CollisionDetectionTest {
                 }
                 controller.update();
             })
-            .setKeyCallback(controller)
+            .setKeyCallback((key, action, mods) -> {
+                controller.perform(key, action, mods);
+            })
             .init();
         runner.run();
     }

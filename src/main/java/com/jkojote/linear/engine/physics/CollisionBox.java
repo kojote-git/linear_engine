@@ -27,6 +27,12 @@ public class CollisionBox extends BaseTransformable {
             t1[i] = thisTransform.mult(this.vertices[i]);
         for (int i = 0; i < t2.length; i++)
             t2[i] = cbTransform.mult(collisionBox.vertices[i]);
+        if (testOverlap(t1, t2) && testOverlap(t2, t1))
+            return true;
+        return false;
+    }
+
+    private boolean testOverlap(Vec3f[] t1, Vec3f[] t2) {
         Vec3f start = t1[0];
         for (int i = 1; i < t1.length; i++) {
             Vec3f end = t1[i];
@@ -36,8 +42,8 @@ public class CollisionBox extends BaseTransformable {
             DotTuple thisProjections = getProjection(t1, normal);
             DotTuple thatProjections = getProjection(t2, normal);
             if (!checkOverlap(
-                thisProjections.min, thisProjections.max,
-                thatProjections.min, thatProjections.max
+                    thisProjections.min, thisProjections.max,
+                    thatProjections.min, thatProjections.max
             )) return false;
         }
         return true;
