@@ -1,6 +1,7 @@
 package com.jkojote.linear.engine.graphics2d;
 
 import com.jkojote.linear.engine.math.Mat4f;
+import com.jkojote.linear.engine.math.MathUtils;
 import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.shared.Transformable;
 
@@ -34,10 +35,11 @@ public final class GraphicsUtils {
         return vaof;
     }
 
-    public static Mat4f tranformationMatrix(Transformable transformable) {
-        Mat4f translation = Mat4f.translation(transformable.getTranslation());
-        Mat4f rotation = Mat4f.rotationZ(transformable.getRotationAngle());
-        Mat4f scale = Mat4f.scale(transformable.getScaleFactor());
-        return translation.mult(rotation).mult(scale);
+
+    public static Mat4f transformationMatrix(Vec3f translation, float rotationAngle, float scaleFactor) {
+        Mat4f translate = Mat4f.translation(translation);
+        Mat4f rotate = Mat4f.rotationZ(rotationAngle);
+        Mat4f scale = Mat4f.scale(scaleFactor);
+        return translate.mult(rotate).mult(scale);
     }
 }

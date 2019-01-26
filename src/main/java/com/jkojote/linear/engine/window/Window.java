@@ -3,6 +3,7 @@ package com.jkojote.linear.engine.window;
 import com.jkojote.linear.engine.Initializable;
 import com.jkojote.linear.engine.Releasable;
 import com.jkojote.linear.engine.ResourceInitializationException;
+import com.jkojote.linear.engine.math.Mat4f;
 import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -49,6 +50,8 @@ public final class Window implements Releasable, Initializable {
 
     private boolean mouseEnabled;
 
+    private Mat4f projectionMatrix;
+
     /**
      * Creates a new window instance; this method doesn't initialize it.
      * To do so, call {@code init()} method after you set up all callbacks.
@@ -65,6 +68,7 @@ public final class Window implements Releasable, Initializable {
         this.height = height;
         this.resizable = resizable;
         this.mouseEnabled = mouseEnabled;
+        this.projectionMatrix = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, 0, 1);
     }
 
     /**
@@ -240,6 +244,10 @@ public final class Window implements Releasable, Initializable {
         if (renderCallback != null)
             renderCallback.perform();
         glfwSwapBuffers(window);
+    }
+
+    public Mat4f getProjectionMatrix() {
+        return projectionMatrix;
     }
 
     /**

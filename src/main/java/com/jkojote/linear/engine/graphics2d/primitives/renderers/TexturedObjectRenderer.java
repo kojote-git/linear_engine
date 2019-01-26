@@ -34,16 +34,19 @@ public class TexturedObjectRenderer implements Renderer<TexturedObject>,
     @Override
     @SuppressWarnings("Duplicates")
     public void render(TexturedObject obj, Camera camera) {
-        Texture2D texture = obj.getTexture();
+        renderTexture(obj.getTexture(), obj.modelMatrix(), camera);
+    }
+
+    public void renderTexture(Texture2D texture, Mat4f transformationMatrix, Camera camera) {
         int
-            width = texture.getWidth(),
-            height = texture.getHeight();
+                width = texture.getWidth(),
+                height = texture.getHeight();
         float[] coords = {
-        //  ---------- position -----------  -coords-
-            -width / 2f,  height / 2f, 0.0f,   0, 0,
-            -width / 2f, -height / 2f, 0.0f,   0, 1,
-             width / 2f, -height / 2f, 0.0f,   1, 1,
-             width / 2f,  height / 2f, 0.0f,   1, 0
+                //  ---------- position -----------  -coords-
+                -width / 2f,  height / 2f, 0.0f,   0, 0,
+                -width / 2f, -height / 2f, 0.0f,   0, 1,
+                width / 2f, -height / 2f, 0.0f,   1, 1,
+                width / 2f,  height / 2f, 0.0f,   1, 0
         };
         Vaof vao = new Vaof(2, true)
                 .addArrayBuffer(coords, GL_STATIC_DRAW, 0, 3, 20, 0)
@@ -51,14 +54,14 @@ public class TexturedObjectRenderer implements Renderer<TexturedObject>,
         vao.unbind();
         shader.bind();
         shader.setUniform("pv", projectionMatrix.mult(camera.viewMatrix()), true);
-        shader.setUniform("model", obj.modelMatrix(), true);
+        shader.setUniform("model", transformationMatrix, true);
         texture.bind();
         vao.bind();
-            glEnableVertexAttribArray(0);
-            glEnableVertexAttribArray(1);
-            glDrawArrays(GL_QUADS, 0, 4);
-            glDisableVertexAttribArray(0);
-            glDisableVertexAttribArray(1);
+        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
+        glDrawArrays(GL_QUADS, 0, 4);
+        glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(1);
         texture.unbind();
         vao.unbind();
         vao.release();

@@ -13,6 +13,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
+import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glDrawArrays;
 import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
@@ -32,8 +33,12 @@ public class TextRenderer implements Renderer<Text>, Initializable, Releasable {
     public void render(Text text, Camera camera) {
         FontMap font = text.getFontMap();
         CharSequence seq = text.getSequence();
-        Texture2D fontTexture = font.getTexture();
         Vec3f color = text.getColor();
+        renderText(seq, font, color, text.modelMatrix(), camera);
+    }
+
+    public void renderText(CharSequence seq, FontMap font, Vec3f color, Mat4f transformationMatrix, Camera camera) {
+        Texture2D fontTexture = font.getTexture();
         float xRatio = 1f / fontTexture.getWidth();
         float yRatio = 1f / fontTexture.getHeight();
         int lines = 0;
@@ -59,12 +64,12 @@ public class TextRenderer implements Renderer<Text>, Initializable, Releasable {
         fontTexture.bind();
         vao.bind();
         shader.setUniform("pv", projectionMatrix.mult(camera.viewMatrix()), true);
-        shader.setUniform("model", text.modelMatrix(), true);
+        shader.setUniform("model", transformationMatrix, true);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
         glEnableVertexAttribArray(2);
 
-        glDrawArrays(text.renderingMode(), 0, len << 2);
+        glDrawArrays(GL_QUADS, 0, len << 2);
 
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
