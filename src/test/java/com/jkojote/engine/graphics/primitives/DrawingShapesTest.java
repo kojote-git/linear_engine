@@ -123,13 +123,13 @@ public class DrawingShapesTest {
         controller.setTranslationDelta(10);
         BoundingCamera camera = new BoundingCamera<>(rectangle);
         window
-            .setRenderCallback(() -> {
+            .setUpdateCallback(() -> {
                 vertexShapeRenderer.render(rectangle, camera);
                 ellipseRenderer.render(ellipse, camera);
             })
             .setKeyCallback(controller)
-            .setUpdateCallback(controller::update)
             .init();
+        runner.setUpdateCallback(controller::update);
         runner.run();
     }
 
@@ -137,10 +137,11 @@ public class DrawingShapesTest {
     public void drawLine() {
         TransformationController controller = new TransformationController(line);
         window
-            .setRenderCallback(() -> vertexShapeRenderer.render(line, staticCamera))
+            .setUpdateCallback(() -> vertexShapeRenderer.render(line, staticCamera))
             .setKeyCallback(controller)
             .init();
         while (!window.isTerminated()) {
+            window.pollEvents();
             window.update();
             controller.update();
         }
@@ -151,10 +152,10 @@ public class DrawingShapesTest {
         TransformationController controller = new TransformationController(triangle);
         LoopRunner runner = new LoopRunner(window);
         window
-            .setRenderCallback(() -> vertexShapeRenderer.render(triangle, staticCamera))
+            .setUpdateCallback(() -> vertexShapeRenderer.render(triangle, staticCamera))
             .setKeyCallback(controller)
-            .setUpdateCallback(controller::update)
             .init();
+        runner.setUpdateCallback(controller::update);
         runner.run();
     }
 
@@ -165,13 +166,13 @@ public class DrawingShapesTest {
         LoopRunner runner = new LoopRunner(window);
         controller.setTranslationDelta(5);
         window
-            .setRenderCallback(() -> ellipseRenderer.render(ellipse, staticCamera))
+            .setUpdateCallback(() -> ellipseRenderer.render(ellipse, staticCamera))
             .setKeyCallback(controller)
-            .setUpdateCallback(() -> {
-                painter.updateColor();
-                controller.update();
-            })
             .init();
+        runner.setUpdateCallback(() -> {
+            painter.updateColor();
+            controller.update();
+        });
         runner.run();
     }
 
@@ -182,13 +183,13 @@ public class DrawingShapesTest {
         Painter painter = new Painter(polygon);
         controller.setTranslationDelta(5f);
         window
-            .setRenderCallback(() -> vertexShapeRenderer.render(polygon, staticCamera))
+            .setUpdateCallback(() -> vertexShapeRenderer.render(polygon, staticCamera))
             .setKeyCallback(controller)
-            .setUpdateCallback(() -> {
-                controller.update();
-                painter.updateColor();
-            })
             .init();
+        runner.setUpdateCallback(() -> {
+            painter.updateColor();
+            controller.update();
+        });
         runner.run();
     }
 }

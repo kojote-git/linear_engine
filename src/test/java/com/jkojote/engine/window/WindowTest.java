@@ -15,9 +15,6 @@ public class WindowTest {
             .setKeyCallback((key, action, mods) -> {
                 System.out.println("key: " + key + ", action: " + action + ", mods: " + mods);
             })
-            .setUpdateCallback(() -> {
-                System.out.println("window is updated");
-            })
             .setInitCallback(() -> {
                 System.out.println("window is initialized");
             })
@@ -27,7 +24,7 @@ public class WindowTest {
         window.init();
         while (!window.isTerminated()) {
             Thread.sleep(1000 / 60);
-            window.update();
+            window.pollEvents();
         }
         window.terminate();
     }

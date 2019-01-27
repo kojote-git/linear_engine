@@ -25,7 +25,7 @@ public class Texture2DTest {
                     window.release();
                 }
             })
-            .setRenderCallback(() -> {
+            .setUpdateCallback(() -> {
                 glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
                 glOrtho(-width / 2.0f, width / 2.0f, -height / 2.0f, height / 2.0f, 0.0f, 1.0f);
@@ -54,10 +54,11 @@ public class Texture2DTest {
                 t.unbind();
             });
         window.init();
+        window.update();
         System.out.println("************ Texture2D test ************");
         System.out.println("Is the texture being rendered right?");
         while (!window.isTerminated()) {
-            window.update();
+            window.pollEvents();
         }
         t.release();
     }

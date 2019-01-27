@@ -4,7 +4,7 @@ import com.jkojote.linear.engine.graphics2d.primitives.Shape;
 import com.jkojote.linear.engine.math.Vec3f;
 
 /*
- * Object that is used to update color of the shape in a smooth manner
+ * Object that is used to pollEvents color of the shape in a smooth manner
  */
 public class Painter {
 

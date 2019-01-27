@@ -22,12 +22,12 @@ public interface VaoObject extends Renderable, Releasable {
     void unbind();
 
     /**
-     * Enables all of the vertex attributes of the VAO that are needed to properly render the object
+     * Enables all of the vertex attributes of the VAO that are needed to properly update the object
      */
     void enableAttributes();
 
     /**
-     * Disables all of the vertex attributes of the VAO that are needed to properly render the object
+     * Disables all of the vertex attributes of the VAO that are needed to properly update the object
      */
     void disableAttributes();
 

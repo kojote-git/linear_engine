@@ -2,7 +2,6 @@ package com.jkojote.linear.engine.graphics2d.engine;
 
 import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.*;
-import com.jkojote.linear.engine.graphics2d.engine.GraphicsEngine;
 import com.jkojote.linear.engine.graphics2d.primitives.VertexShape;
 import com.jkojote.linear.engine.graphics2d.primitives.filled.Ellipse;
 import com.jkojote.linear.engine.graphics2d.primitives.renderers.*;
@@ -11,7 +10,7 @@ import com.jkojote.linear.engine.graphics2d.text.PlainText;
 import com.jkojote.linear.engine.graphics2d.text.TextRenderer;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
-import com.jkojote.linear.engine.window.RenderCallback;
+import com.jkojote.linear.engine.window.UpdateCallback;
 import com.jkojote.linear.engine.window.Window;
 
 import java.util.ArrayDeque;
@@ -20,7 +19,7 @@ import java.util.Deque;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 
-public class SimpleGraphicsEngine implements GraphicsEngine, RenderCallback {
+public class SimpleGraphicsEngine implements GraphicsEngine, UpdateCallback {
 
     private Window window;
 
@@ -59,7 +58,7 @@ public class SimpleGraphicsEngine implements GraphicsEngine, RenderCallback {
            this.textRenderer.init();
            this.textureRenderer.init();
         });
-        this.window.setRenderCallback(this);
+        this.window.setUpdateCallback(this);
         this.renderableDeq = new ArrayDeque<>();
     }
 

@@ -110,16 +110,8 @@ public class StressTest {
         fpsCount.setScaleFactor(0.8f);
         fpsCount.setColor(new Vec3f(0.3f, 0.8f, 0.3f));
         controller.setTranslationDelta(5f);
-
         window
             .setUpdateCallback(() -> {
-                for (Shape shape : shapes) {
-                    if (shape instanceof Transformable)
-                        randomTransform((Transformable) shape);
-                }
-                controller.update();
-            })
-            .setRenderCallback(() -> {
                 for (Shape shape : shapes) {
                     if (shape instanceof VertexShape)
                         vertexShapeRenderer.render((VertexShape) shape, transformableCamera);
@@ -130,6 +122,7 @@ public class StressTest {
             })
             .setKeyCallback(controller)
             .init();
+        runner.setUpdateCallback(controller::update);
         runner.run();
     }
 

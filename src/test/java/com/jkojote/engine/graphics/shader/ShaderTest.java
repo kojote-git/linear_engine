@@ -50,7 +50,7 @@ public class ShaderTest {
                    .addArrayBuffer(vertices, GL_STATIC_DRAW, 1, 3, 5 * FLOAT_SIZE, 2 * FLOAT_SIZE);
                 vao.unbind();
             })
-            .setRenderCallback(() -> {
+            .setUpdateCallback(() -> {
                 shader.bind();
                 vao.bind();
                 glEnableVertexAttribArray(0);
@@ -68,8 +68,9 @@ public class ShaderTest {
         w.init();
         System.out.println("************ Shader Test ***********");
         System.out.println("Do you see black square?");
+        w.update();
         while (!w.isTerminated()) {
-            w.update();
+            w.pollEvents();
         }
     }
 }

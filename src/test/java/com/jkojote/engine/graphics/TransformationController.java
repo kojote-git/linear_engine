@@ -43,24 +43,39 @@ public class TransformationController implements KeyCallback {
 
     @Override
     public void perform(int key, int action, int mods) {
-        if (action == GLFW_PRESS) {
-            if (key == GLFW_KEY_Z && mods == GLFW_KEY_LEFT_CONTROL) {
-                scaleFactorDelta -= 0.1f;
-                return;
-            } else if (key == GLFW_KEY_Z) {
-                scaleFactorDelta += 0.1f;
-                return;
-            }
-            if (key == GLFW_KEY_X && mods == GLFW_KEY_LEFT_CONTROL) {
-                translationDelta -= 0.8f;
-                return;
-            } else if (key == GLFW_KEY_X) {
-                translationDelta += 0.8f;
-                return;
+        if (action == GLFW_PRESS || action == GLFW_REPEAT) {
+            if (mods == GLFW_MOD_CONTROL) {
+                switch (key) {
+                    case GLFW_KEY_Z:
+                        if (scaleFactorDelta - 0.1 > 0)
+                            scaleFactorDelta -= 0.1;
+                        return;
+                    case GLFW_KEY_X:
+                        if (translationDelta - 1 > 0)
+                            translationDelta -= 1;
+                        return;
+                    case GLFW_KEY_C:
+                        if (rotationDelta - 5 > 0)
+                            rotationDelta -= 5;
+                        return;
+                }
+            } else {
+                switch (key) {
+                    case GLFW_KEY_Z:
+                        scaleFactorDelta += 0.1;
+                        return;
+                    case GLFW_KEY_X:
+                        translationDelta += 1;
+                        return;
+                    case GLFW_KEY_C:
+                        rotationDelta += 5;
+                        return;
+                }
             }
             int actionPressed = translateKey(key);
-            if (actionPressed == -1)
+            if (actionPressed == -1) {
                 return;
+            }
             pressed[actionPressed] = true;
         } else if (action == GLFW_RELEASE) {
             int actionPressed = translateKey(key);

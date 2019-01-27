@@ -34,7 +34,7 @@ public final class Window implements Releasable, Initializable {
 
     private InitCallback initCallback;
 
-    private RenderCallback renderCallback;
+    private UpdateCallback updateCallback;
 
     private MouseButtonCallback mouseButtonCallback;
 
@@ -43,8 +43,6 @@ public final class Window implements Releasable, Initializable {
     private ScrollCallback scrollCallback;
 
     private TextInputCallback textInputCallback;
-
-    private UpdateCallback updateCallback;
 
     private TerminationCallback windowClosedCallback;
 
@@ -84,14 +82,14 @@ public final class Window implements Releasable, Initializable {
     }
 
     /**
-     * Sets the callback that is called every time the window is ready for rendering
-     * @param renderCallback callback to be set
+     * Sets the callback that is called every time the window is ready for updating
+     * @param updateCallback callback to be set
      * @return this window
      */
-    public Window setRenderCallback(RenderCallback renderCallback) {
-        if (renderCallback == null)
-            throw new NullPointerException("renderCallback must not be null");
-        this.renderCallback = renderCallback;
+    public Window setUpdateCallback(UpdateCallback updateCallback) {
+        if (updateCallback == null)
+            throw new NullPointerException("updateCallback must not be null");
+        this.updateCallback = updateCallback;
         return this;
     }
 
@@ -104,20 +102,8 @@ public final class Window implements Releasable, Initializable {
 
     public Window setMouseButtonCallback(MouseButtonCallback mouseCallback) {
         if (mouseCallback == null)
-            throw new NullPointerException("mouseCallback must not be null");
+            throw new NullPointerException("mouseButtonCallback must not be null");
         this.mouseButtonCallback = mouseCallback;
-        return this;
-    }
-
-    /**
-     * Sets the callback that is called every time the window is updated
-     * @param updateCallback to be set
-     * @return this
-     */
-    public Window setUpdateCallback(UpdateCallback updateCallback) {
-        if (updateCallback == null)
-            throw new NullPointerException("updateCallback must not be null");
-        this.updateCallback = updateCallback;
         return this;
     }
 
@@ -233,25 +219,27 @@ public final class Window implements Releasable, Initializable {
         }
     }
 
-    /**
-     * Updates the window calling {@link UpdateCallback} and {@link RenderCallback}
-     * that had been set before the window was initialized.
-     * Does nothing if the window has been already terminated.
-     */
-    public void update() {
+    public void pollEvents() {
+        if (terminated)
+            return;
         glfwPollEvents();
         if (glfwWindowShouldClose(window)) {
             terminate();
-            return;
         }
-        if (updateCallback != null)
-            updateCallback.perform();
     }
 
-    public void render() {
+    public void clear() {
+        if (terminated)
+            return;
         glClear(GL_COLOR_BUFFER_BIT);
-        if (renderCallback != null)
-            renderCallback.perform();
+    }
+
+    public void update() {
+        if (terminated)
+            return;
+        glClear(GL_COLOR_BUFFER_BIT);
+        if (updateCallback != null)
+            updateCallback.perform();
         glfwSwapBuffers(window);
     }
 

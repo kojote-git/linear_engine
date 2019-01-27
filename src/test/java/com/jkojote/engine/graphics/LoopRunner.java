@@ -9,6 +9,8 @@ public class LoopRunner implements Runnable {
 
     private FpsCallback onFps;
 
+    private LoopUpdateCallback updateCallback;
+
     public LoopRunner(Window window) {
         this.window = window;
     }
@@ -16,6 +18,10 @@ public class LoopRunner implements Runnable {
     public LoopRunner(Window window, FpsCallback onFps) {
         this.window = window;
         this.onFps = onFps;
+    }
+
+    public void setUpdateCallback(LoopUpdateCallback updateCallback) {
+        this.updateCallback = updateCallback;
     }
 
     @Override
@@ -34,9 +40,10 @@ public class LoopRunner implements Runnable {
             lastTime = now;
             while (delta >= 1) {
                 delta--;
-                window.update();
+                window.pollEvents();
+                updateCallback.update();
             }
-            window.render();
+            window.update();
             frames++;
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;

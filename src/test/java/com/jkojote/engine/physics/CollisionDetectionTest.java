@@ -103,33 +103,31 @@ public class CollisionDetectionTest {
         controller.setScaleFactorDelta(0.05f);
         LoopRunner runner = new LoopRunner(window);
         window
-            .setRenderCallback(() -> {
+            .setUpdateCallback(() -> {
                 vertexShapeRenderer.render(p1, camera);
                 vertexShapeRenderer.render(p2, camera);
                 vertexShapeRenderer.render(p3, camera);
                 vertexShapeRenderer.render(p4, camera);
                 textRenderer.render(collisionStatus, staticCamera);
             })
-            .setUpdateCallback(() -> {
-                if (p1.checkCollides(p2)) {
-                    collisionStatus.delete(10, collisionStatus.length()).append("collides with p2");
-                    collisionStatus.setColor(new Vec3f(0.8f, 0.1f, 0.2f));
-                } else if (p1.checkCollides(p3)){
-                    collisionStatus.delete(10, collisionStatus.length()).append("collides with p3");
-                    collisionStatus.setColor(new Vec3f(0.8f, 0.1f, 0.2f));
-                } else if (p1.checkCollides(p4)){
-                    collisionStatus.delete(10, collisionStatus.length()).append("collides with p4");
-                    collisionStatus.setColor(new Vec3f(0.8f, 0.1f, 0.2f));
-                } else {
-                    collisionStatus.delete(10, collisionStatus.length()).append("false");
-                    collisionStatus.setColor(new Vec3f(0.1f, 0.7f, 0.2f));
-                }
-                controller.update();
-            })
-            .setKeyCallback((key, action, mods) -> {
-                controller.perform(key, action, mods);
-            })
+            .setKeyCallback(controller)
             .init();
+        runner.setUpdateCallback(() -> {
+            if (p1.checkCollides(p2)) {
+                collisionStatus.delete(10, collisionStatus.length()).append("collides with p2");
+                collisionStatus.setColor(new Vec3f(0.8f, 0.1f, 0.2f));
+            } else if (p1.checkCollides(p3)){
+                collisionStatus.delete(10, collisionStatus.length()).append("collides with p3");
+                collisionStatus.setColor(new Vec3f(0.8f, 0.1f, 0.2f));
+            } else if (p1.checkCollides(p4)){
+                collisionStatus.delete(10, collisionStatus.length()).append("collides with p4");
+                collisionStatus.setColor(new Vec3f(0.8f, 0.1f, 0.2f));
+            } else {
+                collisionStatus.delete(10, collisionStatus.length()).append("false");
+                collisionStatus.setColor(new Vec3f(0.1f, 0.7f, 0.2f));
+            }
+            controller.update();
+        });
         runner.run();
     }
 

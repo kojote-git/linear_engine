@@ -108,13 +108,13 @@ public class FontMapTest {
         controller.setTranslationDelta(5f);
         controller.setRotationDelta(2f);
         window
-            .setRenderCallback(() -> {
+            .setUpdateCallback(() -> {
                 glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
                 renderer.render(fontTexture, transformableCamera);
             })
             .setKeyCallback(controller)
-            .setUpdateCallback(controller::update)
             .init();
+        runner.setUpdateCallback(controller::update);
         runner.run();
     }
 
@@ -127,12 +127,12 @@ public class FontMapTest {
         controller.setRotationDelta(2f);
         controller.setScaleFactorDelta(0.01f);
         window
-            .setRenderCallback(() -> {
+            .setUpdateCallback(() -> {
                 textRenderer.render(text, transformableCamera);
             })
             .setKeyCallback(controller)
-            .setUpdateCallback(controller::update)
             .init();
+        runner.setUpdateCallback(controller::update);
         runner.run();
     }
 }
