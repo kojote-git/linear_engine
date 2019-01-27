@@ -50,17 +50,6 @@ public class ShaderTest {
                    .addArrayBuffer(vertices, GL_STATIC_DRAW, 1, 3, 5 * FLOAT_SIZE, 2 * FLOAT_SIZE);
                 vao.unbind();
             })
-            .setUpdateCallback(() -> {
-                shader.bind();
-                vao.bind();
-                glEnableVertexAttribArray(0);
-                glEnableVertexAttribArray(1);
-                glDrawArrays(GL_QUADS, 0, 4);
-                glDisableVertexAttribArray(0);
-                glDisableVertexAttribArray(1);
-                vao.unbind();
-                shader.unbind();
-            })
             .setTerminationCallback(() -> {
                 vao.release();
                 shader.release();
@@ -71,6 +60,19 @@ public class ShaderTest {
         w.update();
         while (!w.isTerminated()) {
             w.pollEvents();
+            w.clear();
+
+            shader.bind();
+            vao.bind();
+            glEnableVertexAttribArray(0);
+            glEnableVertexAttribArray(1);
+            glDrawArrays(GL_QUADS, 0, 4);
+            glDisableVertexAttribArray(0);
+            glDisableVertexAttribArray(1);
+            vao.unbind();
+            shader.unbind();
+
+            w.update();
         }
     }
 }

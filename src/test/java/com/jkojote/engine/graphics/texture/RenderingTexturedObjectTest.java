@@ -66,9 +66,9 @@ public class RenderingTexturedObjectTest {
         controller.setRotationDelta(3);
         controller.setTranslationDelta(5);
         window
-            .setUpdateCallback(() -> renderer.render(bird, camera))
             .setKeyCallback(controller)
             .init();
+        runner.setRenderCallback(() -> renderer.render(bird, camera));
         runner.setUpdateCallback(controller::update);
         runner.run();
     }

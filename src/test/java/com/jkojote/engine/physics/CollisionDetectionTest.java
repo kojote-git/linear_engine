@@ -103,15 +103,15 @@ public class CollisionDetectionTest {
         controller.setScaleFactorDelta(0.05f);
         LoopRunner runner = new LoopRunner(window);
         window
-            .setUpdateCallback(() -> {
-                vertexShapeRenderer.render(p1, camera);
-                vertexShapeRenderer.render(p2, camera);
-                vertexShapeRenderer.render(p3, camera);
-                vertexShapeRenderer.render(p4, camera);
-                textRenderer.render(collisionStatus, staticCamera);
-            })
             .setKeyCallback(controller)
             .init();
+        runner.setRenderCallback(() -> {
+            vertexShapeRenderer.render(p1, camera);
+            vertexShapeRenderer.render(p2, camera);
+            vertexShapeRenderer.render(p3, camera);
+            vertexShapeRenderer.render(p4, camera);
+            textRenderer.render(collisionStatus, staticCamera);
+        });
         runner.setUpdateCallback(() -> {
             if (p1.checkCollides(p2)) {
                 collisionStatus.delete(10, collisionStatus.length()).append("collides with p2");

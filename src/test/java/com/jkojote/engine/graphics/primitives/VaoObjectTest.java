@@ -83,9 +83,9 @@ public class VaoObjectTest {
         LoopRunner runner = new LoopRunner(window);
         controller.setTranslationDelta(5);
         window
-            .setUpdateCallback(() -> renderer.render(rectangle, camera))
             .setKeyCallback(controller)
             .init();
+        runner.setRenderCallback(() -> renderer.render(rectangle, camera));
         runner.setUpdateCallback(() -> {
             painter.updateColor();
             controller.update();
@@ -100,9 +100,9 @@ public class VaoObjectTest {
         Painter painter = new Painter(polygon);
         controller.setTranslationDelta(5);
         window
-            .setUpdateCallback(() -> renderer.render(polygon, camera))
             .setKeyCallback(controller)
             .init();
+        runner.setRenderCallback(() -> renderer.render(polygon, camera));
         runner.setUpdateCallback(() -> {
             painter.updateColor();
             controller.update();

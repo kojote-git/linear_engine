@@ -10,7 +10,6 @@ import com.jkojote.linear.engine.graphics2d.text.PlainText;
 import com.jkojote.linear.engine.graphics2d.text.TextRenderer;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
-import com.jkojote.linear.engine.window.UpdateCallback;
 import com.jkojote.linear.engine.window.Window;
 
 import java.util.ArrayDeque;
@@ -19,7 +18,7 @@ import java.util.Deque;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 
-public class SimpleGraphicsEngine implements GraphicsEngine, UpdateCallback {
+public class SimpleGraphicsEngine implements PrimitiveGraphicsEngine {
 
     private Window window;
 
@@ -58,7 +57,6 @@ public class SimpleGraphicsEngine implements GraphicsEngine, UpdateCallback {
            this.textRenderer.init();
            this.textureRenderer.init();
         });
-        this.window.setUpdateCallback(this);
         this.renderableDeq = new ArrayDeque<>();
     }
 
@@ -75,71 +73,56 @@ public class SimpleGraphicsEngine implements GraphicsEngine, UpdateCallback {
     public boolean isReleased() { return window.isReleased(); }
 
     @Override
-    public Window getWindow() { return window; }
-
-    @Override
     public void setCamera(Camera camera) { this.camera = camera; }
 
     @Override
     public Camera getCamera() {return camera; }
 
     @Override
+    public void render(Renderable renderable) {
+        if (renderable instanceof VaoObject)
+            vaoObjectRenderer.render((VaoObject) renderable, camera);
+        else if (renderable instanceof VertexShape)
+            vertexShapeRenderer.render((VertexShape) renderable, camera);
+        else if (renderable instanceof TexturedObject)
+            texturedObjectRenderer.render((TexturedObject) renderable, camera);
+        else if (renderable instanceof Ellipse)
+            ellipseRenderer.render((Ellipse) renderable, camera);
+        else if (renderable instanceof RenderableTextureTuple) {
+            RenderableTextureTuple tuple = (RenderableTextureTuple) renderable;
+            Texture2D texture = tuple.texture;
+            Mat4f transform = tuple.transformationMatrix;
+            textureRenderer.render(texture, camera, transform);
+        }
+        else if (renderable instanceof PlainText) {
+            PlainText text = (PlainText) renderable;
+            CharSequence seq = text.getText();
+            Vec3f color = text.getColor();
+            FontMap fontMap = text.getFont();
+            Mat4f transform = text.modelMatrix();
+            textRenderer.renderText(seq, fontMap, color, transform, camera);
+        }
+    }
+
+    @Override
     public void renderAll(Collection<Renderable> renderables) {
-        renderableDeq.addAll(renderables);
+        for (Renderable renderable: renderables) {
+            render(renderable);
+        }
     }
 
     @Override
     public void renderTexture(Texture2D texture2D, Mat4f transformationMatrix) {
-        renderableDeq.add(new RenderableTextureTuple(texture2D, transformationMatrix));
+        render(new RenderableTextureTuple(texture2D, transformationMatrix));
     }
-
-    @Override
-    public void renderTexturedObject(TexturedObject texturedObject) { renderableDeq.add(texturedObject); }
 
     @Override
     public void renderText(CharSequence text, FontMap font, Vec3f color, Mat4f transformationMatrix) {
         PlainText plainText = new PlainText(text, font, transformationMatrix);
         plainText.setColor(color);
-        renderableDeq.add(plainText);
+        render(plainText);
     }
 
-    @Override
-    public void renderVertexShape(VertexShape shape) { renderableDeq.add(shape); }
-
-    @Override
-    public void renderVaoObject(VaoObject object) { renderableDeq.add(object); }
-
-    @Override
-    public void renderEllipse(Ellipse ellipse) { renderableDeq.add(ellipse); }
-
-    @Override
-    public void perform() {
-        while (!renderableDeq.isEmpty()) {
-            Renderable renderable = renderableDeq.pop();
-            if (renderable instanceof VaoObject)
-                vaoObjectRenderer.render((VaoObject) renderable, camera);
-            else if (renderable instanceof VertexShape)
-                vertexShapeRenderer.render((VertexShape) renderable, camera);
-            else if (renderable instanceof TexturedObject)
-                texturedObjectRenderer.render((TexturedObject) renderable, camera);
-            else if (renderable instanceof Ellipse)
-                ellipseRenderer.render((Ellipse) renderable, camera);
-            else if (renderable instanceof RenderableTextureTuple) {
-                RenderableTextureTuple tuple = (RenderableTextureTuple) renderable;
-                Texture2D texture = tuple.texture;
-                Mat4f transform = tuple.transformationMatrix;
-                textureRenderer.render(texture, camera, transform);
-            }
-            else if (renderable instanceof PlainText) {
-                PlainText text = (PlainText) renderable;
-                CharSequence seq = text.getText();
-                Vec3f color = text.getColor();
-                FontMap fontMap = text.getFont();
-                Mat4f transform = text.modelMatrix();
-                textRenderer.renderText(seq, fontMap, color, transform, camera);
-            }
-        }
-    }
 
     private class RenderableTextureTuple implements Renderable {
 

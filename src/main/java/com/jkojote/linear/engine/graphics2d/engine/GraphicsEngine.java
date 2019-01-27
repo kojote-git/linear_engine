@@ -3,45 +3,21 @@ package com.jkojote.linear.engine.graphics2d.engine;
 import com.jkojote.linear.engine.Initializable;
 import com.jkojote.linear.engine.Releasable;
 import com.jkojote.linear.engine.graphics2d.*;
-import com.jkojote.linear.engine.graphics2d.primitives.VertexShape;
-import com.jkojote.linear.engine.graphics2d.primitives.filled.Ellipse;
-import com.jkojote.linear.engine.graphics2d.text.FontMap;
-import com.jkojote.linear.engine.math.Mat4f;
-import com.jkojote.linear.engine.math.Vec3f;
-import com.jkojote.linear.engine.window.Window;
 
 import java.util.Collection;
 
+/**
+ * This interface encapsulates the functionality of rendering {@link Renderable} objects.
+ * The implementation may not support rendering some objects that implement this interface.
+ */
 public interface GraphicsEngine extends Initializable, Releasable {
-
-    Window getWindow();
 
     void setCamera(Camera camera);
 
     Camera getCamera();
 
-    void renderAll(Collection<Renderable> renderable);
+    void renderAll(Collection<Renderable> renderables);
 
-    default void renderTexture(Texture2D texture, Vec3f translation, float rotationAngle, float scaleFactor) {
-        renderTexture(texture, GraphicsUtils.transformationMatrix(translation, rotationAngle, scaleFactor));
-    }
+    void render(Renderable renderable);
 
-    void renderTexture(Texture2D texture2D, Mat4f transformationMatrix);
-
-    void renderTexturedObject(TexturedObject texturedObject);
-
-    default void renderText(CharSequence text,
-                            FontMap font, Vec3f color,
-                            Vec3f translation,
-                            float rotationAngle, float scaleFactor) {
-        renderText(text, font, color, GraphicsUtils.transformationMatrix(translation, rotationAngle, scaleFactor));
-    }
-
-    void renderText(CharSequence text, FontMap font, Vec3f color, Mat4f transformationMatrix);
-
-    void renderVertexShape(VertexShape shape);
-
-    void renderVaoObject(VaoObject object);
-
-    void renderEllipse(Ellipse ellipse);
 }

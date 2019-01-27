@@ -1,5 +1,6 @@
 package com.jkojote.engine.graphics.engine;
 
+import com.jkojote.engine.graphics.LoopRunner;
 import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.Camera;
 import com.jkojote.linear.engine.graphics2d.StaticCamera;
@@ -13,6 +14,8 @@ import com.jkojote.linear.engine.window.Window;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Arrays;
 
 public class GraphicsEngineTest {
 
@@ -40,15 +43,17 @@ public class GraphicsEngineTest {
 
     @Test
     public void drawShapes() {
-        Rectangle rectangle = new Rectangle(new Vec3f(), 50, 50);
-        Ellipse ellipse = new Ellipse(new Vec3f(), 40, 60);
+        Rectangle rectangle = new Rectangle(new Vec3f(-100, 0, 0), 50, 50);
+        Ellipse ellipse = new Ellipse(new Vec3f(120, 0, 0), 40, 60);
         Triangle triangle = new Triangle(new Vec3f(-20, -15, 0), new Vec3f(0, 20, 0), new Vec3f(20, -15, 0));
+        LoopRunner runner = new LoopRunner(window);
         Camera camera = new StaticCamera();
-        window.pollEvents();
         engine.setCamera(camera);
-        engine.renderVertexShape(rectangle);
-        engine.renderEllipse(ellipse);
-        engine.renderVertexShape(triangle);
-        window.update();
+        runner.setRenderCallback(() -> {
+            engine.render(rectangle);
+            engine.render(ellipse);
+            engine.render(triangle);
+        });
+        runner.run();
     }
 }

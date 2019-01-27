@@ -34,8 +34,6 @@ public final class Window implements Releasable, Initializable {
 
     private InitCallback initCallback;
 
-    private UpdateCallback updateCallback;
-
     private MouseButtonCallback mouseButtonCallback;
 
     private CursorCallback cursorCallback;
@@ -78,18 +76,6 @@ public final class Window implements Releasable, Initializable {
         if (initCallback == null)
             throw new NullPointerException("initCallback must not be null");
         this.initCallback = initCallback;
-        return this;
-    }
-
-    /**
-     * Sets the callback that is called every time the window is ready for updating
-     * @param updateCallback callback to be set
-     * @return this window
-     */
-    public Window setUpdateCallback(UpdateCallback updateCallback) {
-        if (updateCallback == null)
-            throw new NullPointerException("updateCallback must not be null");
-        this.updateCallback = updateCallback;
         return this;
     }
 
@@ -237,9 +223,6 @@ public final class Window implements Releasable, Initializable {
     public void update() {
         if (terminated)
             return;
-        glClear(GL_COLOR_BUFFER_BIT);
-        if (updateCallback != null)
-            updateCallback.perform();
         glfwSwapBuffers(window);
     }
 
