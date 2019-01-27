@@ -77,8 +77,9 @@ public final class Window implements Releasable, Initializable {
      * @return this window
      */
     public Window setInitCallback(InitCallback initCallback) {
-        if (!initialized)
-            this.initCallback = initCallback;
+        if (initCallback == null)
+            throw new NullPointerException("initCallback must not be null");
+        this.initCallback = initCallback;
         return this;
     }
 
@@ -88,20 +89,23 @@ public final class Window implements Releasable, Initializable {
      * @return this window
      */
     public Window setRenderCallback(RenderCallback renderCallback) {
-        if (!initialized)
-            this.renderCallback = renderCallback;
+        if (renderCallback == null)
+            throw new NullPointerException("renderCallback must not be null");
+        this.renderCallback = renderCallback;
         return this;
     }
 
     public Window setKeyCallback(KeyCallback keyCallback) {
-        if (!initialized)
-            this.keyCallback = keyCallback;
+        if (keyCallback == null)
+            throw new NullPointerException("keyCallback must not be null");
+        this.keyCallback = keyCallback;
         return this;
     }
 
     public Window setMouseButtonCallback(MouseButtonCallback mouseCallback) {
-        if (!initialized)
-            this.mouseButtonCallback = mouseCallback;
+        if (mouseCallback == null)
+            throw new NullPointerException("mouseCallback must not be null");
+        this.mouseButtonCallback = mouseCallback;
         return this;
     }
 
@@ -111,32 +115,37 @@ public final class Window implements Releasable, Initializable {
      * @return this
      */
     public Window setUpdateCallback(UpdateCallback updateCallback) {
-        if (!initialized)
-            this.updateCallback = updateCallback;
+        if (updateCallback == null)
+            throw new NullPointerException("updateCallback must not be null");
+        this.updateCallback = updateCallback;
         return this;
     }
 
     public Window setCursorCallback(CursorCallback cursorCallback) {
-        if (!initialized)
-            this.cursorCallback = cursorCallback;
+        if (cursorCallback == null)
+            throw new NullPointerException("cursorCallback must not be null");
+        this.cursorCallback = cursorCallback;
         return this;
     }
 
-    public Window setWindowClosedCallback(TerminationCallback windowClosedCallback) {
-        if (!initialized)
-            this.windowClosedCallback = windowClosedCallback;
+    public Window setTerminationCallback(TerminationCallback windowClosedCallback) {
+        if (windowClosedCallback == null)
+            throw new NullPointerException("terminationCallback must not be null");
+        this.windowClosedCallback = windowClosedCallback;
         return this;
     }
 
     public Window setScrollCallback(ScrollCallback scrollCallback) {
-        if (!initialized)
-            this.scrollCallback = scrollCallback;
+        if (scrollCallback == null)
+            throw new NullPointerException("scrollCallback must not be null");
+        this.scrollCallback = scrollCallback;
         return this;
     }
 
     public Window setTextInputCallback(TextInputCallback textInputCallback) {
-        if (!initialized)
-            this.textInputCallback = textInputCallback;
+        if (textInputCallback == null)
+            throw new NullPointerException("textInputCallback must not be null");
+        this.textInputCallback = textInputCallback;
         return this;
     }
 

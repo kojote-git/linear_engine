@@ -19,7 +19,7 @@ import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 
-public class TextRenderer implements Renderer<Text>, Initializable, Releasable {
+public class TextRenderer implements Renderer<ModifiableText>, Initializable, Releasable {
 
     private Mat4f projectionMatrix;
 
@@ -30,7 +30,7 @@ public class TextRenderer implements Renderer<Text>, Initializable, Releasable {
     }
 
     @Override
-    public void render(Text text, Camera camera) {
+    public void render(ModifiableText text, Camera camera) {
         FontMap font = text.getFontMap();
         CharSequence seq = text.getSequence();
         Vec3f color = text.getColor();

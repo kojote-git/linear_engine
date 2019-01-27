@@ -11,7 +11,7 @@ public interface Initializable {
 
     /**
      * Initializes this object
-     * @throws ResourceInitializationException if something goes wrong while inititializing the object
+     * @throws ResourceInitializationException if something goes wrong while initializing the object
      */
     void init() throws ResourceInitializationException;
 

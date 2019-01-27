@@ -4,7 +4,7 @@ import com.jkojote.engine.graphics.LoopRunner;
 import com.jkojote.engine.graphics.TransformableCamera;
 import com.jkojote.engine.graphics.TransformationController;
 import com.jkojote.linear.engine.graphics2d.StaticCamera;
-import com.jkojote.linear.engine.graphics2d.text.Text;
+import com.jkojote.linear.engine.graphics2d.text.ModifiableText;
 import com.jkojote.linear.engine.graphics2d.text.TextRenderer;
 import com.jkojote.linear.engine.graphics2d.text.FontMap;
 import com.jkojote.linear.engine.graphics2d.primitives.renderers.TexturedObjectRenderer;
@@ -42,7 +42,7 @@ public class FontMapTest {
 
     private int width = 400, height = 400;
 
-    private Text text;
+    private ModifiableText text;
 
     public FontMapTest() {
         projectionMatrix = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, 0.0f, 1.0f);
@@ -54,7 +54,7 @@ public class FontMapTest {
     public void init() {
         textRenderer = new TextRenderer(projectionMatrix);
         renderer = new TexturedObjectRenderer(projectionMatrix);
-        text = new Text(font);
+        text = new ModifiableText(font);
         window = new Window("w", width, height, false, false)
             .setInitCallback(() -> {
                 try {

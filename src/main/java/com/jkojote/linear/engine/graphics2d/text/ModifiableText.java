@@ -7,7 +7,7 @@ import com.jkojote.linear.engine.math.Vec3f;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 
-public class Text extends BaseTransformable implements Renderable {
+public class ModifiableText extends BaseTransformable implements Renderable {
 
     private StringBuilder text;
 
@@ -15,7 +15,7 @@ public class Text extends BaseTransformable implements Renderable {
 
     private Vec3f color;
 
-    public Text(FontMap fontMap) {
+    public ModifiableText(FontMap fontMap) {
         super(new Vec3f(), 0.0f, 1.0f);
         this.text = new StringBuilder();
         this.fontMap = fontMap;
@@ -36,27 +36,27 @@ public class Text extends BaseTransformable implements Renderable {
         return fontMap;
     }
 
-    public Text append(char c) {
+    public ModifiableText append(char c) {
         text.append(c);
         return this;
     }
 
-    public Text append(CharSequence c) {
+    public ModifiableText append(CharSequence c) {
         text.append(c);
         return this;
     }
 
-    public Text append(CharSequence c, int start, int end) {
+    public ModifiableText append(CharSequence c, int start, int end) {
         text.append(c, start, end);
         return this;
     }
 
-    public Text insert(int offset, CharSequence c) {
+    public ModifiableText insert(int offset, CharSequence c) {
         text.insert(offset, c);
         return this;
     }
 
-    public Text delete(int start, int end) {
+    public ModifiableText delete(int start, int end) {
         text.delete(start, end);
         return this;
     }

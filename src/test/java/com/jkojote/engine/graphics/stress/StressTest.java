@@ -14,7 +14,7 @@ import com.jkojote.linear.engine.graphics2d.primitives.filled.Triangle;
 import com.jkojote.linear.engine.graphics2d.primitives.renderers.EllipseRenderer;
 import com.jkojote.linear.engine.graphics2d.primitives.renderers.VertexShapeRenderer;
 import com.jkojote.linear.engine.graphics2d.text.FontMap;
-import com.jkojote.linear.engine.graphics2d.text.Text;
+import com.jkojote.linear.engine.graphics2d.text.ModifiableText;
 import com.jkojote.linear.engine.graphics2d.text.TextRenderer;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
@@ -80,7 +80,7 @@ public class StressTest {
                     System.out.println("GL_VERSION: " + glGetString(GL_VERSION));
                     System.out.println("GL_RENDERER: " + glGetString(GL_RENDERER));
                 })
-                .setWindowClosedCallback(() -> {
+                .setTerminationCallback(() -> {
                     fontMap.release();
                     textRenderer.release();
                     ellipseRenderer.release();
@@ -96,7 +96,7 @@ public class StressTest {
     @Test
     public void drawMultipleObjects() {
         TransformationController controller = new TransformationController(transformableCamera);
-        Text fpsCount = new Text(fontMap).append("FPS: ");
+        ModifiableText fpsCount = new ModifiableText(fontMap).append("FPS: ");
         LoopRunner runner = new LoopRunner(window, (fps) -> {
             fpsCount.delete(4, fpsCount.length());
             fpsCount.append(String.valueOf(fps));

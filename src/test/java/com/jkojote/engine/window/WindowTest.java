@@ -21,7 +21,7 @@ public class WindowTest {
             .setInitCallback(() -> {
                 System.out.println("window is initialized");
             })
-            .setWindowClosedCallback(() -> {
+            .setTerminationCallback(() -> {
                 System.out.println("window is closed");
             });
         window.init();

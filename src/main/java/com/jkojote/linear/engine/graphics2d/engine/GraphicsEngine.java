@@ -1,5 +1,8 @@
-package com.jkojote.linear.engine.graphics2d;
+package com.jkojote.linear.engine.graphics2d.engine;
 
+import com.jkojote.linear.engine.Initializable;
+import com.jkojote.linear.engine.Releasable;
+import com.jkojote.linear.engine.graphics2d.*;
 import com.jkojote.linear.engine.graphics2d.primitives.VertexShape;
 import com.jkojote.linear.engine.graphics2d.primitives.filled.Ellipse;
 import com.jkojote.linear.engine.graphics2d.text.FontMap;
@@ -9,7 +12,7 @@ import com.jkojote.linear.engine.window.Window;
 
 import java.util.Collection;
 
-public interface GraphicsEngine {
+public interface GraphicsEngine extends Initializable, Releasable {
 
     Window getWindow();
 

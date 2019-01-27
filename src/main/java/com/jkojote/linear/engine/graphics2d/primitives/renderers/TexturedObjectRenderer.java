@@ -17,81 +17,40 @@ import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 public class TexturedObjectRenderer implements Renderer<TexturedObject>,
         Releasable, Initializable {
 
-    private Mat4f projectionMatrix;
+    private TextureRenderer textureRenderer;
 
-    private Shader shader;
 
     public TexturedObjectRenderer(Mat4f projectionMatrix) {
-        this.projectionMatrix = projectionMatrix;
-    }
-
-    public void setProjectionMatrix(Mat4f projectionMatrix) {
-        if (projectionMatrix == null)
-            throw new NullPointerException("projection matrix cannot be null");
-        this.projectionMatrix = projectionMatrix;
+        this.textureRenderer = new TextureRenderer(projectionMatrix);
     }
 
     @Override
     @SuppressWarnings("Duplicates")
     public void render(TexturedObject obj, Camera camera) {
-        renderTexture(obj.getTexture(), obj.modelMatrix(), camera);
+        renderTexture(obj.getTexture(), camera, obj.modelMatrix());
     }
 
-    public void renderTexture(Texture2D texture, Mat4f transformationMatrix, Camera camera) {
-        int
-                width = texture.getWidth(),
-                height = texture.getHeight();
-        float[] coords = {
-                //  ---------- position -----------  -coords-
-                -width / 2f,  height / 2f, 0.0f,   0, 0,
-                -width / 2f, -height / 2f, 0.0f,   0, 1,
-                width / 2f, -height / 2f, 0.0f,   1, 1,
-                width / 2f,  height / 2f, 0.0f,   1, 0
-        };
-        Vaof vao = new Vaof(2, true)
-                .addArrayBuffer(coords, GL_STATIC_DRAW, 0, 3, 20, 0)
-                .addArrayBuffer(coords, GL_STATIC_DRAW, 1, 2, 20, 12);
-        vao.unbind();
-        shader.bind();
-        shader.setUniform("pv", projectionMatrix.mult(camera.viewMatrix()), true);
-        shader.setUniform("model", transformationMatrix, true);
-        texture.bind();
-        vao.bind();
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
-        glDrawArrays(GL_QUADS, 0, 4);
-        glDisableVertexAttribArray(0);
-        glDisableVertexAttribArray(1);
-        texture.unbind();
-        vao.unbind();
-        vao.release();
-        shader.unbind();
+    private void renderTexture(Texture2D texture, Camera camera, Mat4f modelMatrtix) {
+        textureRenderer.render(texture, camera, modelMatrtix);
     }
 
     @Override
     public void init() throws ResourceInitializationException {
-        try {
-            shader = Shader.fromResources("shaders/texture/vert.glsl", "shaders/texture/fragm.glsl");
-        } catch (IOException e) {
-            throw new ResourceInitializationException(e);
-        }
+        textureRenderer.init();
     }
 
     @Override
     public boolean isInitialized() {
-        return shader != null;
+        return textureRenderer.isInitialized();
     }
 
     @Override
     public void release() {
-        if (isInitialized())
-            shader.release();
+        textureRenderer.release();
     }
 
     @Override
     public boolean isReleased() {
-        if (!isInitialized())
-            return false;
-        return shader.isReleased();
+        return textureRenderer.isReleased();
     }
 }

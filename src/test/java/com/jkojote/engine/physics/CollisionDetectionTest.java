@@ -6,7 +6,7 @@ import com.jkojote.engine.graphics.primitives.BoundingCamera;
 import com.jkojote.linear.engine.graphics2d.StaticCamera;
 import com.jkojote.linear.engine.graphics2d.primitives.renderers.VertexShapeRenderer;
 import com.jkojote.linear.engine.graphics2d.text.FontMap;
-import com.jkojote.linear.engine.graphics2d.text.Text;
+import com.jkojote.linear.engine.graphics2d.text.ModifiableText;
 import com.jkojote.linear.engine.graphics2d.text.TextRenderer;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
@@ -51,7 +51,7 @@ public class CollisionDetectionTest {
                     throw new RuntimeException(e);
                 }
             })
-            .setWindowClosedCallback(() -> {
+            .setTerminationCallback(() -> {
                 vertexShapeRenderer.release();
                 textRenderer.release();
                 fontMap.release();
@@ -86,7 +86,7 @@ public class CollisionDetectionTest {
             new Vec3f(0, 3, 0),
             new Vec3f(3, -3, 0)
         };
-        Text collisionStatus = new Text(fontMap).append("Collided: false");
+        ModifiableText collisionStatus = new ModifiableText(fontMap).append("Collided: false");
         collisionStatus.setTranslation(new Vec3f(-width / 2f, height / 2f, 0));
         SolidPolygon p1 = new SolidPolygon(cbv1, new Vec3f(-30, 0, 0), new Vec3f(0.8f, 0.8f, 0.4f));
         SolidPolygon p2 = new SolidPolygon(cbv1, new Vec3f(30, 0, 0), new Vec3f(0.1f, 0.8f, 0.4f));

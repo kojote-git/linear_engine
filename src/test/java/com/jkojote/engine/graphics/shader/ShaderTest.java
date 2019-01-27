@@ -61,7 +61,7 @@ public class ShaderTest {
                 vao.unbind();
                 shader.unbind();
             })
-            .setWindowClosedCallback(() -> {
+            .setTerminationCallback(() -> {
                 vao.release();
                 shader.release();
             });

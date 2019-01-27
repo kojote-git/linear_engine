@@ -16,7 +16,7 @@ public class StandardIOFileReaderTest {
 
     @Test
     public void asString() throws IOException {
-        String expected = "Text text Text\nText";
+        String expected = "ModifiableText text ModifiableText\nModifiableText";
         String path = "src/test/java/com/jkojote/engine/files/file.txt";
         File file = new File(path);
         assertTrue(file.exists());

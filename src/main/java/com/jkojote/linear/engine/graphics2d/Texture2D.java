@@ -1,6 +1,8 @@
 package com.jkojote.linear.engine.graphics2d;
 
 import com.jkojote.linear.engine.Releasable;
+import com.jkojote.linear.engine.math.Mat4f;
+import com.jkojote.linear.engine.math.Vec3f;
 import org.lwjgl.BufferUtils;
 
 import javax.imageio.ImageIO;
@@ -45,7 +47,7 @@ import org.lwjgl.opengl.GL11;
  * </p>
  * @see TexturedObject
  */
-public final class Texture2D implements Releasable {
+public final class Texture2D implements Releasable, Renderable {
 
     private static final int BYTES_PER_PIXEL = 4;
 
@@ -54,6 +56,8 @@ public final class Texture2D implements Releasable {
     private int texture;
 
     private boolean released;
+
+    private Mat4f model;
 
     /**
      * Load texture from the file
@@ -106,12 +110,14 @@ public final class Texture2D implements Releasable {
         if (glfwGetCurrentContext() == NULL)
             throw new NoContextSetException();
         this.texture = load(image, GL_NEAREST, GL_NEAREST);
+        this.model = Mat4f.identity();
     }
 
     public Texture2D(BufferedImage image, int minFilter, int magFilter) {
         if (glfwGetCurrentContext() == NULL)
             throw new NoContextSetException();
         this.texture = load(image, minFilter, magFilter);
+        this.model = Mat4f.identity();
     }
 
     private int load(BufferedImage image, int minFilter, int magFilter) {
@@ -175,5 +181,15 @@ public final class Texture2D implements Releasable {
     @Override
     public boolean isReleased() {
         return released;
+    }
+
+    @Override
+    public Mat4f modelMatrix() {
+        return model;
+    }
+
+    @Override
+    public int renderingMode() {
+        return GL_QUADS;
     }
 }

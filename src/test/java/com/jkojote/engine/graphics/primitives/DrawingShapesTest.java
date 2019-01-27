@@ -103,7 +103,7 @@ public class DrawingShapesTest {
                 System.out.println("GL_VERSION" + glGetString(GL_VERSION));
                 System.out.println("GL_RENDERER: " + glGetString(GL_RENDERER));
             })
-            .setWindowClosedCallback(() -> {
+            .setTerminationCallback(() -> {
                 vertexShapeRenderer.release();
                 ellipseRenderer.release();
             });
