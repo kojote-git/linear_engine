@@ -16,7 +16,7 @@ import java.util.Collection;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 
-public class SimpleGraphicsEngine implements PrimitiveGraphicsEngine {
+public class PrimitiveGraphicsEngineImpl implements PrimitiveGraphicsEngine {
 
     private Window window;
 
@@ -34,7 +34,7 @@ public class SimpleGraphicsEngine implements PrimitiveGraphicsEngine {
 
     private TextureRenderer textureRenderer;
 
-    public SimpleGraphicsEngine(Window window) {
+    public PrimitiveGraphicsEngineImpl(Window window) {
         if (window.isInitialized())
             throw new IllegalStateException();
         this.window = window;

@@ -5,7 +5,7 @@ import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.Camera;
 import com.jkojote.linear.engine.graphics2d.cameras.StaticCamera;
 import com.jkojote.linear.engine.graphics2d.engine.GraphicsEngine;
-import com.jkojote.linear.engine.graphics2d.engine.SimpleGraphicsEngine;
+import com.jkojote.linear.engine.graphics2d.engine.PrimitiveGraphicsEngineImpl;
 import com.jkojote.linear.engine.graphics2d.primitives.solid.Ellipse;
 import com.jkojote.linear.engine.graphics2d.primitives.solid.Rectangle;
 import com.jkojote.linear.engine.graphics2d.primitives.solid.Triangle;
@@ -24,7 +24,7 @@ public class GraphicsEngineTest {
     @Before
     public void init() {
         window = new Window("Window", 400, 400, false, false);
-        engine = new SimpleGraphicsEngine(window);
+        engine = new PrimitiveGraphicsEngineImpl(window);
         try {
             engine.init();
         } catch (ResourceInitializationException e) {
