@@ -3,7 +3,7 @@ package com.jkojote.engine.physics;
 import com.jkojote.engine.graphics.LoopRunner;
 import com.jkojote.engine.graphics.TransformationController;
 import com.jkojote.engine.graphics.primitives.BoundingCamera;
-import com.jkojote.linear.engine.graphics2d.StaticCamera;
+import com.jkojote.linear.engine.graphics2d.cameras.StaticCamera;
 import com.jkojote.linear.engine.graphics2d.primitives.renderers.VertexShapeRenderer;
 import com.jkojote.linear.engine.graphics2d.text.FontMap;
 import com.jkojote.linear.engine.graphics2d.text.ModifiableText;

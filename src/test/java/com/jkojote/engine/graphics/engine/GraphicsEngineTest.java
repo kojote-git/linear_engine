@@ -3,19 +3,17 @@ package com.jkojote.engine.graphics.engine;
 import com.jkojote.engine.graphics.LoopRunner;
 import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.Camera;
-import com.jkojote.linear.engine.graphics2d.StaticCamera;
+import com.jkojote.linear.engine.graphics2d.cameras.StaticCamera;
 import com.jkojote.linear.engine.graphics2d.engine.GraphicsEngine;
 import com.jkojote.linear.engine.graphics2d.engine.SimpleGraphicsEngine;
-import com.jkojote.linear.engine.graphics2d.primitives.filled.Ellipse;
-import com.jkojote.linear.engine.graphics2d.primitives.filled.Rectangle;
-import com.jkojote.linear.engine.graphics2d.primitives.filled.Triangle;
+import com.jkojote.linear.engine.graphics2d.primitives.solid.Ellipse;
+import com.jkojote.linear.engine.graphics2d.primitives.solid.Rectangle;
+import com.jkojote.linear.engine.graphics2d.primitives.solid.Triangle;
 import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.window.Window;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Arrays;
 
 public class GraphicsEngineTest {
 

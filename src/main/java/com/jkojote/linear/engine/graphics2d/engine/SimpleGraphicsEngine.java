@@ -3,7 +3,7 @@ package com.jkojote.linear.engine.graphics2d.engine;
 import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.*;
 import com.jkojote.linear.engine.graphics2d.primitives.VertexShape;
-import com.jkojote.linear.engine.graphics2d.primitives.filled.Ellipse;
+import com.jkojote.linear.engine.graphics2d.primitives.solid.Ellipse;
 import com.jkojote.linear.engine.graphics2d.primitives.renderers.*;
 import com.jkojote.linear.engine.graphics2d.text.FontMap;
 import com.jkojote.linear.engine.graphics2d.text.PlainText;
@@ -12,9 +12,7 @@ import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.window.Window;
 
-import java.util.ArrayDeque;
 import java.util.Collection;
-import java.util.Deque;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 
@@ -23,8 +21,6 @@ public class SimpleGraphicsEngine implements PrimitiveGraphicsEngine {
     private Window window;
 
     private Camera camera;
-
-    private Deque<Renderable> renderableDeq;
 
     private VaoObjectRenderer vaoObjectRenderer;
 
@@ -57,7 +53,6 @@ public class SimpleGraphicsEngine implements PrimitiveGraphicsEngine {
            this.textRenderer.init();
            this.textureRenderer.init();
         });
-        this.renderableDeq = new ArrayDeque<>();
     }
 
     @Override

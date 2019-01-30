@@ -1,5 +1,6 @@
-package com.jkojote.linear.engine.graphics2d;
+package com.jkojote.linear.engine.graphics2d.cameras;
 
+import com.jkojote.linear.engine.graphics2d.Camera;
 import com.jkojote.linear.engine.math.Mat4f;
 
 public class StaticCamera implements Camera {

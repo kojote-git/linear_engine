@@ -1,4 +1,4 @@
-package com.jkojote.linear.engine.graphics2d.primitives.filled;
+package com.jkojote.linear.engine.graphics2d.primitives.solid;
 
 import com.jkojote.linear.engine.graphics2d.primitives.BaseShape;
 import com.jkojote.linear.engine.math.Vec3f;

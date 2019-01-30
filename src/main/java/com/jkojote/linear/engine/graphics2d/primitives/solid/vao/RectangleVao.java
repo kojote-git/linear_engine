@@ -1,4 +1,4 @@
-package com.jkojote.linear.engine.graphics2d.primitives.filled.vao;
+package com.jkojote.linear.engine.graphics2d.primitives.solid.vao;
 
 import com.jkojote.linear.engine.graphics2d.VaoObject;
 import com.jkojote.linear.engine.graphics2d.GraphicsUtils;
