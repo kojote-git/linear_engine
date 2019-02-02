@@ -41,9 +41,9 @@ public class Painter {
         float incX = (float) (Math.random() / 50);
         float incY = (float) (Math.random() / 50);
         float incZ = (float) (Math.random() / 50);
-        float x = color.getX() + incX * xColor + colorOffsetX;
-        float y = color.getY() + incY * yColor + colorOffsetY;
-        float z = color.getZ() + incZ * zColor + colorOffsetZ;
+        float x = color.x() + incX * xColor + colorOffsetX;
+        float y = color.y() + incY * yColor + colorOffsetY;
+        float z = color.z() + incZ * zColor + colorOffsetZ;
         if (x >= 1.0f) {
             xColor = -1;
             x = 1.0f;

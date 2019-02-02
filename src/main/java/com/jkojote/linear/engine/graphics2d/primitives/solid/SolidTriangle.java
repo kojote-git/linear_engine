@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import static org.lwjgl.opengl.GL11.*;
 
-public class Triangle extends BaseVertexShape {
+public class SolidTriangle extends BaseVertexShape {
 
     /**
      * Creates a new triangle, which has given vertices.
@@ -24,29 +24,22 @@ public class Triangle extends BaseVertexShape {
      * @param v3 third vertex
      * @param translation
      */
-    public Triangle(Vec3f translation, Vec3f v1, Vec3f v2, Vec3f v3) {
+    public SolidTriangle(Vec3f translation, Vec3f v1, Vec3f v2, Vec3f v3) {
+        super(new ArrayList<>(3), translation, 0, 1.0f);
         super.vertices = new ArrayList<>(3);
-        super.translation = translation;
-        super.color = new Vec3f();
-        super.scaleFactor = 1.0f;
-
         vertices.add(v1);
         vertices.add(v2);
         vertices.add(v3);
     }
 
     /**
-     * @see Triangle#Triangle(Vec3f, Vec3f, Vec3f, Vec3f)
+     * @see SolidTriangle#SolidTriangle(Vec3f, Vec3f, Vec3f, Vec3f)
      * @param v1 first vertex
      * @param v2 second vertex
      * @param v3 third vertex
      */
-    public Triangle(Vec3f v1, Vec3f v2, Vec3f v3) {
-        super.vertices = new ArrayList<>(3);
-        super.translation = new Vec3f();
-        super.color = new Vec3f();
-        super.scaleFactor = 1.0f;
-
+    public SolidTriangle(Vec3f v1, Vec3f v2, Vec3f v3) {
+        super(new ArrayList<>(3));
         vertices.add(v1);
         vertices.add(v2);
         vertices.add(v3);

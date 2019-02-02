@@ -21,17 +21,17 @@ public final class Vec3f {
     /**
      * @return x component
      */
-    public float getX() { return x; }
+    public float x() { return x; }
 
     /**
      * @return y component
      */
-    public float getY() { return y; }
+    public float y() { return y; }
 
     /**
      * @return z component
      */
-    public float getZ() { return z; }
+    public float z() { return z; }
 
 
     /**

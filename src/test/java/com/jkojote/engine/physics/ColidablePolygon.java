@@ -1,7 +1,7 @@
 package com.jkojote.engine.physics;
 
 import com.jkojote.linear.engine.graphics2d.primitives.VertexShape;
-import com.jkojote.linear.engine.graphics2d.primitives.solid.Polygon;
+import com.jkojote.linear.engine.graphics2d.primitives.solid.SolidPolygon;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.physics.CollisionBox;
@@ -9,18 +9,18 @@ import com.jkojote.linear.engine.shared.Transformable;
 
 import java.util.List;
 
-public class SolidPolygon implements Transformable, VertexShape {
+public class ColidablePolygon implements Transformable, VertexShape {
 
-    private Polygon polygon;
+    private SolidPolygon polygon;
 
     private CollisionBox collisionBox;
 
-    public SolidPolygon(Vec3f[] vertices, Vec3f position, Vec3f color) {
-        this.polygon = new Polygon(position, color, vertices);
+    public ColidablePolygon(Vec3f[] vertices, Vec3f position, Vec3f color) {
+        this.polygon = new com.jkojote.linear.engine.graphics2d.primitives.solid.SolidPolygon(position, color, vertices);
         this.collisionBox = new CollisionBox(position, vertices);
     }
 
-    public boolean checkCollides(SolidPolygon polygon) {
+    public boolean checkCollides(ColidablePolygon polygon) {
         return collisionBox.checkCollides(polygon.collisionBox);
     }
 

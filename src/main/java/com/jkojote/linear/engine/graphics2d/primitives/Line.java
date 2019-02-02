@@ -11,34 +11,29 @@ public class Line extends BaseVertexShape {
     private float length;
 
     public Line(float length) {
+        super(new ArrayList<>(2));
         this.length = length;
-        super.vertices = new ArrayList<>(2);
+        vertices = new ArrayList<>(2);
         vertices.add(new Vec3f(-length / 2, 0, 0));
         vertices.add(new Vec3f(length / 2, 0, 0));
-        setColor(new Vec3f());
-        setTranslation(new Vec3f());
-        setScaleFactor(1.0f);
     }
 
     public Line(float length, Vec3f translation, Vec3f color) {
+        super(new ArrayList<>(2), translation, 0, 1.0f, color);
         this.length = length;
-        super.vertices = new ArrayList<>(2);
+        vertices = new ArrayList<>(2);
         vertices.add(new Vec3f(-length / 2, 0, 0));
         vertices.add(new Vec3f(length / 2, 0, 0));
-        setColor(color);
-        setTranslation(translation);
-        setScaleFactor(1.0f);
     }
 
     public Line(Vec3f v1, Vec3f v2) {
-        float x = (v1.getX() + v2.getX()) / 2;
-        float y = (v1.getY() + v2.getY()) / 2;
-        super.vertices = new ArrayList<>(2);
-        vertices.add(new Vec3f(v1.getX() - x, v1.getY() - y, v1.getZ()));
-        vertices.add(new Vec3f(v2.getX() - x, v2.getY() - y, v2.getZ()));
-        setColor(new Vec3f());
-        setTranslation(new Vec3f());
-        setScaleFactor(1.0f);
+        super(new ArrayList<>(2));
+        float x = (v1.x() + v2.x()) / 2;
+        float y = (v1.y() + v2.y()) / 2;
+        this.length = new Vec3f(v1.x() - v2.x(), v1.y() - v2.y(), v1.z() - v2.z()).len();
+        vertices = new ArrayList<>(2);
+        vertices.add(new Vec3f(v1.x() - x, v1.y() - y, v1.z()));
+        vertices.add(new Vec3f(v2.x() - x, v2.y() - y, v2.z()));
     }
 
     public float getLength() {

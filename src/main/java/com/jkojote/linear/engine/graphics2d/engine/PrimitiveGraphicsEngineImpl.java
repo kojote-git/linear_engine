@@ -2,8 +2,9 @@ package com.jkojote.linear.engine.graphics2d.engine;
 
 import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.*;
+import com.jkojote.linear.engine.graphics2d.primitives.Ellipse;
 import com.jkojote.linear.engine.graphics2d.primitives.VertexShape;
-import com.jkojote.linear.engine.graphics2d.primitives.solid.Ellipse;
+import com.jkojote.linear.engine.graphics2d.primitives.solid.SolidEllipse;
 import com.jkojote.linear.engine.graphics2d.primitives.renderers.*;
 import com.jkojote.linear.engine.graphics2d.text.FontMap;
 import com.jkojote.linear.engine.graphics2d.text.PlainText;

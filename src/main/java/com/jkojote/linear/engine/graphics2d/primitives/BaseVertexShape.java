@@ -10,17 +10,40 @@ public abstract class BaseVertexShape implements VertexShape, Transformable {
 
     protected List<Vec3f> vertices;
 
-    protected Vec3f color;
+    private Vec3f color;
 
-    protected Vec3f translation;
+    private Vec3f translation;
 
-    protected float scaleFactor;
+    private float scaleFactor;
 
-    protected float rotationAngle;
+    private float rotationAngle;
 
     private boolean updateMatrix = true;
 
     private Mat4f modelMatrix;
+
+    protected BaseVertexShape(List<Vec3f> vertices) {
+        this(vertices, new Vec3f(), 0, 1.0f, new Vec3f());
+    }
+
+    protected BaseVertexShape(List<Vec3f> vertices,
+                              Vec3f translation,
+                              float rotationAngle,
+                              float scaleFactor) {
+        this(vertices, translation, rotationAngle, scaleFactor, new Vec3f());
+    }
+
+    protected BaseVertexShape(List<Vec3f> vertices,
+                              Vec3f translation,
+                              float rotationAngle,
+                              float scaleFactor,
+                              Vec3f color) {
+        this.vertices = vertices;
+        this.translation = translation;
+        this.rotationAngle = rotationAngle;
+        this.scaleFactor = scaleFactor;
+        this.color = color;
+    }
 
     @Override
     public List<Vec3f> vertices() {

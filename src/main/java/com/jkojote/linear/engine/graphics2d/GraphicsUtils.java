@@ -1,9 +1,7 @@
 package com.jkojote.linear.engine.graphics2d;
 
 import com.jkojote.linear.engine.math.Mat4f;
-import com.jkojote.linear.engine.math.MathUtils;
 import com.jkojote.linear.engine.math.Vec3f;
-import com.jkojote.linear.engine.shared.Transformable;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -18,14 +16,14 @@ public final class GraphicsUtils {
 
     public static Vaof createPrimitiveVao(List<Vec3f> vertices, Vec3f color) {
         float
-            colorX = color.getX(),
-            colorY = color.getY(),
-            colorZ = color.getZ();
+            colorX = color.x(),
+            colorY = color.y(),
+            colorZ = color.z();
         int capacity = (vertices.size() * 5) << 2;
         FloatBuffer buffer = ByteBuffer.allocateDirect(capacity).order(ByteOrder.nativeOrder()).asFloatBuffer();
         for (Vec3f v : vertices) {
             buffer
-                .put(v.getX()).put(v.getY())
+                .put(v.x()).put(v.y())
                 .put(colorX).put(colorY).put(colorZ);
         }
         buffer.flip();

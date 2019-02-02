@@ -6,12 +6,13 @@ import com.jkojote.engine.graphics.LoopRunner;
 import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.cameras.StaticCamera;
 import com.jkojote.linear.engine.graphics2d.primitives.*;
-import com.jkojote.linear.engine.graphics2d.primitives.solid.Ellipse;
-import com.jkojote.linear.engine.graphics2d.primitives.solid.Polygon;
-import com.jkojote.linear.engine.graphics2d.primitives.solid.Rectangle;
-import com.jkojote.linear.engine.graphics2d.primitives.solid.Triangle;
+import com.jkojote.linear.engine.graphics2d.primitives.solid.SolidEllipse;
+import com.jkojote.linear.engine.graphics2d.primitives.solid.SolidPolygon;
+import com.jkojote.linear.engine.graphics2d.primitives.solid.SolidRectangle;
+import com.jkojote.linear.engine.graphics2d.primitives.solid.SolidTriangle;
 import com.jkojote.linear.engine.graphics2d.primitives.renderers.VertexShapeRenderer;
 import com.jkojote.linear.engine.graphics2d.primitives.renderers.EllipseRenderer;
+import com.jkojote.linear.engine.graphics2d.primitives.striped.StripedPolygon;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.window.Window;
@@ -24,13 +25,13 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class DrawingShapesTest {
 
-    private Rectangle rectangle;
+    private SolidRectangle rectangle;
 
-    private Ellipse ellipse;
+    private SolidEllipse ellipse;
 
-    private Triangle triangle;
+    private SolidTriangle triangle;
 
-    private Polygon polygon;
+    private StripedPolygon polygon;
 
     private Line line;
 
@@ -48,13 +49,13 @@ public class DrawingShapesTest {
 
     public DrawingShapesTest() {
         // load rectangle
-        rectangle = new Rectangle(new Vec3f(100, 100, 0), 80, 80);
+        rectangle = new SolidRectangle(new Vec3f(100, 100, 0), 80, 80);
         rectangle.setColor(new Vec3f(0.5f, 0.5f, 0.5f));
         // load ellipse
-        ellipse = new Ellipse(new Vec3f(0, 0, 0), 80, 90);
+        ellipse = new SolidEllipse(new Vec3f(0, 0, 0), 80, 90);
         ellipse.setColor(new Vec3f(0.5f, 0.5f, 0.5f));
         // load triangle
-        triangle = new Triangle(
+        triangle = new SolidTriangle(
                 new Vec3f(-15, -30, 0),
                 new Vec3f(0, 20, 0),
                 new Vec3f(20, -20, 0));
@@ -64,7 +65,7 @@ public class DrawingShapesTest {
         line.setColor(new Vec3f(0.5f, 0.5f, 0.5f));
         // load polygon
         // cat head
-        polygon = new Polygon(new Vec3f[]{
+        polygon = new StripedPolygon(new Vec3f[]{
             new Vec3f(-2, -5, 0),
             new Vec3f(-5, -4, 0),
             new Vec3f(-7, -2, 0),

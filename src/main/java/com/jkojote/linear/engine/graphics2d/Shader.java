@@ -117,7 +117,7 @@ public final class Shader implements Releasable {
         int location = glGetUniformLocation(programObject, name);
         if (location == -1)
             return false;
-        glUniform3f(location, vec3f.getX(), vec3f.getY(), vec3f.getZ());
+        glUniform3f(location, vec3f.x(), vec3f.y(), vec3f.z());
         return true;
     }
 

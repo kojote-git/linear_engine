@@ -6,17 +6,36 @@ import com.jkojote.linear.engine.math.Vec3f;
 
 public abstract class BaseShape implements Shape, Transformable {
 
-    protected Vec3f color;
+    private Vec3f color;
 
-    protected Vec3f translation;
+    private Vec3f translation;
 
-    protected float rotationAngle;
+    private float rotationAngle;
 
-    protected float scaleFactor;
+    private float scaleFactor;
 
     private Mat4f transformationMatrix;
 
-    private boolean updateMatrix = true;
+    private boolean updateMatrix;
+
+    protected BaseShape() {
+        this.translation = new Vec3f();
+        this.rotationAngle = 0;
+        this.scaleFactor = 1.0f;
+        this.color = new Vec3f();
+    }
+
+    protected BaseShape(Vec3f translation, float rotationAngle, float scaleFactor) {
+        this(translation, rotationAngle, scaleFactor, new Vec3f());
+    }
+
+    protected BaseShape(Vec3f translation, float rotationAngle, float scaleFactor, Vec3f color) {
+        this.translation = translation;
+        this.rotationAngle = rotationAngle;
+        this.scaleFactor = scaleFactor;
+        this.updateMatrix = true;
+        this.color = color;
+    }
 
     @Override
     public Vec3f color() {

@@ -7,7 +7,7 @@ import com.jkojote.linear.engine.graphics2d.Camera;
 import com.jkojote.linear.engine.graphics2d.Renderer;
 import com.jkojote.linear.engine.graphics2d.Shader;
 import com.jkojote.linear.engine.graphics2d.Vaof;
-import com.jkojote.linear.engine.graphics2d.primitives.solid.Ellipse;
+import com.jkojote.linear.engine.graphics2d.primitives.Ellipse;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.MathUtils;
 import com.jkojote.linear.engine.math.Vec3f;
@@ -39,9 +39,9 @@ public class EllipseRenderer implements Renderer<Ellipse>, Releasable, Initializ
         float xRad = ellipse.xRadius();
         float yRad = ellipse.yRadius();
         float
-                colorX = color.getX(),
-                colorY = color.getY(),
-                colorZ = color.getZ();
+                colorX = color.x(),
+                colorY = color.y(),
+                colorZ = color.z();
         int capacity = (360 * 5) << 2;
         FloatBuffer buffer = ByteBuffer.allocateDirect(capacity)
                 .order(ByteOrder.nativeOrder()).asFloatBuffer();

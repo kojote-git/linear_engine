@@ -82,9 +82,9 @@ public class TextRenderer implements Renderer<ModifiableText>, Initializable, Re
     private FloatBuffer createVbo(CharSequence seq, Vec3f color, FontMap font,
                                   float xRatio, float yRatio, int capacity, int lines) {
         int lineHeight = font.getLineHeight();
-        float colorX = color.getX(),
-              colorY = color.getY(),
-              colorZ = color.getZ();
+        float colorX = color.x(),
+              colorY = color.y(),
+              colorZ = color.z();
         FloatBuffer buffer = ByteBuffer.allocateDirect(capacity).order(ByteOrder.nativeOrder()).asFloatBuffer();
         float xPosition = 0, yPosition = 0;
         for (int i = 0; i < seq.length(); i++) {

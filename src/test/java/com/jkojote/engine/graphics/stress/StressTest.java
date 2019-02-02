@@ -7,10 +7,10 @@ import com.jkojote.linear.engine.graphics2d.cameras.StaticCamera;
 import com.jkojote.linear.engine.shared.Transformable;
 import com.jkojote.linear.engine.graphics2d.primitives.Shape;
 import com.jkojote.linear.engine.graphics2d.primitives.VertexShape;
-import com.jkojote.linear.engine.graphics2d.primitives.solid.Ellipse;
-import com.jkojote.linear.engine.graphics2d.primitives.solid.Polygon;
-import com.jkojote.linear.engine.graphics2d.primitives.solid.Rectangle;
-import com.jkojote.linear.engine.graphics2d.primitives.solid.Triangle;
+import com.jkojote.linear.engine.graphics2d.primitives.solid.SolidEllipse;
+import com.jkojote.linear.engine.graphics2d.primitives.solid.SolidPolygon;
+import com.jkojote.linear.engine.graphics2d.primitives.solid.SolidRectangle;
+import com.jkojote.linear.engine.graphics2d.primitives.solid.SolidTriangle;
 import com.jkojote.linear.engine.graphics2d.primitives.renderers.EllipseRenderer;
 import com.jkojote.linear.engine.graphics2d.primitives.renderers.VertexShapeRenderer;
 import com.jkojote.linear.engine.graphics2d.text.FontMap;
@@ -124,8 +124,8 @@ public class StressTest {
             for (Shape shape : shapes) {
                 if (shape instanceof VertexShape)
                     vertexShapeRenderer.render((VertexShape) shape, transformableCamera);
-                if (shape instanceof Ellipse)
-                    ellipseRenderer.render((Ellipse) shape, transformableCamera);
+                if (shape instanceof SolidEllipse)
+                    ellipseRenderer.render((SolidEllipse) shape, transformableCamera);
             }
             textRenderer.render(fpsCount, staticCamera);
         });
@@ -147,18 +147,18 @@ public class StressTest {
         Vec3f translation = new Vec3f(x, y, 0);
         switch (rand) {
             case 0:
-                return new Rectangle(translation, 30, 30);
+                return new SolidRectangle(translation, 30, 30);
             case 1:
-                Triangle triangle = new Triangle(
+                SolidTriangle triangle = new SolidTriangle(
                         new Vec3f(-15, -15, 0),
                         new Vec3f(0, 15, 0),
                         new Vec3f(15, -15, 0)
                 );
                 triangle.setTranslation(translation);
             case 2:
-                return new Ellipse(translation, 30, 30);
+                return new SolidEllipse(translation, 30, 30);
             default:
-                return new Polygon(translation, new Vec3f(), new Vec3f[]{
+                return new SolidPolygon(translation, new Vec3f(), new Vec3f[]{
                         new Vec3f(-2, -5, 0),
                         new Vec3f(-5, -4, 0),
                         new Vec3f(-7, -2, 0),

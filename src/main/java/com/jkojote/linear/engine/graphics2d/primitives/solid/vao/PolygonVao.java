@@ -22,17 +22,13 @@ public class PolygonVao extends BaseShape implements VaoObject {
     private List<Vec3f> vertices;
 
     public PolygonVao(Vec3f[] vertices) {
+        super(new Vec3f(), 0, 1.0f);
         this.vertices = Arrays.asList(vertices);
-        super.translation = new Vec3f();
-        super.color = new Vec3f();
-        super.scaleFactor = 1.0f;
     }
 
     public PolygonVao(Vec3f translation, Vec3f color, Vec3f[] vertices) {
+        super(translation, 0, 1.0f, color);
         this.vertices = Arrays.asList(vertices);
-        super.translation = translation;
-        super.color = color;
-        super.scaleFactor = 1.0f;
     }
 
     @Override
@@ -95,7 +91,7 @@ public class PolygonVao extends BaseShape implements VaoObject {
         if (updateVao) {
             if (vao != null)
                 vao.release();
-            vao = GraphicsUtils.createPrimitiveVao(vertices, color);
+            vao = GraphicsUtils.createPrimitiveVao(vertices, color());
             updateVao = false;
         }
     }

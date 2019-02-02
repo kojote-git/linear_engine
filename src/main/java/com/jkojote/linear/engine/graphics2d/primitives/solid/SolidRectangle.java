@@ -7,27 +7,24 @@ import java.util.ArrayList;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 
-public class Rectangle extends BaseVertexShape {
+public class SolidRectangle extends BaseVertexShape {
 
-    private float initialWidth, initialHeight;
+    private float width, height;
 
-    public Rectangle(Vec3f translation, float width, float height) {
-        super.vertices = new ArrayList<>(4);
-        super.translation = translation;
-        super.color = new Vec3f();
-        super.scaleFactor = 1.0f;
+    public SolidRectangle(Vec3f translation, float width, float height) {
+        super(new ArrayList<>(4), translation, 0, 1.0f);
 
-        initialWidth = width;
-        initialHeight = height;
+        this.width = width;
+        this.height = height;
         vertices.add(new Vec3f(-width / 2, -height / 2, 0));
         vertices.add(new Vec3f(-width / 2,  height / 2, 0));
         vertices.add(new Vec3f( width / 2,  height / 2, 0));
         vertices.add(new Vec3f( width / 2, -height / 2, 0));
     }
 
-    public float getInitialWidth() { return initialWidth; }
+    public float getWidth() { return width; }
 
-    public float getInitialHeight() { return initialHeight; }
+    public float getHeight() { return height; }
 
     @Override
     public int renderingMode() {

@@ -14,7 +14,7 @@ import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 
 public class RectangleVao extends BaseShape implements VaoObject {
 
-    private float initialWidth, initialHeight;
+    private float width, height;
 
     private ArrayList<Vec3f> vertices;
 
@@ -23,12 +23,10 @@ public class RectangleVao extends BaseShape implements VaoObject {
     private boolean updateVao = true, vaoReleased;
 
     public RectangleVao(Vec3f translation, float width, float height) {
-        super.translation = translation;
-        super.color = new Vec3f();
-        super.scaleFactor = 1.0f;
+        super(translation, 0, 1.0f);
 
-        initialWidth = width;
-        initialHeight = height;
+        this.width = width;
+        this.height = height;
         vertices = new ArrayList<>(4);
         vertices.add(new Vec3f(-width / 2, -height / 2, 0));
         vertices.add(new Vec3f(-width / 2,  height / 2, 0));
@@ -36,9 +34,9 @@ public class RectangleVao extends BaseShape implements VaoObject {
         vertices.add(new Vec3f( width / 2, -height / 2, 0));
     }
 
-    public float getInitialWidth() { return initialWidth; }
+    public float getWidth() { return width; }
 
-    public float getInitialHeight() { return initialHeight; }
+    public float getHeight() { return height; }
 
     @Override
     public void setColor(Vec3f color) {
@@ -88,7 +86,7 @@ public class RectangleVao extends BaseShape implements VaoObject {
         if (updateVao) {
             if (vaof != null)
                 vaof.release();
-            vaof = GraphicsUtils.createPrimitiveVao(vertices, color);
+            vaof = GraphicsUtils.createPrimitiveVao(vertices, color());
             updateVao = false;
         }
     }
