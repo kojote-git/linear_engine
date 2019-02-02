@@ -15,6 +15,10 @@ public abstract class BaseTransformable implements Transformable {
 
     private boolean updateMatrix;
 
+    protected BaseTransformable() {
+        this(new Vec3f(), 0, 1.0f);
+    }
+
     protected BaseTransformable(Vec3f translation, float rotationAngle, float scaleFactor) {
         this.translation = translation;
         this.rotationAngle = rotationAngle;
