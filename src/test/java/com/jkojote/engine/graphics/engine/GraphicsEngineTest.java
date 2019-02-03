@@ -24,7 +24,7 @@ public class GraphicsEngineTest {
     @Before
     public void init() {
         window = new Window("Window", 400, 400, false, false);
-        engine = new PrimitiveGraphicsEngineImpl(window);
+        engine = new PrimitiveGraphicsEngineImpl();
         try {
             engine.init();
         } catch (ResourceInitializationException e) {

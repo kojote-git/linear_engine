@@ -21,9 +21,11 @@ import static org.lwjgl.opengl.GL11.GL_QUADS;
 
 public class PrimitiveGraphicsEngineImpl implements PrimitiveGraphicsEngine {
 
-    private Window window;
-
     private Camera camera;
+
+    private boolean initialized;
+
+    private boolean released;
 
     private VaoObjectRenderer vaoObjectRenderer;
 
@@ -39,11 +41,7 @@ public class PrimitiveGraphicsEngineImpl implements PrimitiveGraphicsEngine {
 
     private SpriteObjectRenderer spriteObjectRenderer;
 
-    public PrimitiveGraphicsEngineImpl(Window window) {
-        if (window.isInitialized())
-            throw new IllegalStateException();
-        this.window = window;
-        Mat4f proj = window.getProjectionMatrix();
+    public PrimitiveGraphicsEngineImpl() {
         this.texturedObjectRenderer = new TexturedObjectRenderer();
         this.vaoObjectRenderer = new VaoObjectRenderer();
         this.ellipseRenderer = new EllipseRenderer();
@@ -51,28 +49,42 @@ public class PrimitiveGraphicsEngineImpl implements PrimitiveGraphicsEngine {
         this.textRenderer = new TextRenderer();
         this.textureRenderer = new TextureRenderer();
         this.spriteObjectRenderer = new SpriteObjectRenderer();
-        this.window.setInitCallback(() -> {
-            this.spriteObjectRenderer.init();
-            this.texturedObjectRenderer.init();
-            this.vaoObjectRenderer.init();
-            this.ellipseRenderer.init();
-            this.vertexShapeRenderer.init();
-            this.textRenderer.init();
-            this.textureRenderer.init();
-        });
     }
 
     @Override
-    public void init() throws ResourceInitializationException { window.init(); }
+    public void init() throws ResourceInitializationException {
+        if (initialized)
+            return;
+        spriteObjectRenderer.init();
+        texturedObjectRenderer.init();
+        vaoObjectRenderer.init();
+        ellipseRenderer.init();
+        vertexShapeRenderer.init();
+        textRenderer.init();
+        textureRenderer.init();
+        initialized = true;
+    }
 
     @Override
-    public boolean isInitialized() { return window.isInitialized(); }
+    public boolean isInitialized() { return initialized; }
 
     @Override
-    public void release() { window.terminate(); }
+    public void release() {
+        if (released)
+            return;
+        spriteObjectRenderer.release();
+        texturedObjectRenderer.release();
+        ellipseRenderer.release();
+        vaoObjectRenderer.release();
+        ellipseRenderer.release();
+        vertexShapeRenderer.release();
+        textRenderer.release();
+        textureRenderer.release();
+        released = true;
+    }
 
     @Override
-    public boolean isReleased() { return window.isReleased(); }
+    public boolean isReleased() { return released; }
 
     @Override
     public void setCamera(Camera camera) { this.camera = camera; }
