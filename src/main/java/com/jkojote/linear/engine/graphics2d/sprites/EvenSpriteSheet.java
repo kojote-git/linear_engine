@@ -1,12 +1,14 @@
 package com.jkojote.linear.engine.graphics2d.sprites;
 
-import com.jkojote.linear.engine.Releasable;
 import com.jkojote.linear.engine.graphics2d.Texture2D;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EvenSpriteSheet implements SpriteSheet, Releasable {
+import static org.lwjgl.opengl.GL11.GL_NEAREST;
+
+public class EvenSpriteSheet implements SpriteSheet {
 
     private Texture2D texture;
 
@@ -15,6 +17,18 @@ public class EvenSpriteSheet implements SpriteSheet, Releasable {
     public EvenSpriteSheet(Texture2D texture, float spriteWidth, float spriteHeight) {
         sprites = new ArrayList<>();
         this.texture = texture;
+        cutSprites(texture, spriteWidth, spriteHeight);
+    }
+
+    public EvenSpriteSheet(String path, float spriteWidth, float spriteHeight) throws IOException {
+        this(path, spriteWidth, spriteHeight, GL_NEAREST, GL_NEAREST);
+    }
+
+    public EvenSpriteSheet(String path,
+                           float spriteWidth, float spriteHeight,
+                           int minFilter, int magFilter) throws IOException {
+        sprites = new ArrayList<>();
+        texture = new Texture2D(path, minFilter, magFilter);
         cutSprites(texture, spriteWidth, spriteHeight);
     }
 
@@ -55,9 +69,10 @@ public class EvenSpriteSheet implements SpriteSheet, Releasable {
             if (x >= texWidth) {
                 x = 0;
                 y += spriteHeight;
+            } else {
+                sprites.add(new OrdinarySprite(this, new Point(x, y), spriteWidth, spriteHeight));
+                x += spriteWidth;
             }
-            sprites.add(new TransformableSprite(this, new Point(x, y), spriteWidth, spriteHeight));
-            x += spriteWidth;
         }
     }
 }

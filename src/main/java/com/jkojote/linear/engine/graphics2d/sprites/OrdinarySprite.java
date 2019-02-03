@@ -1,9 +1,8 @@
 package com.jkojote.linear.engine.graphics2d.sprites;
 
 import com.jkojote.linear.engine.math.Mat4f;
-import com.jkojote.linear.engine.shared.BaseTransformable;
 
-public final class TransformableSprite extends BaseTransformable implements Sprite {
+public final class OrdinarySprite implements Sprite {
 
     private float width, height;
 
@@ -11,7 +10,9 @@ public final class TransformableSprite extends BaseTransformable implements Spri
 
     private Point topLeft;
 
-    public TransformableSprite(SpriteSheet spriteSheet, Point topLeft, float width, float height) {
+    private Mat4f identity = Mat4f.identity();
+
+    public OrdinarySprite(SpriteSheet spriteSheet, Point topLeft, float width, float height) {
         this.spriteSheet = spriteSheet;
         this.topLeft = topLeft;
         this.width = width;
@@ -40,6 +41,6 @@ public final class TransformableSprite extends BaseTransformable implements Spri
 
     @Override
     public Mat4f modelMatrix() {
-        return transformationMatrix();
+        return identity;
     }
 }

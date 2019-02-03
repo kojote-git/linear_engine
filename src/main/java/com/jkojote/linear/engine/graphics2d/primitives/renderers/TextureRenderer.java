@@ -29,6 +29,7 @@ public class TextureRenderer implements Renderer<Texture2D>, Initializable, Rele
         render(texture, camera, texture.modelMatrix());
     }
 
+    @SuppressWarnings("Duplicates")
     public void render(Texture2D texture, Camera camera, Mat4f transformationMatrix) {
         int
             width = texture.getWidth(),
@@ -37,8 +38,8 @@ public class TextureRenderer implements Renderer<Texture2D>, Initializable, Rele
             //  ---------- position -----------  -coords-
             -width / 2f,  height / 2f, 0.0f,   0, 0,
             -width / 2f, -height / 2f, 0.0f,   0, 1,
-             width / 2f, -height / 2f, 0.0f,   1, 1,
-             width / 2f,  height / 2f, 0.0f,   1, 0
+             width / 2f,  height / 2f, 0.0f,   1, 1,
+             width / 2f, -height / 2f, 0.0f,   1, 0
         };
         Vaof vao = new Vaof(2, true)
             .addArrayBuffer(coords, GL_STATIC_DRAW, 0, 3, 20, 0)

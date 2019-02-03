@@ -47,8 +47,8 @@ public class TransformationController implements KeyCallback {
             if (mods == GLFW_MOD_CONTROL) {
                 switch (key) {
                     case GLFW_KEY_Z:
-                        if (scaleFactorDelta - 0.1 > 0)
-                            scaleFactorDelta -= 0.1;
+                        if (scaleFactorDelta - 0.01f > 0)
+                            scaleFactorDelta -= 0.01f;
                         return;
                     case GLFW_KEY_X:
                         if (translationDelta - 1 > 0)
@@ -62,7 +62,7 @@ public class TransformationController implements KeyCallback {
             } else {
                 switch (key) {
                     case GLFW_KEY_Z:
-                        scaleFactorDelta += 0.1;
+                        scaleFactorDelta += 0.01f;
                         return;
                     case GLFW_KEY_X:
                         translationDelta += 1;
