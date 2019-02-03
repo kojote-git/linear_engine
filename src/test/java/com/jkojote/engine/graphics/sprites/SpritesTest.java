@@ -2,7 +2,7 @@ package com.jkojote.engine.graphics.sprites;
 
 import com.jkojote.engine.graphics.LoopRunner;
 import com.jkojote.engine.graphics.TransformationController;
-import com.jkojote.engine.graphics.primitives.BoundingCamera;
+import com.jkojote.engine.graphics.BoundingCamera;
 import com.jkojote.linear.engine.Releasable;
 import com.jkojote.linear.engine.graphics2d.Camera;
 import com.jkojote.linear.engine.graphics2d.sprites.EvenSpriteSheet;
@@ -39,11 +39,11 @@ public class SpritesTest {
     @Before
     public void init() throws Exception {
         window = new Window("w", width, height, false, false);
-        renderer = new SpriteObjectRenderer(window.getProjectionMatrix());
+        renderer = new SpriteObjectRenderer();
         runner = new LoopRunner(window, (fps) -> System.out.println("FPS: " + fps));
         spriteSheet = new EvenSpriteSheet(path, 180, 340, GL_LINEAR, GL_LINEAR);
         spriteObject = new AnimatedSpriteObject(spriteSheet, 1);
-        camera = new BoundingCamera<>(spriteObject);
+        camera = new BoundingCamera<>(spriteObject, window);
         controller = new TransformationController(spriteObject);
         runner.setUpdateCallback(controller::update);
         window.setKeyCallback(controller);

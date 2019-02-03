@@ -44,13 +44,13 @@ public class PrimitiveGraphicsEngineImpl implements PrimitiveGraphicsEngine {
             throw new IllegalStateException();
         this.window = window;
         Mat4f proj = window.getProjectionMatrix();
-        this.texturedObjectRenderer = new TexturedObjectRenderer(proj);
-        this.vaoObjectRenderer = new VaoObjectRenderer(proj);
-        this.ellipseRenderer = new EllipseRenderer(proj);
-        this.vertexShapeRenderer = new VertexShapeRenderer(proj);
-        this.textRenderer = new TextRenderer(proj);
-        this.textureRenderer = new TextureRenderer(proj);
-        this.spriteObjectRenderer = new SpriteObjectRenderer(proj);
+        this.texturedObjectRenderer = new TexturedObjectRenderer();
+        this.vaoObjectRenderer = new VaoObjectRenderer();
+        this.ellipseRenderer = new EllipseRenderer();
+        this.vertexShapeRenderer = new VertexShapeRenderer();
+        this.textRenderer = new TextRenderer();
+        this.textureRenderer = new TextureRenderer();
+        this.spriteObjectRenderer = new SpriteObjectRenderer();
         this.window.setInitCallback(() -> {
             this.spriteObjectRenderer.init();
             this.texturedObjectRenderer.init();

@@ -18,11 +18,7 @@ public class TextureRenderer implements Renderer<Texture2D>, Initializable, Rele
 
     private Shader shader;
 
-    private Mat4f projectionMatrix;
-
-    public TextureRenderer(Mat4f projectionMatrix) {
-        this.projectionMatrix = projectionMatrix;
-    }
+    public TextureRenderer() { }
 
     @Override
     public void render(Texture2D texture, Camera camera) {
@@ -46,7 +42,7 @@ public class TextureRenderer implements Renderer<Texture2D>, Initializable, Rele
             .addArrayBuffer(coords, GL_STATIC_DRAW, 1, 2, 20, 12);
         vao.unbind();
         shader.bind();
-        shader.setUniform("pv", projectionMatrix.mult(camera.viewMatrix()), true);
+        shader.setUniform("pv", camera.viewProjection(), true);
         shader.setUniform("model", transformationMatrix, true);
         texture.bind();
         vao.bind();

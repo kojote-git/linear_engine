@@ -26,20 +26,16 @@ public class VaoObjectTest {
 
     private VaoObjectRenderer renderer;
 
-    private Mat4f proj;
 
     private Camera camera;
 
     private int width = 400, height = 400;
 
-    public VaoObjectTest() {
-        proj = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, 0, 1.0f);
-        camera = new StaticCamera();
-    }
+    public VaoObjectTest() { }
 
     @Before
     public void init() {
-        renderer = new VaoObjectRenderer(proj);
+        renderer = new VaoObjectRenderer();
         rectangle = new RectangleVao(new Vec3f(), 10, 10);
         polygon = new PolygonVao(new Vec3f[]{
             new Vec3f(-2, -5, 0),
@@ -66,6 +62,7 @@ public class VaoObjectTest {
                     window.release();
                 }
             });
+        camera = new StaticCamera(window);
     }
 
     @After

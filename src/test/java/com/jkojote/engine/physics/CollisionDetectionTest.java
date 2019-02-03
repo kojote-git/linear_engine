@@ -2,7 +2,7 @@ package com.jkojote.engine.physics;
 
 import com.jkojote.engine.graphics.LoopRunner;
 import com.jkojote.engine.graphics.TransformationController;
-import com.jkojote.engine.graphics.primitives.BoundingCamera;
+import com.jkojote.engine.graphics.BoundingCamera;
 import com.jkojote.linear.engine.graphics2d.cameras.StaticCamera;
 import com.jkojote.linear.engine.graphics2d.primitives.renderers.VertexShapeRenderer;
 import com.jkojote.linear.engine.graphics2d.text.FontMap;
@@ -27,18 +27,12 @@ public class CollisionDetectionTest {
 
     private TextRenderer textRenderer;
 
-    private Mat4f proj;
-
     private FontMap fontMap;
-
-    public CollisionDetectionTest() {
-        proj = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, 0.0f, 1.0f);
-    }
 
     @Before
     public void init() {
-        vertexShapeRenderer = new VertexShapeRenderer(proj);
-        textRenderer = new TextRenderer(proj);
+        vertexShapeRenderer = new VertexShapeRenderer();
+        textRenderer = new TextRenderer();
         fontMap = new FontMap(new Font("Calibri", Font.PLAIN, 32));
         window = new Window("w", width, height, false, false)
             .setInitCallback(() -> {
@@ -97,8 +91,8 @@ public class CollisionDetectionTest {
         p2.setRotationAngle(45);
         p3.setScaleFactor(5);
         p4.setScaleFactor(5);
-        BoundingCamera camera = new BoundingCamera<>(p1);
-        StaticCamera staticCamera = new StaticCamera();
+        BoundingCamera camera = new BoundingCamera<>(p1, window);
+        StaticCamera staticCamera = new StaticCamera(window);
         TransformationController controller = new TransformationController(p1);
         controller.setScaleFactorDelta(0.05f);
         LoopRunner runner = new LoopRunner(window);

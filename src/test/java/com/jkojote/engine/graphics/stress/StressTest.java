@@ -55,19 +55,19 @@ public class StressTest {
 
     @Before
     public void init() throws Exception {
-        transformableCamera = new TransformableCamera();
-        staticCamera = new StaticCamera();
-        textRenderer = new TextRenderer(proj);
-        ellipseRenderer = new EllipseRenderer(proj);
-        vertexShapeRenderer = new VertexShapeRenderer(proj);
+        textRenderer = new TextRenderer();
+        ellipseRenderer = new EllipseRenderer();
+        vertexShapeRenderer = new VertexShapeRenderer();
         fontMap = FontMap.FontMapBuilder.aFont()
                 .fromFile("src/test/java/com/jkojote/engine/graphics/text/Cousine-Regular.ttf")
                 .withFontFormat(Font.TRUETYPE_FONT)
                 .withSize(48)
                 .withAntialiasingEnabled()
                 .build();
-        window = new Window("test", width, height, false, false)
-                .setInitCallback(() -> {
+        window = new Window("test", width, height, false, false);
+        transformableCamera = new TransformableCamera(window);
+        staticCamera = new StaticCamera(window);
+        window.setInitCallback(() -> {
                     try {
                         fontMap.init();
                         textRenderer.init();

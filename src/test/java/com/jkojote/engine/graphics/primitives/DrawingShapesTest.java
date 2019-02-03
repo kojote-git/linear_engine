@@ -1,5 +1,6 @@
 package com.jkojote.engine.graphics.primitives;
 
+import com.jkojote.engine.graphics.BoundingCamera;
 import com.jkojote.engine.graphics.TransformableCamera;
 import com.jkojote.engine.graphics.TransformationController;
 import com.jkojote.engine.graphics.LoopRunner;
@@ -7,7 +8,6 @@ import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.cameras.StaticCamera;
 import com.jkojote.linear.engine.graphics2d.primitives.*;
 import com.jkojote.linear.engine.graphics2d.primitives.solid.SolidEllipse;
-import com.jkojote.linear.engine.graphics2d.primitives.solid.SolidPolygon;
 import com.jkojote.linear.engine.graphics2d.primitives.solid.SolidRectangle;
 import com.jkojote.linear.engine.graphics2d.primitives.solid.SolidTriangle;
 import com.jkojote.linear.engine.graphics2d.primitives.renderers.VertexShapeRenderer;
@@ -83,17 +83,16 @@ public class DrawingShapesTest {
             new Vec3f( 2, -5, 0)
         });
         polygon.setColor(new Vec3f(0.3f, 0.8f, 0.2f));
-        Mat4f proj = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, 0.0f, 1.0f);
-        vertexShapeRenderer = new VertexShapeRenderer(proj);
-        ellipseRenderer = new EllipseRenderer(proj);
+        vertexShapeRenderer = new VertexShapeRenderer();
+        ellipseRenderer = new EllipseRenderer();
     }
 
     @Before
     public void init() {
-        staticCamera = new StaticCamera();
-        transformableCamera = new TransformableCamera();
-        window = new Window("w", width, height, false, false)
-            .setInitCallback(() -> {
+        window = new Window("w", width, height, false, false);
+        staticCamera = new StaticCamera(window);
+        transformableCamera = new TransformableCamera(window);
+        window.setInitCallback(() -> {
                 try {
                     vertexShapeRenderer.init();
                     ellipseRenderer.init();
@@ -122,7 +121,7 @@ public class DrawingShapesTest {
         TransformationController controller = new TransformationController(rectangle);
         LoopRunner runner = new LoopRunner(window);
         controller.setTranslationDelta(10);
-        BoundingCamera camera = new BoundingCamera<>(rectangle);
+        BoundingCamera camera = new BoundingCamera<>(rectangle, window);
         window
             .setKeyCallback(controller)
             .init();

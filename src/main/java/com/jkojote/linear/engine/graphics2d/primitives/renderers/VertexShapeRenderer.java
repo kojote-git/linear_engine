@@ -5,7 +5,6 @@ import com.jkojote.linear.engine.Releasable;
 import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.*;
 import com.jkojote.linear.engine.graphics2d.primitives.VertexShape;
-import com.jkojote.linear.engine.math.Mat4f;
 
 import java.io.*;
 
@@ -17,18 +16,14 @@ public class VertexShapeRenderer implements Renderer<VertexShape>, Releasable, I
 
     private Shader shader;
 
-    private Mat4f projectionMatrix;
-
-    public VertexShapeRenderer(Mat4f projectionMatrix) {
-        this.projectionMatrix = projectionMatrix;
-    }
+    public VertexShapeRenderer() { }
 
     @Override
     @SuppressWarnings("Duplicates")
     public void render(VertexShape shape, Camera camera) {
         Vaof vao = GraphicsUtils.createPrimitiveVao(shape.vertices(), shape.color());
         shader.bind();
-        shader.setUniform("pv", projectionMatrix.mult(camera.viewMatrix()), true);
+        shader.setUniform("pv", camera.viewProjection(), true);
         shader.setUniform("model", shape.modelMatrix(), true);
 
         glEnableVertexAttribArray(0);
@@ -54,12 +49,6 @@ public class VertexShapeRenderer implements Renderer<VertexShape>, Releasable, I
     @Override
     public boolean isInitialized() {
         return shader != null;
-    }
-
-    public void setProjectionMatrix(Mat4f projectionMatrix) {
-        if (projectionMatrix == null)
-            throw new NullPointerException("projectionMatrix must not be null");
-        this.projectionMatrix = projectionMatrix;
     }
 
     @Override

@@ -27,8 +27,6 @@ public class FontMapTest {
 
     private FontMap font;
 
-    private Mat4f projectionMatrix;
-
     private String path =
         "src/test/java/com/jkojote/engine/graphics/text/Cousine-Regular.ttf";
 
@@ -44,16 +42,10 @@ public class FontMapTest {
 
     private ModifiableText text;
 
-    public FontMapTest() {
-        projectionMatrix = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, 0.0f, 1.0f);
-        transformableCamera = new TransformableCamera();
-        staticCamera = new StaticCamera();
-    }
-
     @Before
     public void init() {
-        textRenderer = new TextRenderer(projectionMatrix);
-        renderer = new TexturedObjectRenderer(projectionMatrix);
+        textRenderer = new TextRenderer();
+        renderer = new TexturedObjectRenderer();
         text = new ModifiableText(font);
         window = new Window("w", width, height, false, false)
             .setInitCallback(() -> {
@@ -86,6 +78,8 @@ public class FontMapTest {
                     throw new RuntimeException(e);
                 }
             });
+        transformableCamera = new TransformableCamera(window);
+        staticCamera = new StaticCamera(window);
     }
     @After
     public void release() {

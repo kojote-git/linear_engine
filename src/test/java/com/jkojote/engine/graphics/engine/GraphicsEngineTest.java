@@ -1,15 +1,11 @@
 package com.jkojote.engine.graphics.engine;
 
-import com.google.common.util.concurrent.Striped;
 import com.jkojote.engine.graphics.LoopRunner;
 import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.Camera;
 import com.jkojote.linear.engine.graphics2d.cameras.StaticCamera;
 import com.jkojote.linear.engine.graphics2d.engine.GraphicsEngine;
 import com.jkojote.linear.engine.graphics2d.engine.PrimitiveGraphicsEngineImpl;
-import com.jkojote.linear.engine.graphics2d.primitives.solid.SolidEllipse;
-import com.jkojote.linear.engine.graphics2d.primitives.solid.SolidRectangle;
-import com.jkojote.linear.engine.graphics2d.primitives.solid.SolidTriangle;
 import com.jkojote.linear.engine.graphics2d.primitives.striped.StripedEllipse;
 import com.jkojote.linear.engine.graphics2d.primitives.striped.StripedRectangle;
 import com.jkojote.linear.engine.graphics2d.primitives.striped.StripedTriangle;
@@ -49,7 +45,7 @@ public class GraphicsEngineTest {
         StripedEllipse ellipse = new StripedEllipse(new Vec3f(120, 0, 0), 40, 60);
         StripedTriangle triangle = new StripedTriangle(new Vec3f(-20, -15, 0), new Vec3f(0, 20, 0), new Vec3f(20, -15, 0));
         LoopRunner runner = new LoopRunner(window);
-        Camera camera = new StaticCamera();
+        Camera camera = new StaticCamera(window);
         engine.setCamera(camera);
         runner.setRenderCallback(() -> {
             engine.render(rectangle);

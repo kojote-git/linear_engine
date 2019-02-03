@@ -21,13 +21,9 @@ import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 
 public class TextRenderer implements Renderer<ModifiableText>, Initializable, Releasable {
 
-    private Mat4f projectionMatrix;
-
     private Shader shader;
 
-    public TextRenderer(Mat4f projectionMatrix) {
-        this.projectionMatrix = projectionMatrix;
-    }
+    public TextRenderer() { }
 
     @Override
     public void render(ModifiableText text, Camera camera) {
@@ -63,7 +59,7 @@ public class TextRenderer implements Renderer<ModifiableText>, Initializable, Re
         shader.bind();
         fontTexture.bind();
         vao.bind();
-        shader.setUniform("pv", projectionMatrix.mult(camera.viewMatrix()), true);
+        shader.setUniform("pv", camera.viewProjection(), true);
         shader.setUniform("model", transformationMatrix, true);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);

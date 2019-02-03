@@ -8,7 +8,6 @@ import com.jkojote.linear.engine.graphics2d.Renderer;
 import com.jkojote.linear.engine.graphics2d.Shader;
 import com.jkojote.linear.engine.graphics2d.Vaof;
 import com.jkojote.linear.engine.graphics2d.primitives.Ellipse;
-import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.MathUtils;
 import com.jkojote.linear.engine.math.Vec3f;
 
@@ -24,13 +23,9 @@ import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 
 public class EllipseRenderer implements Renderer<Ellipse>, Releasable, Initializable {
 
-    private Mat4f projectionMatrix;
-
     private Shader shader;
 
-    public EllipseRenderer(Mat4f projectionMatrix) {
-        this.projectionMatrix = projectionMatrix;
-    }
+    public EllipseRenderer() { }
 
     @Override
     @SuppressWarnings("Duplicates")
@@ -57,7 +52,7 @@ public class EllipseRenderer implements Renderer<Ellipse>, Releasable, Initializ
                 .addArrayBuffer(buffer, GL_STATIC_DRAW, 0, 2, 20, 0)
                 .addArrayBuffer(buffer, GL_STATIC_DRAW, 1, 3, 20, 8);
         shader.bind();
-        shader.setUniform("pv", projectionMatrix.mult(camera.viewMatrix()), true);
+        shader.setUniform("pv", camera.viewProjection(), true);
         shader.setUniform("model", ellipse.modelMatrix(), true);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);

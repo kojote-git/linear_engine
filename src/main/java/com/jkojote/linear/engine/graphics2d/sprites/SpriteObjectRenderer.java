@@ -4,7 +4,6 @@ import com.jkojote.linear.engine.Initializable;
 import com.jkojote.linear.engine.Releasable;
 import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.*;
-import com.jkojote.linear.engine.math.Mat4f;
 
 import java.io.IOException;
 
@@ -17,11 +16,8 @@ public class SpriteObjectRenderer implements Renderer<SpriteObject>, Releasable,
 
     private Shader shader;
 
-    private Mat4f proj;
 
-    public SpriteObjectRenderer(Mat4f proj) {
-        this.proj = proj;
-    }
+    public SpriteObjectRenderer() { }
 
     private boolean initialized;
 
@@ -46,7 +42,7 @@ public class SpriteObjectRenderer implements Renderer<SpriteObject>, Releasable,
             .addArrayBuffer(data, GL_STATIC_DRAW, 1, 2, 20, 12);
         vaof.unbind();
         shader.bind();
-        shader.setUniform("pv", proj.mult(camera.viewMatrix()), true);
+        shader.setUniform("pv", camera.viewProjection(), true);
         shader.setUniform("model", spriteObj.modelMatrix(), true);
         vaof.bind();
         tex.bind();

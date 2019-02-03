@@ -22,20 +22,13 @@ public class RenderingTexturedObjectTest {
 
     private Window window;
 
-    private Mat4f proj;
-
     private Camera camera;
 
     private int width = 600, height = 600;
 
-    public RenderingTexturedObjectTest() {
-        proj = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, 0.0f, 1.0f);
-        camera = new StaticCamera();
-    }
-
     @Before
     public void init() throws IOException {
-        renderer = new TexturedObjectRenderer(proj);
+        renderer = new TexturedObjectRenderer();
         bird = new Bird();
         window = new Window("w", width, height, false, false)
             .setInitCallback(() -> {
@@ -48,6 +41,7 @@ public class RenderingTexturedObjectTest {
                     window.release();
                 }
             });
+        camera = new StaticCamera(window);
     }
 
     @After

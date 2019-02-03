@@ -19,9 +19,8 @@ public class TexturedObjectRenderer implements Renderer<TexturedObject>,
 
     private TextureRenderer textureRenderer;
 
-
-    public TexturedObjectRenderer(Mat4f projectionMatrix) {
-        this.textureRenderer = new TextureRenderer(projectionMatrix);
+    public TexturedObjectRenderer() {
+        this.textureRenderer = new TextureRenderer();
     }
 
     @Override

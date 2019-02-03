@@ -7,7 +7,6 @@ import com.jkojote.linear.engine.graphics2d.Camera;
 import com.jkojote.linear.engine.graphics2d.Renderer;
 import com.jkojote.linear.engine.graphics2d.Shader;
 import com.jkojote.linear.engine.graphics2d.VaoObject;
-import com.jkojote.linear.engine.math.Mat4f;
 
 import java.io.IOException;
 
@@ -15,25 +14,15 @@ import static org.lwjgl.opengl.GL11.glDrawArrays;
 
 public class VaoObjectRenderer implements Renderer<VaoObject>, Releasable, Initializable {
 
-    private Mat4f projectionMatrix;
-
     private Shader shader;
 
-    public VaoObjectRenderer(Mat4f projectionMatrix) {
-        this.projectionMatrix = projectionMatrix;
-    }
-
-    public void setProjectionMatrix(Mat4f projectionMatrix) {
-        if (projectionMatrix == null)
-            throw new NullPointerException("projectionMatrix must mot be null");
-        this.projectionMatrix = projectionMatrix;
-    }
+    public VaoObjectRenderer() { }
 
     @Override
     @SuppressWarnings("Duplicates")
     public void render(VaoObject vao, Camera camera) {
         shader.bind();
-        shader.setUniform("pv", projectionMatrix.mult(camera.viewMatrix()), true);
+        shader.setUniform("pv", camera.viewProjection(), true);
         shader.setUniform("model", vao.modelMatrix(), true);
         vao.bind();
         vao.enableAttributes();
