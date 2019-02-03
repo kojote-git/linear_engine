@@ -26,6 +26,7 @@ public class GraphicsEngineTest {
         window = new Window("Window", 400, 400, false, false);
         engine = new PrimitiveGraphicsEngineImpl();
         try {
+            window.init();
             engine.init();
         } catch (ResourceInitializationException e) {
             System.out.println("Cannot initialize engine");
@@ -35,6 +36,7 @@ public class GraphicsEngineTest {
 
     @After
     public void release() {
+        window.release();
         engine.release();
     }
 

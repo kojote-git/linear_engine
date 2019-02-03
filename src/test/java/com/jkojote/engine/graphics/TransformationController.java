@@ -2,6 +2,7 @@ package com.jkojote.engine.graphics;
 
 import com.jkojote.linear.engine.shared.Transformable;
 import com.jkojote.linear.engine.window.KeyCallback;
+import com.jkojote.linear.engine.window.Window;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -42,7 +43,7 @@ public class TransformationController implements KeyCallback {
     }
 
     @Override
-    public void perform(int key, int action, int mods) {
+    public void perform(Window w, int key, int action, int mods) {
         if (action == GLFW_PRESS || action == GLFW_REPEAT) {
             if (mods == GLFW_MOD_CONTROL) {
                 switch (key) {

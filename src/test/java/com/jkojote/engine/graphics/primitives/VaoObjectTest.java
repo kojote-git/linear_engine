@@ -55,7 +55,7 @@ public class VaoObjectTest {
             new Vec3f( 2, -5, 0)
         });
         window = new Window("w", width, height, false, false)
-            .setInitCallback(() -> {
+            .setInitCallback((win) -> {
                 try {
                     renderer.init();
                 } catch (ResourceInitializationException e) {

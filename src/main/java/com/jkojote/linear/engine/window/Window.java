@@ -169,7 +169,7 @@ public final class Window implements Releasable, Initializable {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         initCallbacks();
         if (initCallback != null)
-            initCallback.perform();
+            initCallback.perform(this);
         initialized = true;
     }
 
@@ -179,28 +179,28 @@ public final class Window implements Releasable, Initializable {
     private void initCallbacks() {
         if (keyCallback != null) {
             glfwSetKeyCallback(window, (window, key, scanCode, action, mods) ->
-                keyCallback.perform(key, action, mods)
+                keyCallback.perform(this, key, action, mods)
             );
         }
         if (textInputCallback != null) {
             glfwSetCharCallback(window, (window, code) ->
-                textInputCallback.perform(code)
+                textInputCallback.perform(this, code)
             );
         }
         if (mouseEnabled) {
             if (cursorCallback != null) {
                 glfwSetCursorPosCallback(window, (window, x, y) ->
-                    cursorCallback.perform(x, y)
+                    cursorCallback.perform(this, x, y)
                 );
             }
             if (mouseButtonCallback != null) {
                 glfwSetMouseButtonCallback(window, (window, button, action, mods) ->
-                    mouseButtonCallback.perform(button, action, mods)
+                    mouseButtonCallback.perform(this, button, action, mods)
                 );
             }
             if (scrollCallback != null) {
                 glfwSetScrollCallback(window, (window, xOffset, yOffset) ->
-                    scrollCallback.perform(xOffset, yOffset)
+                    scrollCallback.perform(this, xOffset, yOffset)
                 );
             }
         }
@@ -242,7 +242,7 @@ public final class Window implements Releasable, Initializable {
         glfwDestroyWindow(window);
         glfwTerminate();
         if (windowClosedCallback != null)
-            windowClosedCallback.perform();
+            windowClosedCallback.perform(this);
     }
 
     @Override

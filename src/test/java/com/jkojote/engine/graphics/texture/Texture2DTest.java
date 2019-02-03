@@ -18,7 +18,7 @@ public class Texture2DTest {
     public void drawTexture() {
         int width = 400, height = 400;
         window = new Window("window", width, height, false, false)
-            .setInitCallback(() -> {
+            .setInitCallback((win) -> {
                 try {
                     t = new Texture2D("src/test/java/com/jkojote/engine/graphics/texture/bird.png");
                     t.init();

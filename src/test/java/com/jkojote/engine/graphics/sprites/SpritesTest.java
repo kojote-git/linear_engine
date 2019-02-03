@@ -47,7 +47,7 @@ public class SpritesTest {
         controller = new TransformationController(spriteObject);
         runner.setUpdateCallback(controller::update);
         window.setKeyCallback(controller);
-        window.setInitCallback(() -> {
+        window.setInitCallback((win) -> {
             try {
                 spriteSheet.init();
                 int last = spriteSheet.sprites().size() - 1;

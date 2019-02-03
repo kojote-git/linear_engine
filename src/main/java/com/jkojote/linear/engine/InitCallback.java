@@ -6,5 +6,5 @@ package com.jkojote.linear.engine;
  */
 public interface InitCallback {
 
-    void perform();
+    void perform(Initializable i);
 }

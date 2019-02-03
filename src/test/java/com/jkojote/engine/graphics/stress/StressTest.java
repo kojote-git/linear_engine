@@ -67,7 +67,7 @@ public class StressTest {
         window = new Window("test", width, height, false, false);
         transformableCamera = new TransformableCamera(window);
         staticCamera = new StaticCamera(window);
-        window.setInitCallback(() -> {
+        window.setInitCallback((win) -> {
                     try {
                         fontMap.init();
                         textRenderer.init();
@@ -80,7 +80,7 @@ public class StressTest {
                     System.out.println("GL_VERSION: " + glGetString(GL_VERSION));
                     System.out.println("GL_RENDERER: " + glGetString(GL_RENDERER));
                 })
-                .setTerminationCallback(() -> {
+                .setTerminationCallback((win) -> {
                     fontMap.release();
                     textRenderer.release();
                     ellipseRenderer.release();

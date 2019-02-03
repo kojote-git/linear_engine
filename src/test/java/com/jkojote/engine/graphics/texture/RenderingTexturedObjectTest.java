@@ -31,7 +31,7 @@ public class RenderingTexturedObjectTest {
         renderer = new TexturedObjectRenderer();
         bird = new Bird();
         window = new Window("w", width, height, false, false)
-            .setInitCallback(() -> {
+            .setInitCallback((win) -> {
                 try {
                     renderer.init();
                     bird.init();

@@ -2,5 +2,5 @@ package com.jkojote.linear.engine.window;
 
 public interface CursorCallback {
 
-    void perform(double xPos, double yPos);
+    void perform(Window win, double xPos, double yPos);
 }

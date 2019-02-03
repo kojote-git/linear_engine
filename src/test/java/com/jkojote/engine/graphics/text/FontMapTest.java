@@ -48,7 +48,7 @@ public class FontMapTest {
         renderer = new TexturedObjectRenderer();
         text = new ModifiableText(font);
         window = new Window("w", width, height, false, false)
-            .setInitCallback(() -> {
+            .setInitCallback((win) -> {
                 try {
                     // use larger size for better font quality
                     // it later can be scaled

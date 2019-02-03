@@ -66,7 +66,7 @@ public class Scene {
         releasables.add(window);
         releasables.add(engine);
         releasables.add(spriteSheet);
-        window.setInitCallback(() -> {
+        window.setInitCallback((win) -> {
             engine.init();
             spriteSheet.init();
             int size = spriteSheet.sprites().size();

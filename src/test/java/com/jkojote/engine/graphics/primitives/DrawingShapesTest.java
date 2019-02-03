@@ -92,7 +92,7 @@ public class DrawingShapesTest {
         window = new Window("w", width, height, false, false);
         staticCamera = new StaticCamera(window);
         transformableCamera = new TransformableCamera(window);
-        window.setInitCallback(() -> {
+        window.setInitCallback((win) -> {
                 try {
                     vertexShapeRenderer.init();
                     ellipseRenderer.init();
@@ -103,7 +103,7 @@ public class DrawingShapesTest {
                 System.out.println("GL_VERSION" + glGetString(GL_VERSION));
                 System.out.println("GL_RENDERER: " + glGetString(GL_RENDERER));
             })
-            .setTerminationCallback(() -> {
+            .setTerminationCallback((win) -> {
                 vertexShapeRenderer.release();
                 ellipseRenderer.release();
             });

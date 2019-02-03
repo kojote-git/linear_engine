@@ -8,7 +8,6 @@ import com.jkojote.linear.engine.graphics2d.primitives.renderers.VertexShapeRend
 import com.jkojote.linear.engine.graphics2d.text.FontMap;
 import com.jkojote.linear.engine.graphics2d.text.ModifiableText;
 import com.jkojote.linear.engine.graphics2d.text.TextRenderer;
-import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.window.Window;
 import org.junit.After;
@@ -35,7 +34,7 @@ public class CollisionDetectionTest {
         textRenderer = new TextRenderer();
         fontMap = new FontMap(new Font("Calibri", Font.PLAIN, 32));
         window = new Window("w", width, height, false, false)
-            .setInitCallback(() -> {
+            .setInitCallback((win) -> {
                 try {
                     vertexShapeRenderer.init();
                     textRenderer.init();
@@ -45,7 +44,7 @@ public class CollisionDetectionTest {
                     throw new RuntimeException(e);
                 }
             })
-            .setTerminationCallback(() -> {
+            .setTerminationCallback((win) -> {
                 vertexShapeRenderer.release();
                 textRenderer.release();
                 fontMap.release();

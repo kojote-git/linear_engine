@@ -1,5 +1,6 @@
 package com.jkojote.linear.engine.window;
 
 public interface MouseButtonCallback {
-    void perform(int button, int action, int mods);
+
+    void perform(Window win, int button, int action, int mods);
 }

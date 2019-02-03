@@ -9,16 +9,16 @@ public class WindowTest {
     @Test
     public void init() throws InterruptedException {
         Window window = new Window("W", 300, 300, true, true)
-            .setCursorCallback((x, y) -> {
+            .setCursorCallback((win, x, y) -> {
                 System.out.println("x: " + x + ", y: " + y);
             })
-            .setKeyCallback((key, action, mods) -> {
+            .setKeyCallback((win, key, action, mods) -> {
                 System.out.println("key: " + key + ", action: " + action + ", mods: " + mods);
             })
-            .setInitCallback(() -> {
+            .setInitCallback((win) -> {
                 System.out.println("window is initialized");
             })
-            .setTerminationCallback(() -> {
+            .setTerminationCallback((win) -> {
                 System.out.println("window is closed");
             });
         window.init();

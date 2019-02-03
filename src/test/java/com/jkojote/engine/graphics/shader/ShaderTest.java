@@ -37,7 +37,7 @@ public class ShaderTest {
              0.5f, -0.5f, colorX, colorY, colorZ
         };
         Window w = new Window("w", width, height, false, false)
-            .setInitCallback(() -> {
+            .setInitCallback((win) -> {
                 try {
                     shader = Shader.fromFiles(vert, fragm);
                 } catch (IOException e) {
@@ -50,7 +50,7 @@ public class ShaderTest {
                    .addArrayBuffer(vertices, GL_STATIC_DRAW, 1, 3, 5 * FLOAT_SIZE, 2 * FLOAT_SIZE);
                 vao.unbind();
             })
-            .setTerminationCallback(() -> {
+            .setTerminationCallback((win) -> {
                 vao.release();
                 shader.release();
             });
