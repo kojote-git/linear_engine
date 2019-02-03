@@ -54,6 +54,8 @@ public final class Window implements Releasable, Initializable {
 
     private Mat4f projectionMatrix;
 
+    private float aspectRatio;
+
     private Set<WindowStateEventListener<?>> stateListeners;
 
     /**
@@ -72,8 +74,20 @@ public final class Window implements Releasable, Initializable {
         this.height = height;
         this.resizable = resizable;
         this.mouseEnabled = mouseEnabled;
-        this.projectionMatrix = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, 0, 1);
         this.stateListeners = new HashSet<>();
+        this.aspectRatio = (float) width / height;
+        this.projectionMatrix = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, 0, 1);
+    }
+
+    public Window(String title, int width, int height,
+                  boolean resizable, float aspectRatio) {
+        this.title = title;
+        this.width = width;
+        this.height = height;
+        this.resizable = resizable;
+        this.stateListeners = new HashSet<>();
+        this.aspectRatio = aspectRatio;
+        this.projectionMatrix = Mat4f.ortho(-aspectRatio, aspectRatio, -1, 1, -1, 1);
     }
 
     /**
@@ -188,6 +202,7 @@ public final class Window implements Releasable, Initializable {
         glfwShowWindow(window);
         glfwMakeContextCurrent(window);
         GL.createCapabilities();
+        glViewport(0, 0, width, height);
         glClearColor(1.0f, 1.0f, 1.0f, 0);
         // enable textures and blend function
         glEnable(GL_TEXTURE_2D);
@@ -206,6 +221,7 @@ public final class Window implements Releasable, Initializable {
         glfwSetWindowSizeCallback(window, (window, width, height) -> {
             this.width = width;
             this.height = height;
+            glViewport(0, 0, width, height);
             notifyListeners(new WindowResizedEvent(this, width, height));
             updateMatrix();
             notifyListeners(new WindowMatrixUpdatedEvent(this, projectionMatrix));
@@ -241,7 +257,7 @@ public final class Window implements Releasable, Initializable {
     }
 
     private void updateMatrix() {
-        this.projectionMatrix = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, 0, 1);
+        this.projectionMatrix = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, -1, 1);
     }
 
     public void pollEvents() {

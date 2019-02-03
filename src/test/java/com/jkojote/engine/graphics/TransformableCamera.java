@@ -5,6 +5,8 @@ import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.shared.Transformable;
 import com.jkojote.linear.engine.window.Window;
+import com.jkojote.linear.engine.window.WindowStateEventListener;
+import com.jkojote.linear.engine.window.events.WindowMatrixUpdatedEvent;
 
 public class TransformableCamera implements Transformable, Camera {
 
@@ -26,6 +28,7 @@ public class TransformableCamera implements Transformable, Camera {
         this.rotationAngle = 0;
         this.translation = new Vec3f();
         this.updateMatrix = true;
+        window.addStateListener(new MatrixUpdatedListener(this));
     }
 
     @Override
@@ -77,5 +80,24 @@ public class TransformableCamera implements Transformable, Camera {
         Mat4f rotate = Mat4f.rotationZ(-rotationAngle);
         Mat4f scale = Mat4f.scale(scaleFactor);
         return scale.mult(translate).mult(rotate);
+    }
+
+    private class MatrixUpdatedListener implements WindowStateEventListener<WindowMatrixUpdatedEvent> {
+
+        private TransformableCamera camera;
+
+        MatrixUpdatedListener(TransformableCamera camera) {
+            this.camera = camera;
+        }
+
+        @Override
+        public Class<WindowMatrixUpdatedEvent> eventType() {
+            return WindowMatrixUpdatedEvent.class;
+        }
+
+        @Override
+        public void onEvent(WindowMatrixUpdatedEvent event) {
+            camera.updateMatrix = true;
+        }
     }
 }
