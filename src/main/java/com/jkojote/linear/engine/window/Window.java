@@ -1,5 +1,6 @@
 package com.jkojote.linear.engine.window;
 
+import com.jkojote.linear.engine.InitCallback;
 import com.jkojote.linear.engine.Initializable;
 import com.jkojote.linear.engine.Releasable;
 import com.jkojote.linear.engine.ResourceInitializationException;

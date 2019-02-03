@@ -4,9 +4,11 @@ import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.*;
 import com.jkojote.linear.engine.graphics2d.primitives.Ellipse;
 import com.jkojote.linear.engine.graphics2d.primitives.VertexShape;
-import com.jkojote.linear.engine.graphics2d.primitives.solid.SolidEllipse;
 import com.jkojote.linear.engine.graphics2d.primitives.renderers.*;
+import com.jkojote.linear.engine.graphics2d.sprites.SpriteObject;
+import com.jkojote.linear.engine.graphics2d.sprites.SpriteObjectRenderer;
 import com.jkojote.linear.engine.graphics2d.text.FontMap;
+import com.jkojote.linear.engine.graphics2d.text.ModifiableText;
 import com.jkojote.linear.engine.graphics2d.text.PlainText;
 import com.jkojote.linear.engine.graphics2d.text.TextRenderer;
 import com.jkojote.linear.engine.math.Mat4f;
@@ -35,6 +37,8 @@ public class PrimitiveGraphicsEngineImpl implements PrimitiveGraphicsEngine {
 
     private TextureRenderer textureRenderer;
 
+    private SpriteObjectRenderer spriteObjectRenderer;
+
     public PrimitiveGraphicsEngineImpl(Window window) {
         if (window.isInitialized())
             throw new IllegalStateException();
@@ -46,13 +50,15 @@ public class PrimitiveGraphicsEngineImpl implements PrimitiveGraphicsEngine {
         this.vertexShapeRenderer = new VertexShapeRenderer(proj);
         this.textRenderer = new TextRenderer(proj);
         this.textureRenderer = new TextureRenderer(proj);
+        this.spriteObjectRenderer = new SpriteObjectRenderer(proj);
         this.window.setInitCallback(() -> {
-           this.texturedObjectRenderer.init();
-           this.vaoObjectRenderer.init();
-           this.ellipseRenderer.init();
-           this.vertexShapeRenderer.init();
-           this.textRenderer.init();
-           this.textureRenderer.init();
+            this.spriteObjectRenderer.init();
+            this.texturedObjectRenderer.init();
+            this.vaoObjectRenderer.init();
+            this.ellipseRenderer.init();
+            this.vertexShapeRenderer.init();
+            this.textRenderer.init();
+            this.textureRenderer.init();
         });
     }
 
@@ -76,7 +82,10 @@ public class PrimitiveGraphicsEngineImpl implements PrimitiveGraphicsEngine {
 
     @Override
     public void render(Renderable renderable) {
-        if (renderable instanceof VaoObject)
+        if (renderable instanceof SpriteObject) {
+            spriteObjectRenderer.render((SpriteObject) renderable, camera);
+        }
+        else if (renderable instanceof VaoObject)
             vaoObjectRenderer.render((VaoObject) renderable, camera);
         else if (renderable instanceof VertexShape)
             vertexShapeRenderer.render((VertexShape) renderable, camera);
@@ -89,6 +98,9 @@ public class PrimitiveGraphicsEngineImpl implements PrimitiveGraphicsEngine {
             Texture2D texture = tuple.texture;
             Mat4f transform = tuple.transformationMatrix;
             textureRenderer.render(texture, camera, transform);
+        }
+        else if (renderable instanceof ModifiableText) {
+            textRenderer.render((ModifiableText) renderable, camera);
         }
         else if (renderable instanceof PlainText) {
             PlainText text = (PlainText) renderable;

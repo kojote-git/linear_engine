@@ -14,32 +14,29 @@ public class AnimatedSpriteObject extends BaseTransformable implements SpriteObj
 
     private List<Sprite> sprites;
 
-    private int changeAfter = 32;
+    private int changeAfter;
 
     private int getCount = 0;
 
     private int last = 0;
 
-    private int sheetSize;
-
     public AnimatedSpriteObject(SpriteSheet spriteSheet) {
         this.spriteSheet = spriteSheet;
-        this.sheetSize = spriteSheet.sprites().size();
         this.sprites = spriteSheet.sprites();
+        this.changeAfter = 32;
     }
 
     public AnimatedSpriteObject(SpriteSheet spriteSheet, int changeAfter) {
         this.spriteSheet = spriteSheet;
-        this.sheetSize = spriteSheet.sprites().size();
-        this.changeAfter = changeAfter;
         this.sprites = spriteSheet.sprites();
+        this.changeAfter = changeAfter;
     }
 
     private Sprite getSprite() {
         getCount++;
-        if (getCount == changeAfter) {
+        if (getCount >= changeAfter) {
             getCount = 0;
-            if (last == sheetSize - 1) {
+            if (last >= sprites.size() - 1) {
                 last = 0;
             }
             last++;

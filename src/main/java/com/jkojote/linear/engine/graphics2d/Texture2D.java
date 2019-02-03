@@ -1,6 +1,8 @@
 package com.jkojote.linear.engine.graphics2d;
 
+import com.jkojote.linear.engine.Initializable;
 import com.jkojote.linear.engine.Releasable;
+import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 import org.lwjgl.BufferUtils;
@@ -47,7 +49,7 @@ import org.lwjgl.opengl.GL11;
  * </p>
  * @see TexturedObject
  */
-public final class Texture2D implements Releasable, Renderable {
+public final class Texture2D implements Releasable, Initializable, Renderable {
 
     private static final int BYTES_PER_PIXEL = 4;
 
@@ -58,6 +60,12 @@ public final class Texture2D implements Releasable, Renderable {
     private boolean released;
 
     private Mat4f model;
+
+    private BufferedImage image;
+
+    private int minFilter, magFilter;
+
+    private boolean initialized;
 
     /**
      * Load texture from the file
@@ -107,16 +115,16 @@ public final class Texture2D implements Releasable, Renderable {
      * @throws NoContextSetException if the OpenGL context hasn't been set before calling the constructor
      */
     public Texture2D(BufferedImage image) throws NoContextSetException {
-        if (glfwGetCurrentContext() == NULL)
-            throw new NoContextSetException();
-        this.texture = load(image, GL_NEAREST, GL_NEAREST);
+        this.image = image;
+        this.minFilter = GL_NEAREST;
+        this.magFilter = GL_NEAREST;
         this.model = Mat4f.identity();
     }
 
     public Texture2D(BufferedImage image, int minFilter, int magFilter) {
-        if (glfwGetCurrentContext() == NULL)
-            throw new NoContextSetException();
-        this.texture = load(image, minFilter, magFilter);
+        this.image = image;
+        this.minFilter = minFilter;
+        this.magFilter = magFilter;
         this.model = Mat4f.identity();
     }
 
@@ -149,6 +157,20 @@ public final class Texture2D implements Releasable, Renderable {
      */
     public int getWidth() {
         return width;
+    }
+
+    /**
+     * @return minification filter used for this texture
+     */
+    public int getMinFilter() {
+        return minFilter;
+    }
+
+    /**
+     * @return magnification filter used for this texture
+     */
+    public int getMagFilter() {
+        return magFilter;
     }
 
     /**
@@ -191,5 +213,22 @@ public final class Texture2D implements Releasable, Renderable {
     @Override
     public int renderingMode() {
         return GL_QUADS;
+    }
+
+    @Override
+    public void init() throws ResourceInitializationException {
+        if (glfwGetCurrentContext() == NULL) {
+            throw new ResourceInitializationException(new NoContextSetException());
+        }
+        if (initialized)
+            return;
+        initialized = true;
+        texture = load(image, minFilter, magFilter);
+        image = null;
+    }
+
+    @Override
+    public boolean isInitialized() {
+        return initialized;
     }
 }

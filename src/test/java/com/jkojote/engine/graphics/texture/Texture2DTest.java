@@ -21,6 +21,7 @@ public class Texture2DTest {
             .setInitCallback(() -> {
                 try {
                     t = new Texture2D("src/test/java/com/jkojote/engine/graphics/texture/bird.png");
+                    t.init();
                 } catch (IOException e) {
                     window.release();
                 }

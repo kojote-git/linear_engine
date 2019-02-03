@@ -106,6 +106,7 @@ public class FontMap implements Releasable, Initializable {
         glyphMap = atlas.getGlyphsMap();
         glyphUnknown = glyphMap.get((char)31);
         this.texture = new Texture2D(atlas.getImage(), GL_LINEAR, GL_LINEAR);
+        this.texture.init();
         this.lineHeight = atlas.getLineHeight();
     }
 

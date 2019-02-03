@@ -37,21 +37,23 @@ public class SpritesTest {
     private int width = 400, height = 400;
 
     @Before
-    public void init() {
+    public void init() throws Exception {
         window = new Window("w", width, height, false, false);
         renderer = new SpriteObjectRenderer(window.getProjectionMatrix());
         runner = new LoopRunner(window, (fps) -> System.out.println("FPS: " + fps));
+        spriteSheet = new EvenSpriteSheet(path, 180, 340, GL_LINEAR, GL_LINEAR);
+        spriteObject = new AnimatedSpriteObject(spriteSheet, 1);
+        camera = new BoundingCamera<>(spriteObject);
+        controller = new TransformationController(spriteObject);
+        runner.setUpdateCallback(controller::update);
+        window.setKeyCallback(controller);
         window.setInitCallback(() -> {
             try {
-                renderer.init();
-                spriteSheet = new EvenSpriteSheet(path, 180, 340, GL_LINEAR, GL_LINEAR);
+                spriteSheet.init();
                 int last = spriteSheet.sprites().size() - 1;
                 spriteSheet.sprites().remove(last--);
                 spriteSheet.sprites().remove(last);
-                spriteObject = new AnimatedSpriteObject(spriteSheet, 1);
-                camera = new BoundingCamera<>(spriteObject);
-                controller = new TransformationController(spriteObject);
-                runner.setUpdateCallback(controller::update);
+                renderer.init();
             } catch (Exception e) {
                 e.printStackTrace();
                 tryRelease(renderer);

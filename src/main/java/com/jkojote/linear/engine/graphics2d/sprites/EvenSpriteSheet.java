@@ -1,5 +1,6 @@
 package com.jkojote.linear.engine.graphics2d.sprites;
 
+import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.Texture2D;
 
 import java.io.IOException;
@@ -12,11 +13,17 @@ public class EvenSpriteSheet implements SpriteSheet {
 
     private Texture2D texture;
 
+    private float spriteWidth, spriteHeight;
+
+    private boolean initialized;
+
     private List<Sprite> sprites;
 
     public EvenSpriteSheet(Texture2D texture, float spriteWidth, float spriteHeight) {
         sprites = new ArrayList<>();
         this.texture = texture;
+        this.spriteWidth = spriteWidth;
+        this.spriteHeight = spriteHeight;
         cutSprites(texture, spriteWidth, spriteHeight);
     }
 
@@ -27,9 +34,7 @@ public class EvenSpriteSheet implements SpriteSheet {
     public EvenSpriteSheet(String path,
                            float spriteWidth, float spriteHeight,
                            int minFilter, int magFilter) throws IOException {
-        sprites = new ArrayList<>();
-        texture = new Texture2D(path, minFilter, magFilter);
-        cutSprites(texture, spriteWidth, spriteHeight);
+        this(new Texture2D(path, minFilter, magFilter), spriteWidth, spriteHeight);
     }
 
     @Override
@@ -74,5 +79,21 @@ public class EvenSpriteSheet implements SpriteSheet {
                 x += spriteWidth;
             }
         }
+    }
+
+    @Override
+    public void init() throws ResourceInitializationException {
+        if (initialized)
+            return;
+        initialized = true;
+        if (!texture.isInitialized()) {
+            texture.init();
+        }
+        cutSprites(texture, spriteWidth, spriteHeight);
+    }
+
+    @Override
+    public boolean isInitialized() {
+        return initialized;
     }
 }

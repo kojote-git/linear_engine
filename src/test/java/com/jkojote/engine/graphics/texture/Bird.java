@@ -25,6 +25,7 @@ public class Bird extends BaseTransformable
     public void init() throws ResourceInitializationException {
         try {
             texture = new Texture2D("src/test/java/com/jkojote/engine/graphics/texture/bird.png");
+            texture.init();
         } catch (IOException e) {
             throw new ResourceInitializationException(e);
         }
