@@ -1,7 +1,5 @@
 package com.jkojote.linear.engine.graphics2d.sprites;
 
-import com.jkojote.linear.engine.math.Mat4f;
-
 public final class OrdinarySprite implements Sprite {
 
     private float width, height;
@@ -9,8 +7,6 @@ public final class OrdinarySprite implements Sprite {
     private SpriteSheet spriteSheet;
 
     private Point topLeft;
-
-    private Mat4f identity = Mat4f.identity();
 
     public OrdinarySprite(SpriteSheet spriteSheet, Point topLeft, float width, float height) {
         this.spriteSheet = spriteSheet;
@@ -37,10 +33,5 @@ public final class OrdinarySprite implements Sprite {
     @Override
     public float height() {
         return height;
-    }
-
-    @Override
-    public Mat4f modelMatrix() {
-        return identity;
     }
 }

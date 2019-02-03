@@ -13,13 +13,13 @@ import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 
-public class SpriteRenderer implements Renderer<Sprite>, Releasable, Initializable {
+public class SpriteObjectRenderer implements Renderer<SpriteObject>, Releasable, Initializable {
 
     private Shader shader;
 
     private Mat4f proj;
-    
-    public SpriteRenderer(Mat4f proj) {
+
+    public SpriteObjectRenderer(Mat4f proj) {
         this.proj = proj;
     }
 
@@ -27,7 +27,8 @@ public class SpriteRenderer implements Renderer<Sprite>, Releasable, Initializab
 
     @Override
     @SuppressWarnings("Duplicates")
-    public void render(Sprite sprite, Camera camera) {
+    public void render(SpriteObject spriteObj, Camera camera) {
+        Sprite sprite = spriteObj.sprite();
         Texture2D tex = sprite.spriteSheet().sheet();
         float sWidth = sprite.width(), sHeight = sprite.height();
         float tWidth = tex.getWidth(), tHeight = tex.getHeight();
@@ -46,12 +47,12 @@ public class SpriteRenderer implements Renderer<Sprite>, Releasable, Initializab
         vaof.unbind();
         shader.bind();
         shader.setUniform("pv", proj.mult(camera.viewMatrix()), true);
-        shader.setUniform("model", sprite.modelMatrix(), true);
+        shader.setUniform("model", spriteObj.modelMatrix(), true);
         vaof.bind();
         tex.bind();
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
-        glDrawArrays(sprite.renderingMode(), 0, 4);
+        glDrawArrays(spriteObj.renderingMode(), 0, 4);
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
         tex.unbind();

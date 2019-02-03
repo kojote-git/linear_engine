@@ -65,7 +65,7 @@ public class EvenSpriteSheet implements SpriteSheet {
     private void cutSprites(Texture2D texture, float spriteWidth, float spriteHeight) {
         float texWidth = texture.getWidth(), texHeight = texture.getHeight();
         float x = 0, y = 0;
-        while (y <= texHeight) {
+        while (y <= texHeight - spriteHeight) {
             if (x >= texWidth) {
                 x = 0;
                 y += spriteHeight;

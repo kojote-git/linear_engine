@@ -1,17 +1,13 @@
 package com.jkojote.engine.graphics.sprites;
 
 import com.jkojote.engine.graphics.LoopRunner;
-import com.jkojote.engine.graphics.TransformableCamera;
 import com.jkojote.engine.graphics.TransformationController;
+import com.jkojote.engine.graphics.primitives.BoundingCamera;
 import com.jkojote.linear.engine.Releasable;
-import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.Camera;
-import com.jkojote.linear.engine.graphics2d.primitives.renderers.TextureRenderer;
 import com.jkojote.linear.engine.graphics2d.sprites.EvenSpriteSheet;
-import com.jkojote.linear.engine.graphics2d.sprites.Sprite;
-import com.jkojote.linear.engine.graphics2d.sprites.SpriteRenderer;
+import com.jkojote.linear.engine.graphics2d.sprites.SpriteObjectRenderer;
 import com.jkojote.linear.engine.graphics2d.sprites.SpriteSheet;
-import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.window.Window;
 import org.junit.After;
 import org.junit.Before;
@@ -24,22 +20,38 @@ public class SpritesTest {
 
     private SpriteSheet spriteSheet;
 
+    private Camera camera;
+
+    private LoopRunner runner;
+
+    private TransformationController controller;
+
+    private AnimatedSpriteObject spriteObject;
+
     private String path = "src/test/java/com/jkojote/engine/graphics/sprites/spritesheet.png";
 
     private Window window;
 
-    private SpriteRenderer renderer;
+    private SpriteObjectRenderer renderer;
 
     private int width = 400, height = 400;
 
     @Before
     public void init() {
         window = new Window("w", width, height, false, false);
-        renderer = new SpriteRenderer(window.getProjectionMatrix());
+        renderer = new SpriteObjectRenderer(window.getProjectionMatrix());
+        runner = new LoopRunner(window, (fps) -> System.out.println("FPS: " + fps));
         window.setInitCallback(() -> {
             try {
                 renderer.init();
                 spriteSheet = new EvenSpriteSheet(path, 180, 340, GL_LINEAR, GL_LINEAR);
+                int last = spriteSheet.sprites().size() - 1;
+                spriteSheet.sprites().remove(last--);
+                spriteSheet.sprites().remove(last);
+                spriteObject = new AnimatedSpriteObject(spriteSheet, 1);
+                camera = new BoundingCamera<>(spriteObject);
+                controller = new TransformationController(spriteObject);
+                runner.setUpdateCallback(controller::update);
             } catch (Exception e) {
                 e.printStackTrace();
                 tryRelease(renderer);
@@ -57,15 +69,10 @@ public class SpritesTest {
 
     @Test
     public void render() {
-        LoopRunner runner = new LoopRunner(window);
-        TransformableCamera camera = new TransformableCamera();
-        TransformationController cameraController = new TransformationController(camera);
-        window.setKeyCallback(cameraController);
-        runner.setUpdateCallback(cameraController::update);
-        runner.setRenderCallback(() -> {
-            renderer.render(spriteSheet.sprites().get(0), camera);
-        });
         window.init();
+        runner.setRenderCallback(() -> {
+            renderer.render(spriteObject, camera);
+        });
         runner.run();
     }
 
