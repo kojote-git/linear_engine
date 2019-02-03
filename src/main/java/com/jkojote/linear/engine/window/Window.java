@@ -5,7 +5,12 @@ import com.jkojote.linear.engine.Initializable;
 import com.jkojote.linear.engine.Releasable;
 import com.jkojote.linear.engine.ResourceInitializationException;
 import com.jkojote.linear.engine.math.Mat4f;
+import com.jkojote.linear.engine.window.events.WindowMatrixUpdatedEvent;
+import com.jkojote.linear.engine.window.events.WindowResizedEvent;
 import org.lwjgl.opengl.GL;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -49,6 +54,8 @@ public final class Window implements Releasable, Initializable {
 
     private Mat4f projectionMatrix;
 
+    private Set<WindowStateEventListener<?>> stateListeners;
+
     /**
      * Creates a new window instance; this method doesn't initialize it.
      * To do so, call {@code init()} method after you set up all callbacks.
@@ -66,6 +73,7 @@ public final class Window implements Releasable, Initializable {
         this.resizable = resizable;
         this.mouseEnabled = mouseEnabled;
         this.projectionMatrix = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, 0, 1);
+        this.stateListeners = new HashSet<>();
     }
 
     /**
@@ -120,6 +128,24 @@ public final class Window implements Releasable, Initializable {
             throw new NullPointerException("textInputCallback must not be null");
         this.textInputCallback = textInputCallback;
         return this;
+    }
+
+    public void addStateListener(WindowStateEventListener<?> listener) {
+        if (listener == null)
+            return;
+        stateListeners.add(listener);
+    }
+
+    public void removeStateListener(WindowStateEventListener<?> listener) {
+        stateListeners.remove(listener);
+    }
+
+    private<T extends WindowStateEvent> void notifyListeners(T event) {
+        for (WindowStateEventListener listener : stateListeners) {
+            if (listener.eventType().equals(event.getClass())) {
+                listener.onEvent(event);
+            }
+        }
     }
 
     public int getWidth() { return width; }
@@ -177,6 +203,14 @@ public final class Window implements Releasable, Initializable {
      * Initializes all callbacks that were set before the {@code init()} method was called
      */
     private void initCallbacks() {
+        glfwSetWindowSizeCallback(window, (window, width, height) -> {
+            this.width = width;
+            this.height = height;
+            notifyListeners(new WindowResizedEvent(this, width, height));
+            updateMatrix();
+            notifyListeners(new WindowMatrixUpdatedEvent(this, projectionMatrix));
+
+        });
         if (keyCallback != null) {
             glfwSetKeyCallback(window, (window, key, scanCode, action, mods) ->
                 keyCallback.perform(this, key, action, mods)
@@ -204,6 +238,10 @@ public final class Window implements Releasable, Initializable {
                 );
             }
         }
+    }
+
+    private void updateMatrix() {
+        this.projectionMatrix = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, 0, 1);
     }
 
     public void pollEvents() {
