@@ -12,6 +12,9 @@ import java.util.Arrays;
  */
 public final class Mat4f {
 
+    /**
+     * PI divided by 180 for converting from angles to radians
+     */
     private static final float PI_180 = (float) Math.PI / 180;
 
     private float[] matrix;
@@ -102,10 +105,10 @@ public final class Mat4f {
      * @param j column number
      */
     public void set(int i, int j, float value) {
-        if (i < 0 || i > 3)
-            throw new IllegalArgumentException("i must be in range [0;3]");
-        if (j < 0 || j > 3)
-            throw new IllegalArgumentException("j must be in range [0;3]");
+        if (i < 0 || i >= 3)
+            throw new IllegalArgumentException("i must be in range [0;2]");
+        if (j < 0 || j >= 3)
+            throw new IllegalArgumentException("j must be in range [0;2]");
         matrix[i * 4 + j] = value;
     }
 
@@ -166,6 +169,46 @@ public final class Mat4f {
         return res;
     }
 
+    /**
+     * @return determinant of the matrix
+     */
+    public float det() {
+        /*
+         * This is how elements align in the matrix.
+         *
+         * |   [0],   [1],   [2],   [3], |
+         * |   [4],   [5],   [6],   [7], |
+         * |   [8],   [9],  [10],  [11], |
+         * |  [12],  [13],  [14],  [15]  |
+         *
+         * Where [i] - element under index i in matrix array.
+         * The determinant is calculated by using cofactor expansion along the first row.
+         */
+        float[] m = matrix;
+
+        float d1 = m[0] * (
+            m[5] * (m[10] * m[15] - m[14] * m[11]) -
+            m[6] * (m[9] * m[15] - m[13] * m[11])  +
+            m[7] * (m[9] * m[14] - m[13] * m[10])
+        );
+        float d2 = m[1] * (
+            m[4] * (m[10] * m[15] - m[14] * m[11]) -
+            m[6] * (m[8] * m[15] - m[12] * m[11])  +
+            m[7] * (m[8] * m[14] - m[12] * m[10])
+        );
+        float d3 = m[2] * (
+           m[4] * (m[9] * m[15] - m[13] * m[11]) -
+           m[5] * (m[8] * m[15] - m[12] * m[11]) +
+           m[7] * (m[8] * m[13] - m[12] * m[9])
+        );
+        float d4 = m[3] * (
+           m[4] * (m[9] * m[14] - m[13] * m[10]) -
+           m[5] * (m[8] * m[14] - m[12] * m[10]) +
+           m[6] * (m[8] * m[13] - m[12] * m[9])
+        );
+        return d1 - d2 + d3 - d4;
+    }
+    
     /**
      * Converts this matrix into a buffer
      * @return buffer

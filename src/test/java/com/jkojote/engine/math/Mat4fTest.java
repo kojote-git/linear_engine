@@ -136,6 +136,66 @@ public class Mat4fTest {
     }
 
     @Test
+    public void det() {
+        Mat4f m1 = new Mat4f(new float[] {
+            5,  7,  8, -2,
+            9,  1,  7, -3,
+            8, -2,  2,  1,
+            4,  3,  6,  7
+        });
+        float m1Det = 1425;
+        Mat4f m2 = new Mat4f(new float[] {
+             8,  8,  6,  9,
+            56,  7,  1,  0,
+            65,  9,  3,  4,
+            -1, 72,  9,  2
+        });
+        float m2Det = -18473;
+        Mat4f m3 = new Mat4f(new float[] {
+             7,    8,   6,  53,
+             23,  93,  62,   0,
+            262,  24,  42,   8,
+             92,   7,   5,   3
+        });
+        float m3Det = -11115270;
+        Mat4f m4 = new Mat4f(new float[] {
+             7, 8, 2, 3,
+            32, 2, 1, 8,
+             5, 8, 6, 4,
+             7, 9, 4, 8
+        });
+        float m4Det = -4087;
+        Mat4f m5 = new Mat4f(new float[] {
+            5, 7, 9, 3,
+            2, 0, 6, 8,
+            4, 3, 0, 9,
+            8, 2, 1, 7
+        });
+        float m5Det = -2744;
+        Mat4f m6 = new Mat4f(new float[] {
+            5,  2,  6, 78,
+            4,  1,  8,  0,
+            6, 98, 56,  5,
+            8,  5,  9,  2
+        });
+        float m6Det = 248723;
+        Mat4f m7 = new Mat4f(new float[] {
+              7,  2,  5,  9,
+              7,  2, 71, 92,
+            872,  9,  6,  9,
+              5, 29, 62,  91
+        });
+        float m7Det = -3054309;
+        assertEquals(m1Det, m1.det(), 0.005f);
+        assertEquals(m2Det, m2.det(), 0.005f);
+        assertEquals(m3Det, m3.det(), 0.005f);
+        assertEquals(m4Det, m4.det(), 0.005f);
+        assertEquals(m5Det, m5.det(), 0.005f);
+        assertEquals(m6Det, m6.det(), 0.005f);
+        assertEquals(m7Det, m7.det(), 0.005f);
+    }
+
+    @Test
     public void get() {
         float delta = 0.05f;
         Mat4f m = new Mat4f(new float[] {
