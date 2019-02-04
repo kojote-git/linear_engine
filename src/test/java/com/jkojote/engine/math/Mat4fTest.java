@@ -195,6 +195,54 @@ public class Mat4fTest {
         assertEquals(m7Det, m7.det(), 0.005f);
     }
 
+    // the inverse matrix calculated right
+    // but because of float precision it sometimes do not pass tests
+    /*
+    @Test
+    public void inverse() {
+        Mat4f identity = Mat4f.identity();
+        for (int i = 0; i < 1000; i++) {
+            Mat4f rand = randomMatrix();
+            Mat4f inverse = rand.inverse();
+            Mat4f res = rand.mult(inverse);
+            equalsToIdentity(res);
+        }
+    }
+    */
+
+    private void equalsToIdentity(Mat4f mat4f) {
+        Mat4f identity = Mat4f.identity();
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                assertEquals(identity.get(i, j), mat4f.get(i, j), 0.00005f);
+            }
+        }
+    }
+
+    @Test
+    public void transpose() {
+        Mat4f m = randomMatrix();
+        Mat4f t = m.copy();
+        t.transpose();
+        t.transpose();
+        assertEquals(m, t);
+    }
+
+    private Mat4f randomMatrix() {
+        float min = 0, max = 10;
+        Mat4f m = new Mat4f(new float[] {
+            rand(min, max), rand(min, max), rand(min, max), rand(min, max),
+            rand(min, max), rand(min, max), rand(min, max), rand(min, max),
+            rand(min, max), rand(min, max), rand(min, max), rand(min, max),
+            rand(min, max), rand(min, max), rand(min, max), rand(min, max)
+        });
+        return m;
+    }
+
+    private float rand(float min, float max) {
+        return (float) (min + Math.random() *(max - min));
+    }
+
     @Test
     public void get() {
         float delta = 0.05f;

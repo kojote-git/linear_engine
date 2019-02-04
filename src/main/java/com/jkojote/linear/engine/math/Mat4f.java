@@ -208,7 +208,64 @@ public final class Mat4f {
         );
         return d1 - d2 + d3 - d4;
     }
-    
+
+    public Mat4f inverse() {
+        /*
+         * This is how elements align in the matrix.
+         *
+         * |   [0],   [1],   [2],   [3], |
+         * |   [4],   [5],   [6],   [7], |
+         * |   [8],   [9],  [10],  [11], |
+         * |  [12],  [13],  [14],  [15]  |
+         *
+         * Where [i] - element under index i in matrix array.
+         */
+        float c00 = det3(5, 6, 7, 9, 10, 11, 13, 14, 15);
+        float c01 = -det3(1, 2, 3, 9, 10, 11, 13, 14, 15);
+        float c02 = det3(1, 2, 3, 5, 6, 7, 13, 14, 15);
+        float c03 = -det3(1, 2, 3, 5, 6, 7, 9, 10, 11);
+        float c10 = -det3(4, 6, 7, 8, 10, 11, 12, 14, 15);
+        float c11 = det3(0, 2, 3, 8, 10, 11, 12, 14, 15);
+        float c12 = -det3(0, 2, 3, 4, 6, 7, 12, 14, 15);
+        float c13 = det3(0, 2, 3, 4, 6, 7, 8, 10, 11);
+        float c20 = det3(4, 5, 7, 8, 9, 11, 12, 13, 15);
+        float c21 = -det3(0, 1, 3, 8, 9, 11, 12, 13, 15);
+        float c22 = det3(0, 1, 3, 4, 5, 7, 12, 13, 15);
+        float c23 = -det3(0, 1, 3, 4, 5, 7, 8, 9, 11);
+        float c30 = -det3(4, 5, 6, 8, 9, 10, 12, 13, 14);
+        float c31 = det3(0, 1, 2, 8, 9, 10, 12, 13, 14);
+        float c32 = -det3(0, 1, 2, 4, 5, 6, 12, 13, 14);
+        float c33 = det3(0, 1, 2, 4, 5, 6, 8, 9, 10);
+        Mat4f adjugate = new Mat4f(new float[] {
+            c00, c01, c02, c03,
+            c10, c11, c12, c13,
+            c20, c21, c22, c23,
+            c30, c31, c32, c33
+        });
+        adjugate.scalar(1 / det());
+        return adjugate;
+    }
+
+    public void transpose() {
+        for (int i = 0; i < 4; i++) {
+            for (int j = i; j < 4; j++) {
+                if (i == j)
+                    continue;
+                float temp = matrix[i * 4 + j];
+                matrix[i * 4 + j] = matrix[j * 4 + i];
+                matrix[j * 4 + i] = temp;
+            }
+        }
+    }
+
+    private float det3(int a00, int a01, int a02,
+                       int a10, int a11, int a12,
+                       int a20, int a21, int a22) {
+        return matrix[a00]*matrix[a11]*matrix[a22] + matrix[a01]*matrix[a12]*matrix[a20] + matrix[a10]*matrix[a21]*matrix[a02]
+              -matrix[a02]*matrix[a11]*matrix[a20] - matrix[a21]*matrix[a12]*matrix[a00] - matrix[a10]*matrix[a01]*matrix[a22];
+    }
+
+
     /**
      * Converts this matrix into a buffer
      * @return buffer
