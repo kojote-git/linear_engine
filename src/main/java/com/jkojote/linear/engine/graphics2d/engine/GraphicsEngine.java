@@ -13,13 +13,13 @@ import java.util.Collection;
 public interface GraphicsEngine extends Initializable, Releasable {
 
     /**
-     * Sets the camera that is used for rendering
+     * Sets the camera that is used for rendering if no camera for rendering is specified
      * @param camera a camera to be set
      */
     void setCamera(Camera camera);
 
     /**
-     * @return camera that is used fo rendering
+     * @return camera that is used fo rendering if no camera for rendering is specified
      */
     Camera getCamera();
 
@@ -29,10 +29,13 @@ public interface GraphicsEngine extends Initializable, Releasable {
      */
     void renderAll(Collection<Renderable> renderables);
 
+    void renderAll(Collection<Renderable> renderables, Camera camera);
+
     /**
      * Renders one given object
      * @param renderable an object to be rendered
      */
     void render(Renderable renderable);
 
+    void render(Renderable renderable, Camera camera);
 }

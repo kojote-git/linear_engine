@@ -9,18 +9,18 @@ import com.jkojote.linear.engine.shared.Transformable;
 
 import java.util.List;
 
-public class ColidablePolygon implements Transformable, VertexShape {
+public class CollidablePolygon implements Transformable, VertexShape {
 
     private SolidPolygon polygon;
 
     private CollisionBox collisionBox;
 
-    public ColidablePolygon(Vec3f[] vertices, Vec3f position, Vec3f color) {
+    public CollidablePolygon(Vec3f[] vertices, Vec3f position, Vec3f color) {
         this.polygon = new com.jkojote.linear.engine.graphics2d.primitives.solid.SolidPolygon(position, color, vertices);
         this.collisionBox = new CollisionBox(position, vertices);
     }
 
-    public boolean checkCollides(ColidablePolygon polygon) {
+    public boolean checkCollides(CollidablePolygon polygon) {
         return collisionBox.checkCollides(polygon.collisionBox);
     }
 

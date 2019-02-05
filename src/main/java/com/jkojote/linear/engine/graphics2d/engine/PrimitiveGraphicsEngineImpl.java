@@ -92,7 +92,7 @@ public class PrimitiveGraphicsEngineImpl implements PrimitiveGraphicsEngine {
     public Camera getCamera() {return camera; }
 
     @Override
-    public void render(Renderable renderable) {
+    public void render(Renderable renderable, Camera camera) {
         if (renderable instanceof SpriteObject) {
             spriteObjectRenderer.render((SpriteObject) renderable, camera);
         }
@@ -126,8 +126,20 @@ public class PrimitiveGraphicsEngineImpl implements PrimitiveGraphicsEngine {
     @Override
     public void renderAll(Collection<Renderable> renderables) {
         for (Renderable renderable: renderables) {
-            render(renderable);
+            render(renderable, camera);
         }
+    }
+
+    @Override
+    public void renderAll(Collection<Renderable> renderables, Camera camera) {
+        for (Renderable renderable: renderables) {
+            render(renderable, camera);
+        }
+    }
+
+    @Override
+    public void render(Renderable renderable) {
+        render(renderable, camera);
     }
 
     @Override

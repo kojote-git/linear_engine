@@ -81,10 +81,10 @@ public class CollisionDetectionTest {
         };
         ModifiableText collisionStatus = new ModifiableText(fontMap).append("Collided: false");
         collisionStatus.setTranslation(new Vec3f(-width / 2f, height / 2f, 0));
-        ColidablePolygon p1 = new ColidablePolygon(cbv1, new Vec3f(-30, 0, 0), new Vec3f(0.8f, 0.8f, 0.4f));
-        ColidablePolygon p2 = new ColidablePolygon(cbv1, new Vec3f(30, 0, 0), new Vec3f(0.1f, 0.8f, 0.4f));
-        ColidablePolygon p3 = new ColidablePolygon(cbv2, new Vec3f(-80, 0, 0), new Vec3f(0.1f, 0.8f, 0.4f));
-        ColidablePolygon p4 = new ColidablePolygon(cbv3, new Vec3f(-20, -30, 0), new Vec3f(0.1f, 0.8f, 0.4f));
+        CollidablePolygon p1 = new CollidablePolygon(cbv1, new Vec3f(-30, 0, 0), new Vec3f(0.8f, 0.8f, 0.4f));
+        CollidablePolygon p2 = new CollidablePolygon(cbv1, new Vec3f(30, 0, 0), new Vec3f(0.1f, 0.8f, 0.4f));
+        CollidablePolygon p3 = new CollidablePolygon(cbv2, new Vec3f(-80, 0, 0), new Vec3f(0.1f, 0.8f, 0.4f));
+        CollidablePolygon p4 = new CollidablePolygon(cbv3, new Vec3f(-20, -30, 0), new Vec3f(0.1f, 0.8f, 0.4f));
         p1.setScaleFactor(5);
         p2.setScaleFactor(5);
         p2.setRotationAngle(45);

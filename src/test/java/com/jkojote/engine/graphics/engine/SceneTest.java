@@ -28,7 +28,7 @@ import java.util.List;
 
 import static org.lwjgl.opengl.GL11.GL_LINEAR;
 
-public class Scene {
+public class SceneTest {
 
     private GraphicsEngine engine;
 
@@ -94,10 +94,7 @@ public class Scene {
     @Test
     public void renderScene() {
         window.init();
-        runner.setRenderCallback(() -> {
-            for (Renderable r : renderables)
-                engine.render(r);
-        });
+        runner.setRenderCallback(() -> engine.renderAll(renderables));
         runner.setUpdateCallback(controller::update);
         runner.run();
     }
