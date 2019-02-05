@@ -1,8 +1,7 @@
-package com.jkojote.linear.engine;
+package com.jkojote.linear.engine.shared;
 
 public class ResourceInitializationException extends RuntimeException {
-    public ResourceInitializationException() {
-    }
+    public ResourceInitializationException() { }
 
     public ResourceInitializationException(String message) {
         super(message);

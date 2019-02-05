@@ -1,8 +1,8 @@
 package com.jkojote.linear.engine.graphics2d.primitives.renderers;
 
-import com.jkojote.linear.engine.Initializable;
-import com.jkojote.linear.engine.Releasable;
-import com.jkojote.linear.engine.ResourceInitializationException;
+import com.jkojote.linear.engine.shared.Initializable;
+import com.jkojote.linear.engine.shared.Releasable;
+import com.jkojote.linear.engine.shared.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.Camera;
 import com.jkojote.linear.engine.graphics2d.Renderer;
 import com.jkojote.linear.engine.graphics2d.Shader;

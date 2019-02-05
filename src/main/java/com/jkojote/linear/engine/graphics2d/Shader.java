@@ -1,6 +1,6 @@
 package com.jkojote.linear.engine.graphics2d;
 
-import com.jkojote.linear.engine.Releasable;
+import com.jkojote.linear.engine.shared.Releasable;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.utils.FileUtils;

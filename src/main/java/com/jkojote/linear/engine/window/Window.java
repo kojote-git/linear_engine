@@ -1,9 +1,9 @@
 package com.jkojote.linear.engine.window;
 
-import com.jkojote.linear.engine.InitCallback;
-import com.jkojote.linear.engine.Initializable;
-import com.jkojote.linear.engine.Releasable;
-import com.jkojote.linear.engine.ResourceInitializationException;
+import com.jkojote.linear.engine.shared.InitCallback;
+import com.jkojote.linear.engine.shared.Initializable;
+import com.jkojote.linear.engine.shared.Releasable;
+import com.jkojote.linear.engine.shared.ResourceInitializationException;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.window.events.WindowMatrixUpdatedEvent;
 import com.jkojote.linear.engine.window.events.WindowResizedEvent;
@@ -54,8 +54,6 @@ public final class Window implements Releasable, Initializable {
 
     private Mat4f projectionMatrix;
 
-    private float aspectRatio;
-
     private Set<WindowStateEventListener<?>> stateListeners;
 
     /**
@@ -75,19 +73,7 @@ public final class Window implements Releasable, Initializable {
         this.resizable = resizable;
         this.mouseEnabled = mouseEnabled;
         this.stateListeners = new HashSet<>();
-        this.aspectRatio = (float) width / height;
         this.projectionMatrix = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, 0, 1);
-    }
-
-    public Window(String title, int width, int height,
-                  boolean resizable, float aspectRatio) {
-        this.title = title;
-        this.width = width;
-        this.height = height;
-        this.resizable = resizable;
-        this.stateListeners = new HashSet<>();
-        this.aspectRatio = aspectRatio;
-        this.projectionMatrix = Mat4f.ortho(-aspectRatio, aspectRatio, -1, 1, -1, 1);
     }
 
     /**

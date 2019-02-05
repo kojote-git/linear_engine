@@ -28,6 +28,8 @@ public class MatrixUpdatedTest {
 
     @Before
     public void init() {
+        System.out.println("Matrix Updated Test:");
+        System.out.println("Resize window and watch if it has no problems with resizing");
         window = new Window("test", 300, 300, true, true);
         engine = new PrimitiveGraphicsEngineImpl();
         camera = new TransformableCamera(window);

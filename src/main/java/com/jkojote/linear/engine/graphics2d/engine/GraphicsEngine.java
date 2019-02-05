@@ -1,7 +1,7 @@
 package com.jkojote.linear.engine.graphics2d.engine;
 
-import com.jkojote.linear.engine.Initializable;
-import com.jkojote.linear.engine.Releasable;
+import com.jkojote.linear.engine.shared.Initializable;
+import com.jkojote.linear.engine.shared.Releasable;
 import com.jkojote.linear.engine.graphics2d.*;
 
 import java.util.Collection;

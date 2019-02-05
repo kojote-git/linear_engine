@@ -1,8 +1,8 @@
 package com.jkojote.engine.graphics.texture;
 
-import com.jkojote.linear.engine.Initializable;
-import com.jkojote.linear.engine.Releasable;
-import com.jkojote.linear.engine.ResourceInitializationException;
+import com.jkojote.linear.engine.shared.Initializable;
+import com.jkojote.linear.engine.shared.Releasable;
+import com.jkojote.linear.engine.shared.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.*;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;

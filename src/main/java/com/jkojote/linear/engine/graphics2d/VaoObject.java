@@ -1,6 +1,6 @@
 package com.jkojote.linear.engine.graphics2d;
 
-import com.jkojote.linear.engine.Releasable;
+import com.jkojote.linear.engine.shared.Releasable;
 
 /**
  * This interface represents an object that contains vertex array object (VAO) inside.

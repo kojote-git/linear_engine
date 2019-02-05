@@ -3,7 +3,7 @@ package com.jkojote.engine.graphics.sprites;
 import com.jkojote.engine.graphics.LoopRunner;
 import com.jkojote.engine.graphics.TransformationController;
 import com.jkojote.engine.graphics.BoundingCamera;
-import com.jkojote.linear.engine.Releasable;
+import com.jkojote.linear.engine.shared.Releasable;
 import com.jkojote.linear.engine.graphics2d.Camera;
 import com.jkojote.linear.engine.graphics2d.sprites.EvenSpriteSheet;
 import com.jkojote.linear.engine.graphics2d.sprites.SpriteObjectRenderer;

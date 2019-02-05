@@ -23,10 +23,12 @@ public class CollisionBox extends BaseTransformable {
         Vec3f[] t2 = new Vec3f[collisionBox.vertices.length];
         Mat4f thisTransform = transformationMatrix();
         Mat4f cbTransform = collisionBox.transformationMatrix();
+        //transform vertices using transformation matrices
         for (int i = 0; i < t1.length; i++)
             t1[i] = thisTransform.mult(this.vertices[i]);
         for (int i = 0; i < t2.length; i++)
             t2[i] = cbTransform.mult(collisionBox.vertices[i]);
+        //test if vertices overlap
         if (testOverlap(t1, t2) && testOverlap(t2, t1))
             return true;
         return false;
@@ -34,19 +36,30 @@ public class CollisionBox extends BaseTransformable {
 
     private boolean testOverlap(Vec3f[] t1, Vec3f[] t2) {
         Vec3f start = t1[0];
+        Vec3f end;
         for (int i = 1; i < t1.length; i++) {
-            Vec3f end = t1[i];
+            end = t1[i];
             Vec3f side = end.copy().sub(start);
             start = end;
-            Vec3f normal = side.normal().unit();
-            DotTuple thisProjections = getProjection(t1, normal);
-            DotTuple thatProjections = getProjection(t2, normal);
-            if (!checkOverlap(
-                    thisProjections.min, thisProjections.max,
-                    thatProjections.min, thatProjections.max
-            )) return false;
+            if (!checkOverlap(side, t1, t2))
+                return false;
         }
-        return true;
+        start = t1[t1.length - 1];
+        end = t1[0];
+        return checkOverlap(end.copy().sub(start), t1, t2);
+    }
+
+    /*
+     * check if projections of t1 and t2 onto normal vector of the side overlap
+     */
+    private boolean checkOverlap(Vec3f side, Vec3f[] t1, Vec3f[] t2) {
+        Vec3f normal = side.normal();
+        DotTuple thisProjections = getProjection(t1, normal);
+        DotTuple thatProjections = getProjection(t2, normal);
+        return checkOverlap(
+            thisProjections.min, thisProjections.max,
+            thatProjections.min, thatProjections.max
+        );
     }
 
     /*
@@ -54,8 +67,7 @@ public class CollisionBox extends BaseTransformable {
      */
     private DotTuple getProjection(Vec3f[] vertices, Vec3f normal) {
         float minDot = Float.MAX_VALUE, maxDot = -Float.MAX_VALUE;
-        for (int j = 0; j < vertices.length; j++) {
-            Vec3f vertex = vertices[j];
+        for (Vec3f vertex : vertices) {
             float dot = vertex.dot(normal);
             if (dot < minDot) minDot = dot;
             if (dot > maxDot) maxDot = dot;
@@ -78,7 +90,8 @@ public class CollisionBox extends BaseTransformable {
     private class DotTuple {
 
         private float min, max;
-        public DotTuple(float min, float max) {
+
+        private DotTuple(float min, float max) {
             this.min = min;
             this.max = max;
         }

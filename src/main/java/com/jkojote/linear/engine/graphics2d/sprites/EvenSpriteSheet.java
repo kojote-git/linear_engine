@@ -1,6 +1,6 @@
 package com.jkojote.linear.engine.graphics2d.sprites;
 
-import com.jkojote.linear.engine.ResourceInitializationException;
+import com.jkojote.linear.engine.shared.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.Texture2D;
 
 import java.io.IOException;

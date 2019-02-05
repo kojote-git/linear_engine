@@ -1,6 +1,6 @@
 package com.jkojote.engine.graphics.text;
 
-import com.jkojote.linear.engine.Releasable;
+import com.jkojote.linear.engine.shared.Releasable;
 import com.jkojote.linear.engine.graphics2d.Texture2D;
 import com.jkojote.linear.engine.graphics2d.TexturedObject;
 import com.jkojote.linear.engine.graphics2d.text.FontMap;

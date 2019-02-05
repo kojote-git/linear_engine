@@ -1,6 +1,6 @@
 package com.jkojote.linear.engine.graphics2d.engine;
 
-import com.jkojote.linear.engine.ResourceInitializationException;
+import com.jkojote.linear.engine.shared.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.*;
 import com.jkojote.linear.engine.graphics2d.primitives.Ellipse;
 import com.jkojote.linear.engine.graphics2d.primitives.VertexShape;
@@ -13,7 +13,6 @@ import com.jkojote.linear.engine.graphics2d.text.PlainText;
 import com.jkojote.linear.engine.graphics2d.text.TextRenderer;
 import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
-import com.jkojote.linear.engine.window.Window;
 
 import java.util.Collection;
 

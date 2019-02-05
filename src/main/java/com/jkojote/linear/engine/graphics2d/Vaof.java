@@ -1,6 +1,6 @@
 package com.jkojote.linear.engine.graphics2d;
 
-import com.jkojote.linear.engine.Releasable;
+import com.jkojote.linear.engine.shared.Releasable;
 
 import java.nio.FloatBuffer;
 

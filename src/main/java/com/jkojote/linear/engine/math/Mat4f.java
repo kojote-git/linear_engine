@@ -105,10 +105,10 @@ public final class Mat4f {
      * @param j column number
      */
     public void set(int i, int j, float value) {
-        if (i < 0 || i >= 3)
-            throw new IllegalArgumentException("i must be in range [0;2]");
-        if (j < 0 || j >= 3)
-            throw new IllegalArgumentException("j must be in range [0;2]");
+        if (i < 0 || i > 3)
+            throw new IllegalArgumentException("i must be in range [0;3]");
+        if (j < 0 || j > 3)
+            throw new IllegalArgumentException("j must be in range [0;3]");
         matrix[i * 4 + j] = value;
     }
 

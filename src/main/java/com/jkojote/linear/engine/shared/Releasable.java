@@ -1,4 +1,4 @@
-package com.jkojote.linear.engine;
+package com.jkojote.linear.engine.shared;
 
 /**
  * <p>

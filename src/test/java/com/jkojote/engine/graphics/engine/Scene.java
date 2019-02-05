@@ -4,7 +4,7 @@ import com.jkojote.engine.graphics.BoundingCamera;
 import com.jkojote.engine.graphics.LoopRunner;
 import com.jkojote.engine.graphics.TransformationController;
 import com.jkojote.engine.graphics.sprites.AnimatedSpriteObject;
-import com.jkojote.linear.engine.Releasable;
+import com.jkojote.linear.engine.shared.Releasable;
 import com.jkojote.linear.engine.graphics2d.Camera;
 import com.jkojote.linear.engine.graphics2d.Renderable;
 import com.jkojote.linear.engine.graphics2d.engine.GraphicsEngine;

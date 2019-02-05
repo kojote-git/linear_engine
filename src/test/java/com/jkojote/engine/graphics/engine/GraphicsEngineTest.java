@@ -1,7 +1,7 @@
 package com.jkojote.engine.graphics.engine;
 
 import com.jkojote.engine.graphics.LoopRunner;
-import com.jkojote.linear.engine.ResourceInitializationException;
+import com.jkojote.linear.engine.shared.ResourceInitializationException;
 import com.jkojote.linear.engine.graphics2d.Camera;
 import com.jkojote.linear.engine.graphics2d.cameras.StaticCamera;
 import com.jkojote.linear.engine.graphics2d.engine.GraphicsEngine;
