@@ -5,7 +5,7 @@ import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.shared.BaseTransformable;
 
 /**
- * This collision box represents an idea of Oriented Collision Box.
+ * This collision box represents an idea of Oriented Bounding Box.
  * It can intersect with other collision boxes of different shapes and sizes.
  * As it implements {@link com.jkojote.linear.engine.shared.Transformable} interface, a collision box
  * may be transformed in terms of rotation, scale and can be translated to any position in a world space.
@@ -15,7 +15,7 @@ public class CollisionBox extends BaseTransformable {
     private Vec3f[] vertices;
 
     /**
-     * Create collision box that consist of vertices in a local space
+     * Creates collision box that consist of vertices in a local space
      * @param vertices vertices of the collision box
      */
     public CollisionBox(Vec3f[] vertices) {
@@ -24,7 +24,7 @@ public class CollisionBox extends BaseTransformable {
     }
 
     /**
-     * Create collision box that consist of vertices in a local space and is initially
+     * Creates collision box that consist of vertices in a local space and is initially
      * translated to {@code translation} coordinates.
      * @param translation vector that represents translation
      * @param vertices vertices of the collision box
@@ -36,7 +36,7 @@ public class CollisionBox extends BaseTransformable {
 
     /**
      * Checks if two collision boxes collide
-     * @param collisionBox a collision box to be checked on collision
+     * @param collisionBox a collision box to be checked on a collision
      * @return {@code true} if collision boxes collide and {@code false} otherwise
      */
     public boolean checkCollides(CollisionBox collisionBox) {
@@ -53,7 +53,7 @@ public class CollisionBox extends BaseTransformable {
         Vec3f[] v2 = new Vec3f[collisionBox.vertices.length];
         Mat4f tm1 = transformationMatrix();
         Mat4f collisionBoxTransformationMatrix = collisionBox.transformationMatrix();
-        //transform vertices using transformation matrices
+        // transform vertices using transformation matrices
         for (int i = 0; i < v1.length; i++)
             v1[i] = tm1.mult(this.vertices[i]);
         for (int i = 0; i < v2.length; i++)
