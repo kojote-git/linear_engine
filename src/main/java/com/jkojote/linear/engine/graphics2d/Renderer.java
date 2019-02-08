@@ -8,7 +8,7 @@ public interface Renderer<T extends Renderable> {
 
     /**
      * Renders object on the screen relatively to camera
-     * @param renderable
+     * @param renderable an object to be rendered
      * @param camera
      */
     void render(T renderable, Camera camera);

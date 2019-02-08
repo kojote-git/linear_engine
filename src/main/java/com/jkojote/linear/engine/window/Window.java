@@ -204,15 +204,17 @@ public final class Window implements Releasable, Initializable {
      * Initializes all callbacks that were set before the {@code init()} method was called
      */
     private void initCallbacks() {
-        glfwSetWindowSizeCallback(window, (window, width, height) -> {
-            this.width = width;
-            this.height = height;
-            glViewport(0, 0, width, height);
-            notifyListeners(new WindowResizedEvent(this, width, height));
-            updateMatrix();
-            notifyListeners(new WindowMatrixUpdatedEvent(this, projectionMatrix));
+        if (resizable) {
+            glfwSetWindowSizeCallback(window, (window, width, height) -> {
+                this.width = width;
+                this.height = height;
+                glViewport(0, 0, width, height);
+                notifyListeners(new WindowResizedEvent(this, width, height));
+                updateMatrix();
+                notifyListeners(new WindowMatrixUpdatedEvent(this, projectionMatrix));
 
-        });
+            });
+        }
         if (keyCallback != null) {
             glfwSetKeyCallback(window, (window, key, scanCode, action, mods) ->
                 keyCallback.perform(this, key, action, mods)

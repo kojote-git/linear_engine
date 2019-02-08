@@ -12,7 +12,6 @@ public class StripedTriangle extends BaseVertexShape {
 
     public StripedTriangle(Vec3f translation, Vec3f v1, Vec3f v2, Vec3f v3) {
         super(new ArrayList<>(3), translation, 0, 1.0f);
-        super.vertices = new ArrayList<>(3);
         vertices.add(v1);
         vertices.add(v2);
         vertices.add(v3);

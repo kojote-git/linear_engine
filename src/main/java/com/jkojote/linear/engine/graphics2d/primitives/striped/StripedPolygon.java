@@ -20,7 +20,6 @@ public class StripedPolygon extends BaseVertexShape {
         super(Arrays.asList(vertices));
         if (vertices.length < 3)
             throw new IllegalArgumentException("polygon must have at least 3 vertices");
-        super.vertices = Arrays.asList(vertices);
     }
 
     @Override

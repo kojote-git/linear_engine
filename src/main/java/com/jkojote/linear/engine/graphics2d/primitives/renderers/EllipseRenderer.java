@@ -34,9 +34,9 @@ public class EllipseRenderer implements Renderer<Ellipse>, Releasable, Initializ
         float xRad = ellipse.xRadius();
         float yRad = ellipse.yRadius();
         float
-                colorX = color.x(),
-                colorY = color.y(),
-                colorZ = color.z();
+            colorX = color.x(),
+            colorY = color.y(),
+            colorZ = color.z();
         int capacity = (360 * 5) << 2;
         FloatBuffer buffer = ByteBuffer.allocateDirect(capacity)
                 .order(ByteOrder.nativeOrder()).asFloatBuffer();
