@@ -16,13 +16,8 @@ public class TexturedObjectRenderer implements Renderer<TexturedObject>,
     }
 
     @Override
-    @SuppressWarnings("Duplicates")
     public void render(TexturedObject obj, Camera camera) {
-        renderTexture(obj.getTexture(), camera, obj.modelMatrix());
-    }
-
-    private void renderTexture(Texture2D texture, Camera camera, Mat4f modelMatrtix) {
-        textureRenderer.render(texture, camera, modelMatrtix);
+        textureRenderer.render(obj.getTexture(), camera, obj.modelMatrix());
     }
 
     @Override

@@ -1,16 +1,16 @@
 package com.jkojote.linear.engine.graphics2d.primitives.renderers;
 
+import com.jkojote.linear.engine.graphics2d.*;
+import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.shared.Initializable;
 import com.jkojote.linear.engine.shared.Releasable;
 import com.jkojote.linear.engine.shared.ResourceInitializationException;
-import com.jkojote.linear.engine.graphics2d.Camera;
-import com.jkojote.linear.engine.graphics2d.Renderer;
-import com.jkojote.linear.engine.graphics2d.Shader;
-import com.jkojote.linear.engine.graphics2d.VaoObject;
 
 import java.io.IOException;
 
 import static org.lwjgl.opengl.GL11.glDrawArrays;
+import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 
 public class VaoObjectRenderer implements Renderer<VaoObject>, Releasable, Initializable {
 
@@ -19,8 +19,11 @@ public class VaoObjectRenderer implements Renderer<VaoObject>, Releasable, Initi
     public VaoObjectRenderer() { }
 
     @Override
-    @SuppressWarnings("Duplicates")
     public void render(VaoObject vao, Camera camera) {
+        render(shader, vao, camera);
+    }
+
+    void render(Shader shader, VaoObject vao, Camera camera) {
         shader.bind();
         shader.setUniform("pv", camera.viewProjection(), true);
         shader.setUniform("model", vao.modelMatrix(), true);
@@ -29,6 +32,21 @@ public class VaoObjectRenderer implements Renderer<VaoObject>, Releasable, Initi
         glDrawArrays(vao.renderingMode(), 0, vao.drawCount());
         vao.disableAttributes();
         vao.unbind();
+        shader.unbind();
+    }
+
+    void renderVao(Vaof vaof, Shader shader, Camera camera,
+                   int drawCount, int renderingMode, Mat4f modelMatrix) {
+        shader.bind();
+        shader.setUniform("pv", camera.viewProjection(), true);
+        shader.setUniform("model", modelMatrix, true);
+        vaof.bind();
+        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
+        glDrawArrays(renderingMode, 0, drawCount);
+        glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(1);
+        vaof.unbind();
         shader.unbind();
     }
 
@@ -49,7 +67,7 @@ public class VaoObjectRenderer implements Renderer<VaoObject>, Releasable, Initi
     @Override
     public void release() {
         if (isInitialized())
-        shader.release();
+            shader.release();
     }
 
     @Override

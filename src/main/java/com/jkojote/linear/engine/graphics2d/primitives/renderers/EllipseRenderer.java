@@ -1,12 +1,10 @@
 package com.jkojote.linear.engine.graphics2d.primitives.renderers;
 
+import com.jkojote.linear.engine.graphics2d.*;
+import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.shared.Initializable;
 import com.jkojote.linear.engine.shared.Releasable;
 import com.jkojote.linear.engine.shared.ResourceInitializationException;
-import com.jkojote.linear.engine.graphics2d.Camera;
-import com.jkojote.linear.engine.graphics2d.Renderer;
-import com.jkojote.linear.engine.graphics2d.Shader;
-import com.jkojote.linear.engine.graphics2d.Vaof;
 import com.jkojote.linear.engine.graphics2d.primitives.Ellipse;
 import com.jkojote.linear.engine.math.MathUtils;
 import com.jkojote.linear.engine.math.Vec3f;
@@ -16,19 +14,17 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
-import static org.lwjgl.opengl.GL11.glDrawArrays;
 import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
-import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
-import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 
 public class EllipseRenderer implements Renderer<Ellipse>, Releasable, Initializable {
 
     private Shader shader;
 
+    private VaoObjectRenderer vaoObjectRenderer;
+
     public EllipseRenderer() { }
 
     @Override
-    @SuppressWarnings("Duplicates")
     public void render(Ellipse ellipse, Camera camera) {
         Vec3f color = ellipse.color();
         float xRad = ellipse.xRadius();
@@ -51,25 +47,17 @@ public class EllipseRenderer implements Renderer<Ellipse>, Releasable, Initializ
         Vaof vao = new Vaof(2, true)
                 .addArrayBuffer(buffer, GL_STATIC_DRAW, 0, 2, 20, 0)
                 .addArrayBuffer(buffer, GL_STATIC_DRAW, 1, 3, 20, 8);
-        shader.bind();
-        shader.setUniform("pv", camera.viewProjection(), true);
-        shader.setUniform("model", ellipse.modelMatrix(), true);
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
-
-        glDrawArrays(ellipse.renderingMode(), 0, 360);
-
-        glDisableVertexAttribArray(0);
-        glDisableVertexAttribArray(1);
+        vaoObjectRenderer.renderVao(vao, shader, camera, 360, ellipse.renderingMode(), ellipse.modelMatrix());
         vao.release();
-        shader.unbind();
     }
 
     @Override
     public void init() throws ResourceInitializationException {
         try {
             shader = Shader.fromResources("shaders/shapes/vert.glsl","shaders/shapes/fragm.glsl");
-        } catch (IOException e) {
+            vaoObjectRenderer = new VaoObjectRenderer();
+            vaoObjectRenderer.init();
+        } catch (IOException | ResourceInitializationException e) {
             throw new ResourceInitializationException(e);
         }
     }
@@ -81,8 +69,10 @@ public class EllipseRenderer implements Renderer<Ellipse>, Releasable, Initializ
 
     @Override
     public void release() {
-        if (isInitialized())
+        if (isInitialized()) {
             shader.release();
+            vaoObjectRenderer.release();
+        }
     }
 
     @Override

@@ -54,7 +54,7 @@ public class RenderingTexturedObjectTest {
     public void renderTexture() {
         TransformationController controller = new TransformationController(bird);
         LoopRunner runner = new LoopRunner(window);
-        bird.setScaleFactor(0.2f);
+        bird.setScaleFactor(0.1f);
         controller.setScaleFactorDelta(0.01f);
         controller.setRotationDelta(3);
         controller.setTranslationDelta(5);

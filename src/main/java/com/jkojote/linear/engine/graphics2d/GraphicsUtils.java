@@ -33,7 +33,6 @@ public final class GraphicsUtils {
         return vaof;
     }
 
-
     public static Mat4f transformationMatrix(Vec3f translation, float rotationAngle, float scaleFactor) {
         Mat4f translate = Mat4f.translation(translation);
         Mat4f rotate = Mat4f.rotationZ(rotationAngle);

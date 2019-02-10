@@ -18,6 +18,8 @@ public class TextureRenderer implements Renderer<Texture2D>, Initializable, Rele
 
     private Shader shader;
 
+    private VaoObjectRenderer vaoObjectRenderer;
+
     public TextureRenderer() { }
 
     @Override
@@ -25,7 +27,6 @@ public class TextureRenderer implements Renderer<Texture2D>, Initializable, Rele
         render(texture, camera, texture.modelMatrix());
     }
 
-    @SuppressWarnings("Duplicates")
     public void render(Texture2D texture, Camera camera, Mat4f transformationMatrix) {
         int
             width = texture.getWidth(),
@@ -40,28 +41,19 @@ public class TextureRenderer implements Renderer<Texture2D>, Initializable, Rele
         Vaof vao = new Vaof(2, true)
             .addArrayBuffer(coords, GL_STATIC_DRAW, 0, 3, 20, 0)
             .addArrayBuffer(coords, GL_STATIC_DRAW, 1, 2, 20, 12);
-        vao.unbind();
-        shader.bind();
-        shader.setUniform("pv", camera.viewProjection(), true);
-        shader.setUniform("model", transformationMatrix, true);
         texture.bind();
-        vao.bind();
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
-        glDrawArrays(GL_QUADS, 0, 4);
-        glDisableVertexAttribArray(0);
-        glDisableVertexAttribArray(1);
+        vaoObjectRenderer.renderVao(vao, shader, camera, 4, GL_QUADS, transformationMatrix);
         texture.unbind();
-        vao.unbind();
         vao.release();
-        shader.unbind();
     }
 
     @Override
     public void init() throws ResourceInitializationException {
         try {
             shader = Shader.fromResources("shaders/texture/vert.glsl", "shaders/texture/fragm.glsl");
-        } catch (IOException e) {
+            vaoObjectRenderer = new VaoObjectRenderer();
+            vaoObjectRenderer.init();
+        } catch (IOException | ResourceInitializationException e) {
             throw new ResourceInitializationException(e);
         }
     }
@@ -73,8 +65,10 @@ public class TextureRenderer implements Renderer<Texture2D>, Initializable, Rele
 
     @Override
     public void release() {
-        if (isInitialized())
+        if (isInitialized()) {
             shader.release();
+            vaoObjectRenderer.release();
+        }
     }
 
     @Override

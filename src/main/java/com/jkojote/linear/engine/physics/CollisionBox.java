@@ -52,12 +52,12 @@ public class CollisionBox extends BaseTransformable {
         Vec3f[] v1 = new Vec3f[this.vertices.length];
         Vec3f[] v2 = new Vec3f[collisionBox.vertices.length];
         Mat4f tm1 = transformationMatrix();
-        Mat4f collisionBoxTransformationMatrix = collisionBox.transformationMatrix();
+        Mat4f tm2 = collisionBox.transformationMatrix();
         // transform vertices using transformation matrices
         for (int i = 0; i < v1.length; i++)
             v1[i] = tm1.mult(this.vertices[i]);
         for (int i = 0; i < v2.length; i++)
-            v2[i] = collisionBoxTransformationMatrix.mult(collisionBox.vertices[i]);
+            v2[i] = tm2.mult(collisionBox.vertices[i]);
         if (testOverlap(v1, v2) && testOverlap(v2, v1))
             return true;
         return false;
