@@ -30,7 +30,7 @@ public class ShaderTest {
         int width = 300, height = 300;
         float colorX = 0.0f, colorY = 0.0f, colorZ = 0.0f;
         float[] vertices = {
-        //  -getPosition-  ------- color --------
+        //  -position-    ------- color --------
             -0.5f, -0.5f, colorX, colorY, colorZ,
             -0.5f,  0.5f, colorX, colorY, colorZ,
              0.5f,  0.5f, colorX, colorY, colorZ,
@@ -45,7 +45,6 @@ public class ShaderTest {
                 }
                 vao = new Vaof(2);
                 vao.bind();
-                // add getPosition and color
                 vao.addArrayBuffer(vertices, GL_STATIC_DRAW, 0, 2, 5 * FLOAT_SIZE, 0)
                    .addArrayBuffer(vertices, GL_STATIC_DRAW, 1, 3, 5 * FLOAT_SIZE, 2 * FLOAT_SIZE);
                 vao.unbind();
