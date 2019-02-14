@@ -5,9 +5,7 @@ import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 import com.jkojote.linear.engine.utils.FileUtils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 
 import static org.lwjgl.opengl.GL20.*;
@@ -87,14 +85,32 @@ public final class Shader implements Releasable {
 
     public static Shader fromResources(String vertexShader, String fragmentShader)
     throws IOException {
-        ClassLoader loader = Shader.class.getClassLoader();
-        URL vUrl = loader.getResource(vertexShader);
-        URL fUrl = loader.getResource(fragmentShader);
-        if (vUrl == null)
-            throw new FileNotFoundException("cannot access the resource: " + vertexShader);
-        if (fUrl == null)
-            throw new FileNotFoundException("cannot access the resource: " + fragmentShader);
-        return fromFiles(new File(vUrl.getFile()).getAbsolutePath(), new File(fUrl.getFile()).getAbsolutePath());
+        String vertexShaderSource = readResource(vertexShader);
+        String fragmentShaderSource = readResource(fragmentShader);
+        return fromSource(vertexShaderSource, fragmentShaderSource);
+
+    }
+
+    private static String readResource(String resource) throws IOException {
+        ClassLoader classLoader = Shader.class.getClassLoader();
+        checkResourceExists(resource, classLoader);
+        return readStreamAsString(classLoader.getResourceAsStream(resource));
+    }
+
+    private static String readStreamAsString(InputStream in) throws IOException {
+        byte[] buffer = new byte[4096];
+        int bytesRead;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        while ((bytesRead = in.read(buffer)) > 0) {
+            out.write(buffer, 0, bytesRead);
+        }
+        return out.toString();
+    }
+
+    private static void checkResourceExists(String resource, ClassLoader classLoader) throws IOException {
+        URL url = classLoader.getResource(resource);
+        if (url == null)
+            throw new IOException("resource not found: " + resource);
     }
 
     /**

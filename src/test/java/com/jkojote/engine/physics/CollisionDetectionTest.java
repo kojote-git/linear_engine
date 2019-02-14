@@ -101,6 +101,7 @@ public class CollisionDetectionTest {
                 collisionStatus.setColor(new Vec3f(0.8f, 0.1f, 0.2f));
                 return;
             }
+            polygonNumber++;
         }
         collisionStatus.delete(10, collisionStatus.length()).append("false");
         collisionStatus.setColor(new Vec3f(0.1f, 0.7f, 0.2f));

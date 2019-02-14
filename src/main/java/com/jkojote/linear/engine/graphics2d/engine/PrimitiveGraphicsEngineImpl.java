@@ -19,25 +19,15 @@ import java.util.Collection;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 
 public class PrimitiveGraphicsEngineImpl implements PrimitiveGraphicsEngine {
-
     private Camera camera;
-
     private boolean initialized;
-
     private boolean released;
-
     private VaoObjectRenderer vaoObjectRenderer;
-
     private TexturedObjectRenderer texturedObjectRenderer;
-
     private EllipseRenderer ellipseRenderer;
-
     private VertexShapeRenderer vertexShapeRenderer;
-
     private TextRenderer textRenderer;
-
     private TextureRenderer textureRenderer;
-
     private SpriteObjectRenderer spriteObjectRenderer;
 
     public PrimitiveGraphicsEngineImpl() {
@@ -92,7 +82,60 @@ public class PrimitiveGraphicsEngineImpl implements PrimitiveGraphicsEngine {
     public Camera getCamera() {return camera; }
 
     @Override
+    public void render(Renderable renderable) {
+        checkCameraIsSet(camera);
+        renderChecked(renderable, camera);
+    }
+
+    @Override
     public void render(Renderable renderable, Camera camera) {
+        checkCameraIsSet(camera);
+        renderChecked(renderable, camera);
+    }
+
+    @Override
+    public void renderAll(Collection<Renderable> renderables) {
+        checkCameraIsSet(camera);
+        for (Renderable renderable: renderables) {
+            renderChecked(renderable, camera);
+        }
+    }
+
+    @Override
+    public void renderAll(Collection<Renderable> renderables, Camera camera) {
+        checkCameraIsSet(camera);
+        for (Renderable renderable: renderables) {
+            renderChecked(renderable, camera);
+        }
+    }
+
+    @Override
+    public void renderText(CharSequence text, FontMap font, Vec3f color, Mat4f transformationMatrix) {
+        PlainText plainText = new PlainText(text, font, transformationMatrix);
+        plainText.setColor(color);
+        render(plainText);
+    }
+
+    @Override
+    public void renderTexture(Texture2D texture2D, Mat4f transformationMatrix) {
+        render(new RenderableTextureTuple(texture2D, transformationMatrix));
+    }
+
+    private class RenderableTextureTuple implements Renderable {
+        private Texture2D texture;
+        private Mat4f transformationMatrix;
+
+        RenderableTextureTuple(Texture2D texture, Mat4f transformationMatrix) {
+            this.texture = texture;
+            this.transformationMatrix = transformationMatrix;
+        }
+
+        public int renderingMode()    { return GL_QUADS; }
+        public Mat4f modelMatrix()    { return transformationMatrix; }
+        public Texture2D getTexture() { return texture; }
+    }
+
+    private void renderChecked(Renderable renderable, Camera camera) {
         if (renderable instanceof SpriteObject) {
             spriteObjectRenderer.render((SpriteObject) renderable, camera);
         }
@@ -123,61 +166,8 @@ public class PrimitiveGraphicsEngineImpl implements PrimitiveGraphicsEngine {
         }
     }
 
-    @Override
-    public void renderAll(Collection<Renderable> renderables) {
-        for (Renderable renderable: renderables) {
-            render(renderable, camera);
-        }
-    }
-
-    @Override
-    public void renderAll(Collection<Renderable> renderables, Camera camera) {
-        for (Renderable renderable: renderables) {
-            render(renderable, camera);
-        }
-    }
-
-    @Override
-    public void render(Renderable renderable) {
-        render(renderable, camera);
-    }
-
-    @Override
-    public void renderTexture(Texture2D texture2D, Mat4f transformationMatrix) {
-        render(new RenderableTextureTuple(texture2D, transformationMatrix));
-    }
-
-    @Override
-    public void renderText(CharSequence text, FontMap font, Vec3f color, Mat4f transformationMatrix) {
-        PlainText plainText = new PlainText(text, font, transformationMatrix);
-        plainText.setColor(color);
-        render(plainText);
-    }
-
-
-    private class RenderableTextureTuple implements Renderable {
-
-        private Texture2D texture;
-
-        private Mat4f transformationMatrix;
-
-        public RenderableTextureTuple(Texture2D texture, Mat4f transformationMatrix) {
-            this.texture = texture;
-            this.transformationMatrix = transformationMatrix;
-        }
-
-        public Texture2D getTexture() {
-            return texture;
-        }
-
-        @Override
-        public Mat4f modelMatrix() {
-            return transformationMatrix;
-        }
-
-        @Override
-        public int renderingMode() {
-            return GL_QUADS;
-        }
+    private void checkCameraIsSet(Camera camera) {
+        if (camera == null)
+            throw new NullPointerException("camera is not set");
     }
 }
