@@ -8,7 +8,6 @@ import com.jkojote.linear.engine.graphics2d.text.ModifiableText;
 import com.jkojote.linear.engine.graphics2d.text.TextRenderer;
 import com.jkojote.linear.engine.graphics2d.text.FontMap;
 import com.jkojote.linear.engine.graphics2d.primitives.renderers.TexturedObjectRenderer;
-import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.window.Window;
 import org.junit.After;
 import org.junit.Before;
@@ -23,7 +22,7 @@ public class FontMapTest {
 
     private FontTexture fontTexture;
 
-    private TexturedObjectRenderer renderer;
+    private TexturedObjectRenderer texturedObjectRenderer;
 
     private FontMap font;
 
@@ -45,17 +44,14 @@ public class FontMapTest {
     @Before
     public void init() {
         textRenderer = new TextRenderer();
-        renderer = new TexturedObjectRenderer();
+        texturedObjectRenderer = new TexturedObjectRenderer();
         text = new ModifiableText(font);
-        window = new Window("w", width, height, false, false)
+        window = new Window("w", width, height, false, false, true)
             .setInitCallback((win) -> {
                 try {
-                    // use larger size for better font quality
-                    // it later can be scaled
-//                    font = new FontMap(new Font("Calibri", Font.BOLD, 32), false);
                     font = FontMap.FontMapBuilder.aFont()
                         .fromFile(path)
-                        .withSize(128)
+                        .withSize(32)
                         .withStyle(Font.PLAIN)
                         .withAntialiasingEnabled()
                         .withFontFormat(Font.TRUETYPE_FONT)
@@ -65,26 +61,27 @@ public class FontMapTest {
                     text.append("Hello World!\n\tHello World!\nПривет мир!\nПривет мир!");
 
                     font.init();
-                    renderer.init();
+                    texturedObjectRenderer.init();
                     textRenderer.init();
                 } catch (Exception e) {
                     window.release();
-                    if (!renderer.isReleased()) {
-                        renderer.release();
+                    if (!texturedObjectRenderer.isReleased()) {
+                        texturedObjectRenderer.release();
                     }
                     if (!textRenderer.isReleased()) {
                         textRenderer.release();
                     }
                     throw new RuntimeException(e);
                 }
-            });
+            })
+            .setSamplePoints(4);
         transformableCamera = new TransformableCamera(window);
         staticCamera = new StaticCamera(window);
     }
     @After
     public void release() {
-        if (!renderer.isReleased()) {
-            renderer.release();
+        if (!texturedObjectRenderer.isReleased()) {
+            texturedObjectRenderer.release();
         }
         if (!textRenderer.isReleased()) {
             textRenderer.release();
@@ -106,7 +103,7 @@ public class FontMapTest {
             .init();
         runner.setRenderCallback(() -> {
             glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-            renderer.render(fontTexture, transformableCamera);
+            texturedObjectRenderer.render(fontTexture, transformableCamera);
         });
         runner.setUpdateCallback(controller::update);
         runner.run();

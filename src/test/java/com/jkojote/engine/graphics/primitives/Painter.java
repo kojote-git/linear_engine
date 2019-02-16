@@ -21,8 +21,6 @@ public class Painter {
 
     private Shape shape;
 
-    private static final float MIN = 0.05f, MAX = 0.95f;
-
     public Painter(Shape shape) {
         this.shape = shape;
         colorOffsetX = (float) (Math.random() / colorOffsetFraction);
@@ -31,7 +29,7 @@ public class Painter {
     }
 
     public void updateColor() {
-        if (colorChanges > 127) {
+        if (colorChanges > 512) {
             colorChanges = 0;
             colorOffsetX = (float) (Math.random() / colorOffsetFraction);
             colorOffsetY = (float) (Math.random() / colorOffsetFraction);

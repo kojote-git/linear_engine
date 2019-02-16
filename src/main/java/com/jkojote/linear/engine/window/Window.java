@@ -56,6 +56,10 @@ public final class Window implements Releasable, Initializable {
 
     private Set<WindowStateEventListener<?>> stateListeners;
 
+    private boolean antialiasingEnabled;
+
+    private int samplePoints;
+
     /**
      * Creates a new window instance; this method doesn't initialize it.
      * To do so, call {@code init()} method after you set up all callbacks.
@@ -74,6 +78,14 @@ public final class Window implements Releasable, Initializable {
         this.mouseEnabled = mouseEnabled;
         this.stateListeners = new HashSet<>();
         this.projectionMatrix = Mat4f.ortho(-width / 2f, width / 2f, -height / 2f, height / 2f, 0, 1);
+        this.samplePoints = 2;
+    }
+
+    public Window(String title, int width, int height,
+                  boolean resizable, boolean mouseEnabled,
+                  boolean antialiasingEnabled) {
+        this(title, width, height, resizable, mouseEnabled);
+        this.antialiasingEnabled = antialiasingEnabled;
     }
 
     /**
@@ -130,6 +142,13 @@ public final class Window implements Releasable, Initializable {
         return this;
     }
 
+    public Window setSamplePoints(int samplePoints) {
+        if (samplePoints < 1)
+            throw new IllegalArgumentException("number of sample points must not be less than one");
+        this.samplePoints = samplePoints;
+        return this;
+    }
+
     public void addStateListener(WindowStateEventListener<?> listener) {
         if (listener == null)
             return;
@@ -183,6 +202,9 @@ public final class Window implements Releasable, Initializable {
         }
         if (!resizable)
             glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+        if (antialiasingEnabled) {
+            glfwWindowHint(GLFW_SAMPLES, samplePoints);
+        }
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         window = glfwCreateWindow(width, height, title, NULL, NULL);
         glfwShowWindow(window);
@@ -295,5 +317,42 @@ public final class Window implements Releasable, Initializable {
     @Override
     public boolean isReleased() {
         return terminated;
+    }
+
+    public static class WindowBuilder {
+        private int width, height;
+        private boolean resizable, mouseEnabled;
+        private String title;
+        private boolean antialiasingEnabled;
+
+        public static WindowBuilder createWindow(String title, int width, int height) {
+            return new WindowBuilder(title, width, height);
+        }
+
+        private WindowBuilder(String title, int width, int height) {
+            this.title = title;
+            this.width = width;
+            this.height = height;
+        }
+
+        public WindowBuilder setResizable(boolean resizable) {
+            this.resizable = resizable;
+            return this;
+        }
+
+        public WindowBuilder setMouseEnabled(boolean mouseEnabled) {
+            this.mouseEnabled = mouseEnabled;
+            return this;
+        }
+
+        public WindowBuilder setAntialiasingEnabled(boolean antialiasingEnabled) {
+            this.antialiasingEnabled = antialiasingEnabled;
+            return this;
+        }
+
+        public Window build() {
+            return new Window(title, width, height, resizable, mouseEnabled, antialiasingEnabled);
+        }
+
     }
 }

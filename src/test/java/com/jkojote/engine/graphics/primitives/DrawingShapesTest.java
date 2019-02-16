@@ -88,7 +88,7 @@ public class DrawingShapesTest {
 
     @Before
     public void init() {
-        window = new Window("w", width, height, false, false);
+        window = new Window("w", width, height, false, false, true);
         staticCamera = new StaticCamera(window);
         transformableCamera = new TransformableCamera(window);
         window.setInitCallback((win) -> {
@@ -105,7 +105,8 @@ public class DrawingShapesTest {
             .setTerminationCallback((win) -> {
                 vertexShapeRenderer.release();
                 ellipseRenderer.release();
-            });
+            })
+            .setSamplePoints(4);
     }
 
     @After
