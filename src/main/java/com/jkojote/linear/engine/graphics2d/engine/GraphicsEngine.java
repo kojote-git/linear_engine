@@ -16,12 +16,12 @@ public interface GraphicsEngine extends Initializable, Releasable {
      * Sets the camera that is used for rendering if no camera for rendering is specified
      * @param camera a camera to be set
      */
-    void setCamera(Camera camera);
+    void setDefaultCamera(Camera camera);
 
     /**
      * @return camera that is used fo rendering if no camera for rendering is specified
      */
-    Camera getCamera();
+    Camera getDefaultCamera();
 
     /**
      * Renders all objects from collection

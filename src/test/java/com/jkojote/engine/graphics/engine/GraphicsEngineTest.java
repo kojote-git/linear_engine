@@ -48,7 +48,7 @@ public class GraphicsEngineTest {
         StripedTriangle triangle = new StripedTriangle(new Vec3f(-20, -15, 0), new Vec3f(0, 20, 0), new Vec3f(20, -15, 0));
         LoopRunner runner = new LoopRunner(window);
         Camera camera = new StaticCamera(window);
-        engine.setCamera(camera);
+        engine.setDefaultCamera(camera);
         runner.setRenderCallback(() -> {
             engine.render(rectangle);
             engine.render(ellipse);

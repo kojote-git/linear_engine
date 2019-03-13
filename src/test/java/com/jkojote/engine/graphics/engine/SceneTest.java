@@ -59,7 +59,7 @@ public class SceneTest {
         camera = new BoundingCamera<>((AnimatedSpriteObject) spriteObject, window);
         controller = new TransformationController((AnimatedSpriteObject) spriteObject);
         engine = new PrimitiveGraphicsEngineImpl();
-        engine.setCamera(camera);
+        engine.setDefaultCamera(camera);
         for (int i = 0; i < 16; i++)
             renderables.add(getRenderable());
         renderables.add(spriteObject);

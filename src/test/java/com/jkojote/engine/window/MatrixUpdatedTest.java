@@ -36,7 +36,7 @@ public class MatrixUpdatedTest {
         controller = new TransformationController(camera);
         runner = new LoopRunner(window);
         rectangle = new SolidRectangle(new Vec3f(), 50, 50);
-        engine.setCamera(camera);
+        engine.setDefaultCamera(camera);
         window.setInitCallback((win) -> {
             engine.init();
         });
