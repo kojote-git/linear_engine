@@ -19,7 +19,7 @@ import java.util.Collection;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 
 public class PrimitiveGraphicsEngineImpl implements PrimitiveGraphicsEngine {
-    private Camera camera;
+    private Camera defaultCamera;
     private boolean initialized;
     private boolean released;
     private VaoObjectRenderer vaoObjectRenderer;
@@ -31,6 +31,10 @@ public class PrimitiveGraphicsEngineImpl implements PrimitiveGraphicsEngine {
     private SpriteObjectRenderer spriteObjectRenderer;
 
     public PrimitiveGraphicsEngineImpl() {
+        this(null);
+    }
+
+    public PrimitiveGraphicsEngineImpl(Camera defaultCamera) {
         this.texturedObjectRenderer = new TexturedObjectRenderer();
         this.vaoObjectRenderer = new VaoObjectRenderer();
         this.ellipseRenderer = new EllipseRenderer();
@@ -38,6 +42,7 @@ public class PrimitiveGraphicsEngineImpl implements PrimitiveGraphicsEngine {
         this.textRenderer = new TextRenderer();
         this.textureRenderer = new TextureRenderer();
         this.spriteObjectRenderer = new SpriteObjectRenderer();
+        this.defaultCamera = defaultCamera;
     }
 
     @Override
@@ -76,15 +81,15 @@ public class PrimitiveGraphicsEngineImpl implements PrimitiveGraphicsEngine {
     public boolean isReleased() { return released; }
 
     @Override
-    public void setCamera(Camera camera) { this.camera = camera; }
+    public void setDefaultCamera(Camera camera) { this.defaultCamera = camera; }
 
     @Override
-    public Camera getCamera() {return camera; }
+    public Camera getDefaultCamera() {return defaultCamera; }
 
     @Override
     public void render(Renderable renderable) {
-        checkCameraIsSet(camera);
-        renderChecked(renderable, camera);
+        checkCameraIsSet(defaultCamera);
+        renderChecked(renderable, defaultCamera);
     }
 
     @Override
@@ -95,9 +100,9 @@ public class PrimitiveGraphicsEngineImpl implements PrimitiveGraphicsEngine {
 
     @Override
     public void renderAll(Collection<Renderable> renderables) {
-        checkCameraIsSet(camera);
+        checkCameraIsSet(defaultCamera);
         for (Renderable renderable: renderables) {
-            renderChecked(renderable, camera);
+            renderChecked(renderable, defaultCamera);
         }
     }
 
@@ -168,6 +173,6 @@ public class PrimitiveGraphicsEngineImpl implements PrimitiveGraphicsEngine {
 
     private void checkCameraIsSet(Camera camera) {
         if (camera == null)
-            throw new NullPointerException("camera is not set");
+            throw new NullPointerException("defaultCamera is not set");
     }
 }

@@ -5,7 +5,6 @@ import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.window.Window;
 
 public class StaticCamera implements Camera {
-
     private Window window;
 
     public StaticCamera(Window window) {

@@ -319,38 +319,59 @@ public final class Window implements Releasable, Initializable {
         return terminated;
     }
 
-    public static class WindowBuilder {
+    public static class WindowConfiguration {
         private int width, height;
         private boolean resizable, mouseEnabled;
         private String title;
         private boolean antialiasingEnabled;
 
-        public static WindowBuilder createWindow(String title, int width, int height) {
-            return new WindowBuilder(title, width, height);
+        public static WindowConfiguration createWindow(String title, int width, int height) {
+            return new WindowConfiguration(title, width, height);
         }
 
-        private WindowBuilder(String title, int width, int height) {
+        public static WindowConfiguration createWindow() {
+            return new WindowConfiguration();
+        }
+
+        private WindowConfiguration(String title, int width, int height) {
             this.title = title;
             this.width = width;
             this.height = height;
         }
 
-        public WindowBuilder setResizable(boolean resizable) {
+        private WindowConfiguration() { }
+
+        public WindowConfiguration setWidth(int width) {
+            this.width = width;
+            return this;
+        }
+
+        public WindowConfiguration setHeight(int height) {
+            this.height = height;
+            return this;
+        }
+
+        public WindowConfiguration setTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public WindowConfiguration setResizable(boolean resizable) {
             this.resizable = resizable;
             return this;
         }
 
-        public WindowBuilder setMouseEnabled(boolean mouseEnabled) {
+        public WindowConfiguration setMouseEnabled(boolean mouseEnabled) {
             this.mouseEnabled = mouseEnabled;
             return this;
         }
 
-        public WindowBuilder setAntialiasingEnabled(boolean antialiasingEnabled) {
+        public WindowConfiguration setAntialiasingEnabled(boolean antialiasingEnabled) {
             this.antialiasingEnabled = antialiasingEnabled;
             return this;
         }
 
-        public Window build() {
+        public Window configure() {
             return new Window(title, width, height, resizable, mouseEnabled, antialiasingEnabled);
         }
 
