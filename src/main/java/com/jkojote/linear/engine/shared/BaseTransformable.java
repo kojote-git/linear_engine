@@ -4,15 +4,10 @@ import com.jkojote.linear.engine.math.Mat4f;
 import com.jkojote.linear.engine.math.Vec3f;
 
 public abstract class BaseTransformable implements Transformable {
-
     private Vec3f translation;
-
     private Mat4f matrix;
-
     private float rotationAngle;
-
     private float scaleFactor;
-
     private boolean updateMatrix;
 
     protected BaseTransformable() {
@@ -65,9 +60,9 @@ public abstract class BaseTransformable implements Transformable {
     public Mat4f transformationMatrix() {
         if (!updateMatrix)
             return matrix;
-        Mat4f translation = Mat4f.translation(this.translation);
-        Mat4f rotation = Mat4f.rotationZ(this.rotationAngle);
-        Mat4f scale = Mat4f.scale(this.scaleFactor);
+        Mat4f translation = Mat4f.translation(getTranslation());
+        Mat4f rotation = Mat4f.rotationZ(getRotationAngle());
+        Mat4f scale = Mat4f.scale(getScaleFactor());
         matrix = translation.mult(rotation).mult(scale);
         updateMatrix = false;
         return matrix;
