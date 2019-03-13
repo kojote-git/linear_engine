@@ -4,7 +4,9 @@ import com.jkojote.linear.engine.graphics2d.Texture2D;
 import com.jkojote.linear.engine.window.Window;
 import org.junit.Test;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import static org.lwjgl.opengl.GL11.*;
 
